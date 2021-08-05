@@ -4,7 +4,8 @@ const axiosInstance = axios.create({
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
-        'Accept': '*/*'
+        'Accept': '*/*',
+        'Access-Control-Allow-Origin': '*',
     }
 });
 
@@ -12,6 +13,7 @@ type HttpMethod = 'get' | 'post';
 
 export const requestAPI = async (url: string, method: HttpMethod, params: any) => {
     const response = await axiosInstance({
+        baseURL: 'https://api.odcloud.kr/api',
         url,
         method,
         data: params,
