@@ -5,14 +5,18 @@
 
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { requestAPI } from './modules/requestAPI';
 
-const App = () => {
-  const API_KEY = '8h6BbqRjS0gC4ZAL1Bw6yOwha9E6ODarC3CoZ3n9dOvfX0zdQEBEQXW3E23SiibPIzuPYckNU3ffeguQf9awtQ%3D%3D';
-  const requestURL = `/15003416/v1/uddi:a635e6c7-82cf-4714-b002-c7cf4cb20121_201609071527?page=1&perPage=10&ServiceKey=${API_KEY}`;
+const callAPI = async () => {
+  axios.get('http://localhost:3001/api').then((res) => console.log(res));
+};
 
-  const { data, isLoading, error } = useQuery('test', () => requestAPI(requestURL, 'get', {}));
+const App = () => {
+  useEffect(() => {
+    callAPI();
+  }, []);
 
   return <div>Hello</div>;
 };
