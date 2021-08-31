@@ -9,16 +9,37 @@ import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { requestAPI } from './modules/requestAPI';
 
-const callAPI = async () => {
-  axios.get('http://localhost:3001/api').then((res) => console.log(res));
-};
-
 const App = () => {
-  useEffect(() => {
-    callAPI();
-  }, []);
+  const { isLoading, error, data, refetch } = useQuery(
+    'apiData',
+    () =>
+      axios
+        .get('http://localhost:3001/goCamping/searchList', {
+          params: {
+            pageNo: 1,
+            numOfRows: 2,
+            keyword: '강원도',
+          },
+        })
+        .then((res) => res.data.response.body.items),
+    {
+      onError: () => {
+        console.log('error');
+      },
+    },
+  );
 
-  return <div>Hello</div>;
+  console.log(data);
+
+  const getAPIData = () => {};
+
+  return (
+    <div>
+      <button type="button" onClick={getAPIData}>
+        getData
+      </button>
+    </div>
+  );
 };
 
 export default App;

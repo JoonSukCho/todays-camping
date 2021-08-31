@@ -1,5 +1,0 @@
-
-Backend Library
-
-nodemon
- - hot-reload 처럼, 코드 수정시 서버를 재실행 시켜준다.
