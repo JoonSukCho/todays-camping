@@ -21,6 +21,11 @@ router.get('/', (req, res) => {
         {
             url: baseURL + queryParams,
             method: 'GET',
+            qs: {
+                // add paramskaka
+                // param: 1 
+                // => http://url.com?param=1
+            }
         },
     
         (err, response, body) => {
