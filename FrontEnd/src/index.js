@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import { QueryClientProvider, QueryClient } from 'react-query';
-import store from './store';
 import App from './App';
 
 const qureyClient = new QueryClient({
@@ -19,9 +17,7 @@ const qureyClient = new QueryClient({
 
 ReactDOM.render(
   <QueryClientProvider client={qureyClient}>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <App />
   </QueryClientProvider>,
   document.getElementById('root'),
 );
