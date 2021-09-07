@@ -1,3 +1,6 @@
+
+
+@import url('https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 /*!
 =========================================================
@@ -9,6 +12,13 @@
 * Coded by Creative Tim
 =========================================================
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
+/*!
+=========================================================
+* css를 수정하거나 추가하려면 tailwind.css에서 직접 수정하지 말고,
+* index.css 혹은 별도의 css 파일을 만들어서 override 하거나 추가한다.
+* 서버 실행 시 postcss가 index.css 파일을 전처리 하여 tailwind.css에 적용시킨다.
+=========================================================
 */
 /*! tailwindcss v2.2.9 | MIT License | https://tailwindcss.com
 */
@@ -297,7 +307,7 @@ ul {
  *    to override it to ensure consistency even when using the default theme.
  */
 html {
-  font-family: Roboto, sans-serif; /* 1 */
+  font-family: Spoqa Han Sans Neo, sans-serif; /* 1 */
   line-height: 1.5; /* 2 */
 }
 /**
@@ -549,6 +559,10 @@ video {
 	margin-top: 2rem;
 	margin-bottom: 2rem;
 }
+.mx-2{
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
 .-mt-4{
 	margin-top: -1rem;
 }
@@ -737,11 +751,11 @@ video {
 .rounded-full{
 	border-radius: 9999px;
 }
-.rounded{
-	border-radius: 0.25rem;
-}
 .rounded-2xl{
 	border-radius: 1rem;
+}
+.rounded{
+	border-radius: 0.25rem;
 }
 .border-t{
 	border-top-width: 1px;
@@ -874,7 +888,7 @@ video {
 	text-align: center;
 }
 .font-serif{
-	font-family: "Roboto Slab", serif;
+	font-family: Spoqa Han Sans Neo, serif;
 }
 .text-sm{
 	font-size: 0.875rem;
@@ -961,8 +975,8 @@ video {
 	transition-duration: 150ms;
 }
 .-translate-x-1\/2 {
-        --tw-translate-x: -50% !important;
-    }
+    --tw-translate-x: -50% !important;
+  }
 .tippy-box[data-placement^=top]>.tippy-svg-arrow{bottom:0}
 .tippy-box[data-placement^=top]>.tippy-svg-arrow:after,.tippy-box[data-placement^=top]>.tippy-svg-arrow>svg{top:16px;transform:rotate(180deg)}
 .tippy-box[data-placement^=bottom]>.tippy-svg-arrow{top:0}
@@ -2501,6 +2515,13 @@ video {
 .lg\:justify-start{justify-content:flex-start}
 .lg\:px-36{padding-left:9rem;padding-right:9rem}
 .lg\:text-left{text-align:left}}
+html,
+body {
+  font-family: 'Spoqa Han Sans Neo', sans-serif;
+}
+.font-serif {
+  font-family: 'Spoqa Han Sans Neo', serif;
+}
 .hover\:text-gray-900:hover{
 	--tw-text-opacity: 1;
 	color: rgba(17, 24, 39, var(--tw-text-opacity));
@@ -2539,14 +2560,17 @@ video {
 	.lg\:order-1{
 		order: 1;
 	}
-	.lg\:mb-0{
-		margin-bottom: 0px;
+	.lg\:mb-12{
+		margin-bottom: 3rem;
 	}
 	.lg\:mt-0{
 		margin-top: 0px;
 	}
 	.lg\:mr-4{
 		margin-right: 1rem;
+	}
+	.lg\:mb-0{
+		margin-bottom: 0px;
 	}
 	.lg\:w-6\/12{
 		width: 50%;

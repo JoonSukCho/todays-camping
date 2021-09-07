@@ -2,13 +2,13 @@ module.exports = {
   mode: 'jit',
   // purge - 프로덕션으로 build 할 때, 사용되지 않는 모든 클래스를 제거하여
   // 파일 사이즈를 최적화 시켜준다.
-  purge: ['./src/**/*.js', './public/index.html'],
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
-      sans: ['Roboto', 'sans-serif'],
-      serif: ['"Roboto Slab"', 'serif'],
-      body: ['Roboto', 'sans-serif'],
+      sans: ['Spoqa Han Sans Neo', 'sans-serif'],
+      serif: ['Spoqa Han Sans Neo', 'serif'],
+      body: ['Spoqa Han Sans Neo', 'sans-serif'],
     },
     extend: {
       backgroundImage: () => ({

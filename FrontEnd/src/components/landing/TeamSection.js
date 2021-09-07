@@ -42,17 +42,12 @@ const TeamSection = () => {
           <div className="flex flex-wrap">
             {items.map((item, idx) => {
               return (
-                <>
-                  <TeamCard
-                    key={String(idx)}
-                    img={Image1}
-                    name="Ryan Tompson"
-                    position="Web Developer"
-                  />
+                <div className="flex flex-wrap" key={String(idx)}>
+                  <TeamCard img={Image1} name="Ryan Tompson" position="Web Developer" />
                   <TeamCard img={Image2} name="Romina Hadid" position="Marketing Specialist" />
                   <TeamCard img={Image3} name="Alexa Smith" position="UI/UX Designer" />
-                  <TeamCard img={Image4} name="Jenna Kardi" position="Founder and CEO" />
-                </>
+                  {/* <TeamCard img={Image4} name="Jenna Kardi" position="Founder and CEO" /> */}
+                </div>
               );
             })}
           </div>

@@ -9,13 +9,32 @@
 =========================================================
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+
+/*!
+=========================================================
+* css를 수정하거나 추가하려면 tailwind.css에서 직접 수정하지 말고,
+* index.css 혹은 별도의 css 파일을 만들어서 override 하거나 추가한다.
+* 서버 실행 시 postcss가 index.css 파일을 전처리 하여 tailwind.css에 적용시킨다.
+=========================================================
+*/
+
+@import url('https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css');
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 @import '@material-tailwind/react/tailwind.css';
 
 @layer utilities {
-    .-translate-x-1\/2 {
-        --tw-translate-x: -50% !important;
-    }
+  .-translate-x-1\/2 {
+    --tw-translate-x: -50% !important;
+  }
+}
+
+html,
+body {
+  font-family: 'Spoqa Han Sans Neo', sans-serif;
+}
+
+.font-serif {
+  font-family: 'Spoqa Han Sans Neo', serif;
 }
