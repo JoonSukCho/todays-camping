@@ -23,4 +23,7 @@ module.exports = {
     'jsx-a11y/no-noninteractive-element-interactions': 0,
     'no-return-await': 0,
   },
+  env: {
+    browser: true,
+  },
 };
