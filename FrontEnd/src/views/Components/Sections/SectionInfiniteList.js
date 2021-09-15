@@ -24,7 +24,7 @@ const SectionInfiniteList = () => {
     <div className={classes.sections}>
       <div className={classes.container}>
         <div className={classes.title}>
-          <h2>InfiniteScroll Zone</h2>
+          <h2 style={{ fontWeight: 600 }}>추천 캠핑장</h2>
         </div>
         <InfiniteScroll
           dataLength={items.length}

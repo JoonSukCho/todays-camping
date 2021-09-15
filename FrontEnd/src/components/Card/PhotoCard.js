@@ -1,6 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
 
+// lib
+import Carousel from 'react-slick';
+
 // @material/core
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -21,12 +24,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 // Image
-import CardImage from 'assets/img/sign.jpg';
+import TestImage1 from 'assets/img/sign.jpg';
+import TestImage2 from 'assets/img/main-background.jpg';
+import TestImage3 from 'assets/img/landing-bg.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     // maxWidth: 345,
-    background: '#eee',
   },
   media: {
     height: 0,
@@ -63,10 +67,14 @@ const PhotoCard = () => {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
+        title="강릉 야영지"
         subheader="September 14, 2016"
       />
-      <CardMedia className={classes.media} image={CardImage} title="Paella dish" />
+      <Carousel dots infinite speed={500} slidesToShow={1} slidesToScroll={1} autoplay={false}>
+        <CardMedia className={classes.media} image={TestImage1} title="Paella dish" />
+        <CardMedia className={classes.media} image={TestImage2} title="Paella dish" />
+        <CardMedia className={classes.media} image={TestImage3} title="Paella dish" />
+      </Carousel>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           This impressive paella is a perfect party dish and a fun meal to cook together with your

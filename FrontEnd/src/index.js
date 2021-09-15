@@ -1,7 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { QueryClientProvider, QueryClient } from 'react-query';
+
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
 import App from './App';
+
+const customTheme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Spoqa Han Sans Neo',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
+});
 
 const qureyClient = new QueryClient({
   defaultOptions: {
@@ -21,7 +41,9 @@ const qureyClient = new QueryClient({
 
 ReactDOM.render(
   <QueryClientProvider client={qureyClient}>
-    <App />
+    <ThemeProvider theme={customTheme}>
+      <App />
+    </ThemeProvider>
   </QueryClientProvider>,
   document.getElementById('root'),
 );
