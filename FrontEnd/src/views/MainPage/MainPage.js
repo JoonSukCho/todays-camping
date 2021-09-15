@@ -1,11 +1,16 @@
 import React from 'react';
+
 // nodejs library that concatenates classes
 import classNames from 'classnames';
+
 // react components for routing our app without refresh
 import { Link } from 'react-router-dom';
+
 // @material-ui/core components
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+
 // @material-ui/icons
+
 // core components
 import Header from 'components/Header/Header.js';
 import Footer from 'components/Footer/Footer.js';
@@ -15,20 +20,25 @@ import Button from 'components/CustomButtons/Button.js';
 import Parallax from 'components/Parallax/Parallax.js';
 // sections for this page
 import HeaderLinks from 'components/Header/HeaderLinks.js';
-import SectionBasics from './Sections/SectionBasics.js';
-import SectionNavbars from './Sections/SectionNavbars.js';
-import SectionTabs from './Sections/SectionTabs.js';
-import SectionPills from './Sections/SectionPills.js';
-import SectionNotifications from './Sections/SectionNotifications.js';
-import SectionTypography from './Sections/SectionTypography.js';
-import SectionJavascript from './Sections/SectionJavascript.js';
-import SectionCarousel from './Sections/SectionCarousel.js';
-import SectionCompletedExamples from './Sections/SectionCompletedExamples.js';
-import SectionLogin from './Sections/SectionLogin.js';
-import SectionExamples from './Sections/SectionExamples.js';
-import SectionDownload from './Sections/SectionDownload.js';
+import SectionInfiniteList from 'views/Components/Sections/SectionInfiniteList.js';
+import SectionBasics from 'views/Components/Sections/SectionBasics.js';
+import SectionNavbars from 'views/Components/Sections/SectionNavbars.js';
+import SectionTabs from 'views/Components/Sections/SectionTabs.js';
+import SectionPills from 'views/Components/Sections/SectionPills.js';
+import SectionNotifications from 'views/Components/Sections/SectionNotifications.js';
+import SectionTypography from 'views/Components/Sections/SectionTypography.js';
+import SectionJavascript from 'views/Components/Sections/SectionJavascript.js';
+import SectionCarousel from 'views/Components/Sections/SectionCarousel.js';
+import SectionCompletedExamples from 'views/Components/Sections/SectionCompletedExamples.js';
+import SectionLogin from 'views/Components/Sections/SectionLogin.js';
+import SectionExamples from 'views/Components/Sections/SectionExamples.js';
+import SectionDownload from 'views/Components/Sections/SectionDownload.js';
 
 import styles from 'assets/jss/material-kit-react/views/mainPage.js';
+
+// Image
+// import BackgroundImage from 'assets/img/main-background.jpg';
+import BackgroundImage from 'assets/img/campfire-background.gif';
 
 const useStyles = makeStyles(styles);
 
@@ -48,7 +58,7 @@ export default function Components(props) {
         }}
         {...rest}
       />
-      <Parallax image={require('assets/img/bg4.jpg').default}>
+      <Parallax image={BackgroundImage}>
         <div className={classes.container}>
           <GridContainer>
             <GridItem>
@@ -65,24 +75,25 @@ export default function Components(props) {
 
       <div className={classNames(classes.main, classes.mainRaised)}>
         <SectionBasics />
-        <SectionNavbars />
-        <SectionTabs />
-        <SectionPills />
-        <SectionNotifications />
-        <SectionTypography />
-        <SectionJavascript />
-        <SectionCarousel />
-        <SectionCompletedExamples />
-        <SectionLogin />
-        <GridItem md={12} className={classes.textCenter}>
-          <Link to={'/login-page'} className={classes.link}>
+        {/* <SectionNavbars /> */}
+        {/* <SectionTabs /> */}
+        {/* <SectionPills /> */}
+        {/* <SectionNotifications /> */}
+        {/* <SectionTypography /> */}
+        {/* <SectionJavascript /> */}
+        {/* <SectionCarousel /> */}
+        {/* <SectionCompletedExamples /> */}
+        {/* <SectionLogin /> */}
+        {/* <GridItem md={12} className={classes.textCenter}>
+          <Link to={"/login-page"} className={classes.link}>
             <Button color="primary" size="lg" simple>
               View Login Page
             </Button>
           </Link>
-        </GridItem>
-        <SectionExamples />
-        <SectionDownload />
+        </GridItem> */}
+        {/* <SectionExamples /> */}
+        {/* <SectionDownload /> */}
+        <SectionInfiniteList />
       </div>
       <Footer />
     </div>

@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 // nodejs library that concatenates classes
-import classNames from "classnames";
+import classNames from 'classnames';
 // nodejs library to set properties for components
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 
 // core components
-import styles from "assets/jss/material-kit-react/components/parallaxStyle.js";
+import styles from 'assets/jss/material-kit-react/components/parallaxStyle.js';
 
 const useStyles = makeStyles(styles);
 
@@ -18,22 +18,20 @@ export default function Parallax(props) {
   } else {
     windowScrollTop = 0;
   }
-  const [transform, setTransform] = React.useState(
-    "translate3d(0," + windowScrollTop + "px,0)"
-  );
+  const [transform, setTransform] = React.useState('translate3d(0,' + windowScrollTop + 'px,0)');
   React.useEffect(() => {
     if (window.innerWidth >= 768) {
-      window.addEventListener("scroll", resetTransform);
+      window.addEventListener('scroll', resetTransform);
     }
     return function cleanup() {
       if (window.innerWidth >= 768) {
-        window.removeEventListener("scroll", resetTransform);
+        window.removeEventListener('scroll', resetTransform);
       }
     };
   });
   const resetTransform = () => {
     var windowScrollTop = window.pageYOffset / 3;
-    setTransform("translate3d(0," + windowScrollTop + "px,0)");
+    setTransform('translate3d(0,' + windowScrollTop + 'px,0)');
   };
   const { filter, className, children, style, image, small } = props;
   const classes = useStyles();
@@ -48,7 +46,9 @@ export default function Parallax(props) {
       className={parallaxClasses}
       style={{
         ...style,
-        backgroundImage: "url(" + image + ")",
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${image})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         transform: transform,
       }}
     >
