@@ -1,27 +1,44 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 
-const OAuth2RedirectHandler = () => {
+// @material-ui/core
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+const OAuth2RedirectHandler = ({ history }) => {
   const code = new URL(window.location.href).searchParams.get('code');
 
   useEffect(() => {
     axios({
       method: 'GET',
       url: `http://localhost:4001/oauth/kakao/callback?code=${code}`,
-    }).then((res) => {
-      console.log(res);
-    });
+    })
+      .then((res) => {
+        const ACCESS_TOKEN = res.data.accessToken;
+
+        console.log(res);
+
+        // accessToken은 다른 곳에 저장해야함!!
+        localStorage.setItem('access-token', ACCESS_TOKEN);
+        history.replace('/');
+      })
+      .catch((err) => {
+        console.log('소셜 로그인 에러', err);
+        alert('로그인 실패');
+        history.replace('/login-page');
+      });
   }, []);
 
   return (
-    <div>
-      <p>
-        <a
-          href={`https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_REST_API_KEY}&logout_redirect_uri=${process.env.REACT_APP_LOGOUT_REDIRECT_URI}`}
-        >
-          Logout
-        </a>
-      </p>
+    <div
+      style={{
+        background: '#FFFFFF',
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <CircularProgress />
     </div>
   );
 };

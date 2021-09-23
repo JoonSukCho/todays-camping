@@ -14,7 +14,7 @@ const locationBasedList = require('./routes/goCamping/locationBasedList');
 const searchList = require('./routes/goCamping/searchList');
 
 // oauth 
-const oAuthKakao = require('./routes/oauth/kakao/callback');
+const oAuthKakao = require('./routes/oauth/kakao');
 // ====================================
 
 // ====================================
@@ -41,7 +41,7 @@ app.use("/goCamping/locationBasedList", locationBasedList);
 app.use("/goCamping/searchList", searchList);
 
 // oauth 
-app.use('/oauth/kakao/callback', oAuthKakao);
+app.use('/oauth/kakao', oAuthKakao);
 // ====================================
 
 app.listen(4001, () => {
