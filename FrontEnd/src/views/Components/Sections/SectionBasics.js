@@ -1,54 +1,49 @@
-import React from "react";
+import React from 'react';
 // plugin that creates slider
-import Slider from "nouislider";
+import Slider from 'nouislider';
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Radio from "@material-ui/core/Radio";
-import Switch from "@material-ui/core/Switch";
+import { makeStyles } from '@material-ui/core/styles';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Radio from '@material-ui/core/Radio';
+import Switch from '@material-ui/core/Switch';
 // @material-ui/icons
-import Favorite from "@material-ui/icons/Favorite";
-import People from "@material-ui/icons/People";
-import Check from "@material-ui/icons/Check";
-import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
+import Favorite from '@material-ui/icons/Favorite';
+import People from '@material-ui/icons/People';
+import Check from '@material-ui/icons/Check';
+import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
 // core components
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Button from "components/CustomButtons/Button.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import CustomLinearProgress from "components/CustomLinearProgress/CustomLinearProgress.js";
-import Paginations from "components/Pagination/Pagination.js";
-import Badge from "components/Badge/Badge.js";
+import GridContainer from 'components/Grid/GridContainer.js';
+import GridItem from 'components/Grid/GridItem.js';
+import Button from 'components/CustomButtons/Button.js';
+import CustomInput from 'components/CustomInput/CustomInput.js';
+import CustomLinearProgress from 'components/CustomLinearProgress/CustomLinearProgress.js';
+import Paginations from 'components/Pagination/Pagination.js';
+import Badge from 'components/Badge/Badge.js';
 
-import styles from "assets/jss/material-kit-react/views/componentsSections/basicsStyle.js";
+import styles from 'assets/jss/material-kit-react/views/componentsSections/basicsStyle.js';
+import axios from 'axios';
 
 const useStyles = makeStyles(styles);
 
 export default function SectionBasics() {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([24, 22]);
-  const [selectedEnabled, setSelectedEnabled] = React.useState("b");
+  const [selectedEnabled, setSelectedEnabled] = React.useState('b');
   const [checkedA, setCheckedA] = React.useState(true);
   const [checkedB, setCheckedB] = React.useState(false);
   React.useEffect(() => {
-    if (
-      !document
-        .getElementById("sliderRegular")
-        .classList.contains("noUi-target")
-    ) {
-      Slider.create(document.getElementById("sliderRegular"), {
+    if (!document.getElementById('sliderRegular').classList.contains('noUi-target')) {
+      Slider.create(document.getElementById('sliderRegular'), {
         start: [40],
         connect: [true, false],
         step: 1,
         range: { min: 0, max: 100 },
       });
     }
-    if (
-      !document.getElementById("sliderDouble").classList.contains("noUi-target")
-    ) {
-      Slider.create(document.getElementById("sliderDouble"), {
+    if (!document.getElementById('sliderDouble').classList.contains('noUi-target')) {
+      Slider.create(document.getElementById('sliderDouble'), {
         start: [20, 60],
         connect: [false, true, false],
         step: 1,
@@ -73,6 +68,17 @@ export default function SectionBasics() {
       <div className={classes.container}>
         <div className={classes.title}>
           <h2>Basic Elements</h2>
+          <Button
+            color="primary"
+            onClick={() => {
+              axios({
+                method: 'GET',
+                url: `https://kauth.kakao.com/v2/user/me?client_id=${process.env.REACT_APP_REST_API_KEY}&logout_redirect_uri=${process.env.REACT_APP_LOGOUT_REDIRECT_URI}`,
+              });
+            }}
+          >
+            Get User Info
+          </Button>
         </div>
         <div id="buttons">
           <div className={classes.title}>
@@ -142,7 +148,7 @@ export default function SectionBasics() {
               <CustomInput
                 id="regular"
                 inputProps={{
-                  placeholder: "Regular",
+                  placeholder: 'Regular',
                 }}
                 formControlProps={{
                   fullWidth: true,
@@ -219,13 +225,7 @@ export default function SectionBasics() {
               <div className={classes.title}>
                 <h3>Checkboxes</h3>
               </div>
-              <div
-                className={
-                  classes.checkboxAndRadio +
-                  " " +
-                  classes.checkboxAndRadioHorizontal
-                }
-              >
+              <div className={classes.checkboxAndRadio + ' ' + classes.checkboxAndRadioHorizontal}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -243,13 +243,7 @@ export default function SectionBasics() {
                   label="Unchecked"
                 />
               </div>
-              <div
-                className={
-                  classes.checkboxAndRadio +
-                  " " +
-                  classes.checkboxAndRadioHorizontal
-                }
-              >
+              <div className={classes.checkboxAndRadio + ' ' + classes.checkboxAndRadioHorizontal}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -268,13 +262,7 @@ export default function SectionBasics() {
                   label="Checked"
                 />
               </div>
-              <div
-                className={
-                  classes.checkboxAndRadio +
-                  " " +
-                  classes.checkboxAndRadioHorizontal
-                }
-              >
+              <div className={classes.checkboxAndRadio + ' ' + classes.checkboxAndRadioHorizontal}>
                 <FormControlLabel
                   disabled
                   control={
@@ -296,13 +284,7 @@ export default function SectionBasics() {
                   label="Disabled Unchecked"
                 />
               </div>
-              <div
-                className={
-                  classes.checkboxAndRadio +
-                  " " +
-                  classes.checkboxAndRadioHorizontal
-                }
-              >
+              <div className={classes.checkboxAndRadio + ' ' + classes.checkboxAndRadioHorizontal}>
                 <FormControlLabel
                   disabled
                   control={
@@ -330,27 +312,17 @@ export default function SectionBasics() {
               <div className={classes.title}>
                 <h3>Radio Buttons</h3>
               </div>
-              <div
-                className={
-                  classes.checkboxAndRadio +
-                  " " +
-                  classes.checkboxAndRadioHorizontal
-                }
-              >
+              <div className={classes.checkboxAndRadio + ' ' + classes.checkboxAndRadioHorizontal}>
                 <FormControlLabel
                   control={
                     <Radio
-                      checked={selectedEnabled === "a"}
-                      onChange={() => setSelectedEnabled("a")}
+                      checked={selectedEnabled === 'a'}
+                      onChange={() => setSelectedEnabled('a')}
                       value="a"
                       name="radio button enabled"
                       aria-label="A"
-                      icon={
-                        <FiberManualRecord className={classes.radioUnchecked} />
-                      }
-                      checkedIcon={
-                        <FiberManualRecord className={classes.radioChecked} />
-                      }
+                      icon={<FiberManualRecord className={classes.radioUnchecked} />}
+                      checkedIcon={<FiberManualRecord className={classes.radioChecked} />}
                       classes={{
                         checked: classes.radio,
                         root: classes.radioRoot,
@@ -364,27 +336,17 @@ export default function SectionBasics() {
                   label="First Radio"
                 />
               </div>
-              <div
-                className={
-                  classes.checkboxAndRadio +
-                  " " +
-                  classes.checkboxAndRadioHorizontal
-                }
-              >
+              <div className={classes.checkboxAndRadio + ' ' + classes.checkboxAndRadioHorizontal}>
                 <FormControlLabel
                   control={
                     <Radio
-                      checked={selectedEnabled === "b"}
-                      onChange={() => setSelectedEnabled("b")}
+                      checked={selectedEnabled === 'b'}
+                      onChange={() => setSelectedEnabled('b')}
                       value="b"
                       name="radio button enabled"
                       aria-label="B"
-                      icon={
-                        <FiberManualRecord className={classes.radioUnchecked} />
-                      }
-                      checkedIcon={
-                        <FiberManualRecord className={classes.radioChecked} />
-                      }
+                      icon={<FiberManualRecord className={classes.radioUnchecked} />}
+                      checkedIcon={<FiberManualRecord className={classes.radioChecked} />}
                       classes={{
                         checked: classes.radio,
                         root: classes.radioRoot,
@@ -398,13 +360,7 @@ export default function SectionBasics() {
                   label="Second Radio"
                 />
               </div>
-              <div
-                className={
-                  classes.checkboxAndRadio +
-                  " " +
-                  classes.checkboxAndRadioHorizontal
-                }
-              >
+              <div className={classes.checkboxAndRadio + ' ' + classes.checkboxAndRadioHorizontal}>
                 <FormControlLabel
                   disabled
                   control={
@@ -413,12 +369,8 @@ export default function SectionBasics() {
                       value="a"
                       name="radio button disabled"
                       aria-label="B"
-                      icon={
-                        <FiberManualRecord className={classes.radioUnchecked} />
-                      }
-                      checkedIcon={
-                        <FiberManualRecord className={classes.radioChecked} />
-                      }
+                      icon={<FiberManualRecord className={classes.radioUnchecked} />}
+                      checkedIcon={<FiberManualRecord className={classes.radioChecked} />}
                       classes={{
                         checked: classes.radio,
                         disabled: classes.disabledCheckboxAndRadio,
@@ -433,13 +385,7 @@ export default function SectionBasics() {
                   label="Disabled Unchecked Radio"
                 />
               </div>
-              <div
-                className={
-                  classes.checkboxAndRadio +
-                  " " +
-                  classes.checkboxAndRadioHorizontal
-                }
-              >
+              <div className={classes.checkboxAndRadio + ' ' + classes.checkboxAndRadioHorizontal}>
                 <FormControlLabel
                   disabled
                   control={
@@ -448,12 +394,8 @@ export default function SectionBasics() {
                       value="b"
                       name="radio button disabled"
                       aria-label="B"
-                      icon={
-                        <FiberManualRecord className={classes.radioUnchecked} />
-                      }
-                      checkedIcon={
-                        <FiberManualRecord className={classes.radioChecked} />
-                      }
+                      icon={<FiberManualRecord className={classes.radioUnchecked} />}
+                      checkedIcon={<FiberManualRecord className={classes.radioChecked} />}
                       classes={{
                         checked: classes.radio,
                         disabled: classes.disabledCheckboxAndRadio,
@@ -522,33 +464,25 @@ export default function SectionBasics() {
               <div className={classes.title}>
                 <h3>Progress Bars</h3>
               </div>
-              <CustomLinearProgress
-                variant="determinate"
-                color="primary"
-                value={30}
-              />
-              <CustomLinearProgress
-                variant="determinate"
-                color="info"
-                value={60}
-              />
+              <CustomLinearProgress variant="determinate" color="primary" value={30} />
+              <CustomLinearProgress variant="determinate" color="info" value={60} />
               <CustomLinearProgress
                 variant="determinate"
                 color="success"
                 value={100}
-                style={{ width: "35%", display: "inline-block" }}
+                style={{ width: '35%', display: 'inline-block' }}
               />
               <CustomLinearProgress
                 variant="determinate"
                 color="warning"
                 value={100}
-                style={{ width: "20%", display: "inline-block" }}
+                style={{ width: '20%', display: 'inline-block' }}
               />
               <CustomLinearProgress
                 variant="determinate"
                 color="danger"
                 value={25}
-                style={{ width: "45%", display: "inline-block" }}
+                style={{ width: '45%', display: 'inline-block' }}
               />
             </GridItem>
             <GridItem xs={12} sm={12} md={6}>
@@ -558,25 +492,25 @@ export default function SectionBasics() {
               <Paginations
                 pages={[
                   { text: 1 },
-                  { text: "..." },
+                  { text: '...' },
                   { text: 5 },
                   { text: 6 },
                   { active: true, text: 7 },
                   { text: 8 },
                   { text: 9 },
-                  { text: "..." },
+                  { text: '...' },
                   { text: 12 },
                 ]}
               />
               <Paginations
                 pages={[
-                  { text: "PREV" },
+                  { text: 'PREV' },
                   { text: 1 },
                   { text: 2 },
                   { active: true, text: 3 },
                   { text: 4 },
                   { text: 5 },
-                  { text: "NEXT" },
+                  { text: 'NEXT' },
                 ]}
                 color="info"
               />

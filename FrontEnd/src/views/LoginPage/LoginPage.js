@@ -1,34 +1,43 @@
-import React from "react";
+import React from 'react';
+
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Icon from "@material-ui/core/Icon";
+import { makeStyles } from '@material-ui/core/styles';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Icon from '@material-ui/core/Icon';
+
 // @material-ui/icons
-import Email from "@material-ui/icons/Email";
-import People from "@material-ui/icons/People";
+import Email from '@material-ui/icons/Email';
+import People from '@material-ui/icons/People';
+
 // core components
-import Header from "components/Header/Header.js";
-import HeaderLinks from "components/Header/HeaderLinks.js";
-import Footer from "components/Footer/Footer.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Button from "components/CustomButtons/Button.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardFooter from "components/Card/CardFooter.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
+import Header from 'components/Header/Header.js';
+import HeaderLinks from 'components/Header/HeaderLinks.js';
+import Footer from 'components/Footer/Footer.js';
+import GridContainer from 'components/Grid/GridContainer.js';
+import GridItem from 'components/Grid/GridItem.js';
+import Button from 'components/CustomButtons/Button.js';
+import Card from 'components/Card/Card.js';
+import CardBody from 'components/Card/CardBody.js';
+import CardHeader from 'components/Card/CardHeader.js';
+import CardFooter from 'components/Card/CardFooter.js';
+import CustomInput from 'components/CustomInput/CustomInput.js';
 
-import styles from "assets/jss/material-kit-react/views/loginPage.js";
+import styles from 'assets/jss/material-kit-react/views/loginPage.js';
 
-import image from "assets/img/bg7.jpg";
+import image from 'assets/img/bg7.jpg';
+import KakaoLoginButton from 'assets/img/kakao-login-button.png';
+
+// Login 관련 상수
+const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
+const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
 const useStyles = makeStyles(styles);
 
 export default function LoginPage(props) {
-  const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
+  const [cardAnimaton, setCardAnimation] = React.useState('cardHidden');
   setTimeout(function () {
-    setCardAnimation("");
+    setCardAnimation('');
   }, 700);
   const classes = useStyles();
   const { ...rest } = props;
@@ -44,13 +53,21 @@ export default function LoginPage(props) {
       <div
         className={classes.pageHeader}
         style={{
-          backgroundImage: "url(" + image + ")",
-          backgroundSize: "cover",
-          backgroundPosition: "top center",
+          backgroundImage: 'url(' + image + ')',
+          backgroundSize: 'cover',
+          backgroundPosition: 'top center',
         }}
       >
         <div className={classes.container}>
           <GridContainer justify="center">
+            <GridItem xs={12} sm={12} md={4}>
+              <a href={KAKAO_AUTH_URL}>
+                <img alt="KakaoLogin" src={KakaoLoginButton} />
+              </a>
+            </GridItem>
+          </GridContainer>
+
+          {/* <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={4}>
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form}>
@@ -145,7 +162,7 @@ export default function LoginPage(props) {
                 </form>
               </Card>
             </GridItem>
-          </GridContainer>
+          </GridContainer> */}
         </div>
         <Footer whiteFont />
       </div>

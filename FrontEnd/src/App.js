@@ -11,6 +11,7 @@ import LandingPage from 'views/LandingPage/LandingPage.js';
 import ProfilePage from 'views/ProfilePage/ProfilePage.js';
 import LoginPage from 'views/LoginPage/LoginPage.js';
 import MainPage from 'views/MainPage/MainPage';
+import OAuth2RedirectHandler from 'views/OAuth/OAuth2RedirectHandler';
 
 const hist = createBrowserHistory();
 
@@ -18,6 +19,7 @@ const App = () => {
   return (
     <Router history={hist}>
       <Switch>
+        <Route path="/oauth/kakao/callback" component={OAuth2RedirectHandler} />
         <Route path="/landing-page" component={LandingPage} />
         <Route path="/profile-page" component={ProfilePage} />
         <Route path="/login-page" component={LoginPage} />

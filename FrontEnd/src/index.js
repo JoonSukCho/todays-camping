@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'dotenv/config';
+
 import { QueryClientProvider, QueryClient } from 'react-query';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
