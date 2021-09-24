@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'dotenv/config';
 
 import { QueryClientProvider, QueryClient } from 'react-query';
+import { RecoilRoot } from 'recoil';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+import 'dotenv/config';
 import App from './App';
 
 const customTheme = createMuiTheme({
@@ -43,9 +44,11 @@ const qureyClient = new QueryClient({
 
 ReactDOM.render(
   <QueryClientProvider client={qureyClient}>
-    <ThemeProvider theme={customTheme}>
-      <App />
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={customTheme}>
+        <App />
+      </ThemeProvider>
+    </RecoilRoot>
   </QueryClientProvider>,
   document.getElementById('root'),
 );
