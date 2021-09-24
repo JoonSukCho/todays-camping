@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   atom,
   useRecoilState,
@@ -6,10 +6,18 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from 'recoil';
-import { countState, inputState } from './atom';
-import countStateSelector from './selector';
+import { countState, inputState } from 'recoils/Atoms/testAtom';
+import countStateSelector from 'recoils/Selectors/testSelector';
 
 // 파일을 Atoms 폴더에 ??atom.ts console.log();로 구분하면 좋을것같다.
+
+// 디렉토리 구조를
+/**
+ *
+ * recoil (?)
+ *  Atoms - defaultState, model 등을 정의 (model은 따로 빼놔도 될 것 같다)
+ *  Selectors - getter 및 비즈니스 로직
+ */
 
 const RecoilCounter = () => {
   //

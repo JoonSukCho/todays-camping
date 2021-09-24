@@ -1,6 +1,6 @@
 // selector.js
 import { selector } from 'recoil';
-import { countState, inputState } from './atom';
+import { countState, inputState } from 'recoils/Atoms/testAtom';
 
 const countStateSelector = selector({
   key: 'CountState',

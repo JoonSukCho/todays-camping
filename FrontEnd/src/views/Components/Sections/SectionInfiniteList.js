@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // lib
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -13,6 +13,9 @@ import PhotoCard from 'components/Card/PhotoCard';
 import styles from 'assets/jss/material-kit-react/views/componentsSections/basicsStyle.js';
 import { Grid } from '@material-ui/core';
 
+// Hooks
+import useBasedList from 'Hooks/api/useBasedList';
+
 const useStyles = makeStyles(styles);
 
 const SectionInfiniteList = () => {
@@ -20,13 +23,23 @@ const SectionInfiniteList = () => {
 
   const [items, setItems] = useState([1, 2, 3, 4, 5]);
 
+  const { status, data, error, isFetching, refetch } = useBasedList({
+    pageNo: 1,
+    numOfRows: 20,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, []);
+  console.log(status, data, error, isFetching);
+
   return (
     <div className={classes.sections}>
       <div className={classes.container}>
         <div className={classes.title}>
           <h2 style={{ fontWeight: 600 }}>추천 캠핑장</h2>
         </div>
-        <InfiniteScroll
+        {/* <InfiniteScroll
           dataLength={items.length}
           next={() => {
             setTimeout(() => {
@@ -49,7 +62,7 @@ const SectionInfiniteList = () => {
               </Grid>
             ))}
           </Grid>
-        </InfiniteScroll>
+        </InfiniteScroll> */}
       </div>
     </div>
   );
