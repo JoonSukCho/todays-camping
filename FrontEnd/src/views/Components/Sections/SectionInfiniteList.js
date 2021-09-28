@@ -15,6 +15,7 @@ import { Grid } from '@material-ui/core';
 
 // Hooks
 import useBasedList from 'Hooks/api/useBasedList';
+import useImageList from 'Hooks/api/useImageList';
 
 const useStyles = makeStyles(styles);
 
@@ -23,15 +24,33 @@ const SectionInfiniteList = () => {
 
   const [items, setItems] = useState([1, 2, 3, 4, 5]);
 
-  const { status, data, error, isFetching, refetch } = useBasedList({
+  const {
+    status: basedListStatus,
+    data: basedListData,
+    error: basedListError,
+    isFetching: basedListIsFetching,
+    refetch: basedListRefecth,
+  } = useBasedList({
     pageNo: 1,
     numOfRows: 20,
   });
 
+  const {
+    status: imageListStatus,
+    data: imageListData,
+    error: imageListError,
+    isFetching: imageListIsFetching,
+    refetch: imageListRefecth,
+  } = useImageList({
+    contentId: 1039,
+  });
+
   useEffect(() => {
-    refetch();
+    basedListRefecth();
+    imageListRefecth();
   }, []);
-  console.log(status, data, error, isFetching);
+
+  console.log(basedListData, imageListData);
 
   return (
     <div className={classes.sections}>

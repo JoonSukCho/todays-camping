@@ -7,6 +7,7 @@ export interface _iBasedListParams {
   numOfRows: number;
 }
 
+// goCamping api는 동일
 export interface _iBasedList {
   response: {
     header: _iBasedListHeader;
@@ -14,6 +15,7 @@ export interface _iBasedList {
   };
 }
 
+// goCamping api는 동일 (공통 interface로 뺄 것)
 interface _iBasedListHeader {
   resultCode: string;
   resultMsg: string;
@@ -23,11 +25,9 @@ interface _iBasedListBody {
   numOfRows: number;
   pageNo: number;
   totalCount: number;
-  items:
-    | string
-    | {
-        item?: Array<_iBasedItem>;
-      };
+  items: {
+    item?: Array<_iBasedItem>;
+  };
 }
 
 interface _iBasedItem {
