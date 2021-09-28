@@ -2,44 +2,13 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 import * as _ from 'lodash';
 
-export interface _iBasedListParams {
-  pageNo: number;
-  numOfRows: number;
-}
-
-// goCamping api는 동일
-export interface _iBasedList {
-  response: {
-    header: _iBasedListHeader;
-    body: _iBasedListBody;
-  };
-}
-
-// goCamping api는 동일 (공통 interface로 뺄 것)
-interface _iBasedListHeader {
-  resultCode: string;
-  resultMsg: string;
-}
-
-interface _iBasedListBody {
-  numOfRows: number;
-  pageNo: number;
-  totalCount: number;
-  items: {
-    item?: Array<_iBasedItem>;
-  };
-}
-
-interface _iBasedItem {
-  contentId: number; // Image랑 mapping에 필요한 id
-  facltNm?: string; // 야영장명
-  lineIntro?: string; // 한줄소개
-  intro?: string; // 소개
-  addr1?: string; // 주소
-  addr2?: string; // 상세주소
-
-  // Add Other response...
-}
+// type & interface
+import {
+  _iBasedItem,
+  _iBasedList,
+  _iBasedListBody,
+  _iBasedListReqParams,
+} from 'interfaces/api/goCamping/basedList';
 
 const getBasedList = async (params): Promise<Array<_iBasedItem>> => {
   const { data } = await axios.get('http://localhost:4001/goCamping/basedList', {
@@ -47,19 +16,19 @@ const getBasedList = async (params): Promise<Array<_iBasedItem>> => {
   });
 
   const basedListBody: _iBasedListBody = data.response.body;
-  const basedListItems = basedListBody.items;
+  const basedList: _iBasedList = basedListBody.items;
+  let basedListArray: Array<_iBasedItem> = [];
 
-  if (_.has(basedListItems, 'item')) {
-    const basedList: Array<_iBasedItem> = basedListItems.item;
-
-    return basedList;
+  if (_.has(basedList, 'item')) {
+    basedListArray = basedList.item;
   }
 
-  return [];
+  return basedListArray;
 };
 
-const useBasedList = (params: _iBasedListParams) => {
-  return useQuery('basedList', () => getBasedList(params));
+// useQuery는 generic만 지원
+const useBasedList = (params: _iBasedListReqParams) => {
+  return useQuery<Array<_iBasedItem>, Error>('basedList', () => getBasedList(params));
 };
 
 export default useBasedList;
