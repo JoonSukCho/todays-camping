@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // lib
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useQueryClient } from 'react-query';
 
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,38 +20,60 @@ import useImageList from 'Hooks/api/useImageList';
 
 const useStyles = makeStyles(styles);
 
+const shuffleArr = (arr) => {
+  return arr.sort(() => Math.random() - 0.5);
+};
+
 const SectionInfiniteList = () => {
+  const queryClient = useQueryClient();
   const classes = useStyles();
 
   const [items, setItems] = useState([1, 2, 3, 4, 5]);
 
+  const [basedListReqParams, setBasedListReqParams] = useState({
+    pageNo: 0,
+    numOfRows: 0,
+  });
+
+  const [imageListReqParams, setImageListReqParams] = useState({
+    contentId: 0,
+  });
+
+  const [basedList, setBasedList] = useState([]);
+  const [imageList, setImageList] = useState([]);
+
   const {
     status: basedListStatus,
-    data: basedListData,
+    data: basedListArr,
     error: basedListError,
     isFetching: basedListIsFetching,
     refetch: basedListRefecth,
-  } = useBasedList({
-    pageNo: 1,
-    numOfRows: 20,
-  });
+  } = useBasedList(basedListReqParams);
 
   const {
     status: imageListStatus,
-    data: imageListData,
+    data: imageListArr,
     error: imageListError,
     isFetching: imageListIsFetching,
     refetch: imageListRefecth,
-  } = useImageList({
-    contentId: 1039,
-  });
+  } = useImageList(imageListReqParams);
 
   useEffect(() => {
-    basedListRefecth();
-    imageListRefecth();
+    // imageListRefecth();
   }, []);
 
-  console.log(basedListData, imageListData);
+  useEffect(() => {
+    if (basedListArr) {
+      setImageListReqParams({
+        contentId: basedListArr.contentId,
+      });
+      setBasedList((prev) => prev.concat(basedListArr));
+    }
+  }, [basedListArr]);
+
+  useEffect(() => {
+    // console.log(imageListArr);
+  }, [imageListArr]);
 
   return (
     <div className={classes.sections}>
@@ -58,12 +81,14 @@ const SectionInfiniteList = () => {
         <div className={classes.title}>
           <h2 style={{ fontWeight: 600 }}>추천 캠핑장</h2>
         </div>
-        {/* <InfiniteScroll
-          dataLength={items.length}
+        <InfiniteScroll
+          dataLength={basedList.length}
           next={() => {
-            setTimeout(() => {
-              setItems((prev) => prev.concat([5]));
-            }, 1000);
+            setBasedListReqParams((prev) => ({
+              pageNo: prev.pageNo + 1,
+              numOfRows: 1,
+            }));
+            // setTimeout(() => {}, 1000);
           }}
           hasMore
           loader={<h4>Loading...</h4>}
@@ -75,13 +100,14 @@ const SectionInfiniteList = () => {
           }
         >
           <Grid container spacing={8} style={{ flexGrow: 1 }}>
-            {items.map((item, idx) => (
-              <Grid key={String(idx)} item lg={12} xs={12}>
-                <PhotoCard>Hello</PhotoCard>
-              </Grid>
-            ))}
+            {basedList &&
+              basedList.map((item, idx) => (
+                <Grid key={String(idx)} item lg={12} xs={12}>
+                  <PhotoCard>Hello</PhotoCard>
+                </Grid>
+              ))}
           </Grid>
-        </InfiniteScroll> */}
+        </InfiniteScroll>
       </div>
     </div>
   );

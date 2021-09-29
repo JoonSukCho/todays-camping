@@ -1,4 +1,7 @@
-import { _iGCResponseBody } from 'interfaces/api/goCamping/common';
+import { _iGCResponseBody } from 'models/api/goCamping/common';
+
+// types
+export type _tImageList = _iImageItem[] | _iImageItem;
 
 // interface
 export interface _iImageListReqParams {
@@ -6,11 +9,11 @@ export interface _iImageListReqParams {
 }
 
 export interface _iImageListBody extends _iGCResponseBody {
-  items: _iImageList;
+  items: _iImageListItems;
 }
 
-export interface _iImageList {
-  item?: Array<_iImageItem>;
+export interface _iImageListItems {
+  item?: _tImageList;
 }
 
 export interface _iImageItem {

@@ -4,31 +4,33 @@ import * as _ from 'lodash';
 
 // type & interface
 import {
-  _iBasedItem,
-  _iBasedList,
+  _tBasedList,
+  _iBasedListItems,
   _iBasedListBody,
   _iBasedListReqParams,
-} from 'interfaces/api/goCamping/basedList';
+} from 'models/api/goCamping/basedList';
 
-const getBasedList = async (params): Promise<Array<_iBasedItem>> => {
+const getBasedList = async (params): Promise<_tBasedList> => {
   const { data } = await axios.get('http://localhost:4001/goCamping/basedList', {
     params,
   });
 
   const basedListBody: _iBasedListBody = data.response.body;
-  const basedList: _iBasedList = basedListBody.items;
-  let basedListArray: Array<_iBasedItem> = [];
+  const basedListItems: _iBasedListItems = basedListBody.items;
+  let basedList: _tBasedList = [];
 
-  if (_.has(basedList, 'item')) {
-    basedListArray = basedList.item;
+  if (_.has(basedListItems, 'item')) {
+    basedList = basedListItems.item;
   }
 
-  return basedListArray;
+  return basedList;
 };
 
 // useQuery는 generic만 지원
 const useBasedList = (params: _iBasedListReqParams) => {
-  return useQuery<Array<_iBasedItem>, Error>('basedList', () => getBasedList(params));
+  return useQuery<_tBasedList, Error>(['basedList', params], () => getBasedList(params), {
+    enabled: !!params,
+  });
 };
 
 export default useBasedList;

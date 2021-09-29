@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { QueryClientProvider, QueryClient } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -26,7 +27,7 @@ const customTheme = createMuiTheme({
   },
 });
 
-const qureyClient = new QueryClient({
+const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       enabled: false, // 자동으로 쿼리의 요청 함수가 호출되도록 한다. (useEffect 처럼)
@@ -43,12 +44,13 @@ const qureyClient = new QueryClient({
 });
 
 ReactDOM.render(
-  <QueryClientProvider client={qureyClient}>
+  <QueryClientProvider client={queryClient}>
     <RecoilRoot>
       <ThemeProvider theme={customTheme}>
         <App />
       </ThemeProvider>
     </RecoilRoot>
+    <ReactQueryDevtools />
   </QueryClientProvider>,
   document.getElementById('root'),
 );
