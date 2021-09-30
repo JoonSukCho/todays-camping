@@ -69,6 +69,7 @@ const PhotoCard = (props) => {
     data: imageInfo,
     error: imageInfoError,
     isFetching: imageInfoIsFetching,
+    isFetched: imageInfoIsFetched,
     refetch: imageInfoRefecth,
   } = useImageInfo(imageInfoReqParams);
 
@@ -81,13 +82,13 @@ const PhotoCard = (props) => {
   }, [basedItem]);
 
   useEffect(() => {
-    if (imageInfo) {
+    if (imageInfoIsFetched) {
       setImageList(imageInfo.itemList);
     }
-  }, [imageInfo]);
+  }, [imageInfoIsFetched]);
 
   useEffect(() => {
-    console.log(imageList);
+    console.log('imageList', imageList);
   }, [imageList]);
 
   // card expand handler
@@ -103,13 +104,24 @@ const PhotoCard = (props) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title="강릉 야영지"
+        title={basedItem.facltNm || 'Title'}
         subheader="September 14, 2016"
       />
       <Carousel dots infinite speed={500} slidesToShow={1} slidesToScroll={1} autoplay={false}>
-        <CardMedia className={classes.media} image={TestImage1} title="Paella dish" />
-        <CardMedia className={classes.media} image={TestImage2} title="Paella dish" />
-        <CardMedia className={classes.media} image={TestImage3} title="Paella dish" />
+        {imageList.length > 0 ? (
+          imageList.map((imageItem) => {
+            return (
+              <CardMedia
+                key={imageItem.serialnum}
+                className={classes.media}
+                image={imageItem.imageUrl}
+                title="Paella dish"
+              />
+            );
+          })
+        ) : (
+          <CardMedia className={classes.media} image={TestImage1} title="Paella dish" />
+        )}
       </Carousel>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">

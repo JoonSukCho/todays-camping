@@ -34,10 +34,6 @@ const SectionInfiniteList = () => {
     numOfRows: 0,
   });
 
-  const [imageInfoReqParams, setImageInfoReqParams] = useState({
-    contentId: 0,
-  });
-
   const [infBasedList, setInfBasedList] = useState([]);
 
   const {
@@ -55,11 +51,13 @@ const SectionInfiniteList = () => {
   }, []);
 
   useEffect(() => {
-    if (basedInfo) {
-      const basedItem = basedInfo.itemList[0];
-      setInfBasedList((prev) => prev.concat(basedItem));
+    if (basedInfoIsFetched) {
+      if (basedInfo.itemList.length > 0) {
+        const basedItem = basedInfo.itemList[0];
+        setInfBasedList((prev) => prev.concat(basedItem));
+      }
     }
-  }, [basedInfo]);
+  }, [basedInfoIsFetched]);
 
   return (
     <div className={classes.sections}>
@@ -72,7 +70,7 @@ const SectionInfiniteList = () => {
           next={() => {
             setTimeout(() => {
               setBasedInfoReqParams((prev) => ({
-                pageNo: prev.pageNo + 1,
+                pageNo: prev.pageNo + 5,
                 numOfRows: 1,
               }));
             }, 1000);
@@ -87,12 +85,11 @@ const SectionInfiniteList = () => {
           }
         >
           <Grid container spacing={8} style={{ flexGrow: 1 }}>
-            {infBasedList &&
-              infBasedList.map((infBasedItem, idx) => (
-                <Grid key={String(idx)} item lg={12} xs={12}>
-                  <PhotoCard basedItem={infBasedItem}>Hello</PhotoCard>
-                </Grid>
-              ))}
+            {infBasedList.map((infBasedItem, idx) => (
+              <Grid key={String(idx)} item lg={12} xs={12}>
+                <PhotoCard basedItem={infBasedItem}>Hello</PhotoCard>
+              </Grid>
+            ))}
           </Grid>
         </InfiniteScroll>
       </div>
