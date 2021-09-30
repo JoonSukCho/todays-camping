@@ -1,20 +1,25 @@
 import { _iGCResponseBody } from 'models/api/goCamping/common';
 
 // types
-export type _tBasedList = _iBasedItem[] | _iBasedItem;
+export type _tBasedItem = _iBasedItem[] | _iBasedItem;
 
 // interfaces
-export interface _iBasedListReqParams {
+export interface _iBasedInfoReqParams {
   pageNo: number;
   numOfRows: number;
 }
 
-export interface _iBasedListBody extends _iGCResponseBody {
-  items: _iBasedListItems;
+export interface _iBasedInfoBody extends _iGCResponseBody {
+  items: {
+    item?: _tBasedItem;
+  };
 }
 
-export interface _iBasedListItems {
-  item?: _tBasedList;
+export interface _iBasedInfo {
+  totalCount: number;
+  pageNo: number;
+  numOfRows: number;
+  itemList: _iBasedItem[];
 }
 
 export interface _iBasedItem {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
 // lib
@@ -22,6 +22,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+
+// Hooks
+import useImageInfo from 'Hooks/api/useImageInfo';
 
 // Image
 import TestImage1 from 'assets/img/sign.jpg';
@@ -51,10 +54,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PhotoCard = () => {
-  const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+const PhotoCard = (props) => {
+  const { basedItem } = props;
 
+  const classes = useStyles();
+  const [expanded, setExpanded] = useState(false);
+  const [imageList, setImageList] = useState([]);
+  const [imageInfoReqParams, setImageInfoReqParams] = useState({
+    contentId: 0,
+  });
+
+  const {
+    status: imageInfoStatus,
+    data: imageInfo,
+    error: imageInfoError,
+    isFetching: imageInfoIsFetching,
+    refetch: imageInfoRefecth,
+  } = useImageInfo(imageInfoReqParams);
+
+  useEffect(() => {
+    if (basedItem) {
+      setImageInfoReqParams({
+        contentId: basedItem.contentId,
+      });
+    }
+  }, [basedItem]);
+
+  useEffect(() => {
+    if (imageInfo) {
+      setImageList(imageInfo.itemList);
+    }
+  }, [imageInfo]);
+
+  useEffect(() => {
+    console.log(imageList);
+  }, [imageList]);
+
+  // card expand handler
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };

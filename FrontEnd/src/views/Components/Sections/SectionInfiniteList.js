@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 // lib
+import _ from 'lodash';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useQueryClient } from 'react-query';
 
@@ -15,8 +16,8 @@ import styles from 'assets/jss/material-kit-react/views/componentsSections/basic
 import { Grid } from '@material-ui/core';
 
 // Hooks
-import useBasedList from 'Hooks/api/useBasedList';
-import useImageList from 'Hooks/api/useImageList';
+import useBasedInfo from 'Hooks/api/useBasedInfo';
+import useImageInfo from 'Hooks/api/useImageInfo';
 
 const useStyles = makeStyles(styles);
 
@@ -28,52 +29,37 @@ const SectionInfiniteList = () => {
   const queryClient = useQueryClient();
   const classes = useStyles();
 
-  const [items, setItems] = useState([1, 2, 3, 4, 5]);
-
-  const [basedListReqParams, setBasedListReqParams] = useState({
+  const [basedInfoReqParams, setBasedInfoReqParams] = useState({
     pageNo: 0,
     numOfRows: 0,
   });
 
-  const [imageListReqParams, setImageListReqParams] = useState({
+  const [imageInfoReqParams, setImageInfoReqParams] = useState({
     contentId: 0,
   });
 
-  const [basedList, setBasedList] = useState([]);
-  const [imageList, setImageList] = useState([]);
+  const [infBasedList, setInfBasedList] = useState([]);
 
   const {
-    status: basedListStatus,
-    data: basedListArr,
-    error: basedListError,
-    isFetching: basedListIsFetching,
-    refetch: basedListRefecth,
-  } = useBasedList(basedListReqParams);
+    status: basedInfoStatus,
+    data: basedInfo,
+    error: basedInfoError,
+    isFetching: basedInfoIsFetching,
+    isFetched: basedInfoIsFetched,
+    refetch: basedInfoRefecth,
+  } = useBasedInfo(basedInfoReqParams);
 
-  const {
-    status: imageListStatus,
-    data: imageListArr,
-    error: imageListError,
-    isFetching: imageListIsFetching,
-    refetch: imageListRefecth,
-  } = useImageList(imageListReqParams);
-
+  // get basedInfo Total Count
   useEffect(() => {
-    // imageListRefecth();
+    setBasedInfoReqParams({ pageNo: 0, numOfRows: 0 });
   }, []);
 
   useEffect(() => {
-    if (basedListArr) {
-      setImageListReqParams({
-        contentId: basedListArr.contentId,
-      });
-      setBasedList((prev) => prev.concat(basedListArr));
+    if (basedInfo) {
+      const basedItem = basedInfo.itemList[0];
+      setInfBasedList((prev) => prev.concat(basedItem));
     }
-  }, [basedListArr]);
-
-  useEffect(() => {
-    // console.log(imageListArr);
-  }, [imageListArr]);
+  }, [basedInfo]);
 
   return (
     <div className={classes.sections}>
@@ -82,13 +68,14 @@ const SectionInfiniteList = () => {
           <h2 style={{ fontWeight: 600 }}>추천 캠핑장</h2>
         </div>
         <InfiniteScroll
-          dataLength={basedList.length}
+          dataLength={infBasedList.length}
           next={() => {
-            setBasedListReqParams((prev) => ({
-              pageNo: prev.pageNo + 1,
-              numOfRows: 1,
-            }));
-            // setTimeout(() => {}, 1000);
+            setTimeout(() => {
+              setBasedInfoReqParams((prev) => ({
+                pageNo: prev.pageNo + 1,
+                numOfRows: 1,
+              }));
+            }, 1000);
           }}
           hasMore
           loader={<h4>Loading...</h4>}
@@ -100,10 +87,10 @@ const SectionInfiniteList = () => {
           }
         >
           <Grid container spacing={8} style={{ flexGrow: 1 }}>
-            {basedList &&
-              basedList.map((item, idx) => (
+            {infBasedList &&
+              infBasedList.map((infBasedItem, idx) => (
                 <Grid key={String(idx)} item lg={12} xs={12}>
-                  <PhotoCard>Hello</PhotoCard>
+                  <PhotoCard basedItem={infBasedItem}>Hello</PhotoCard>
                 </Grid>
               ))}
           </Grid>
