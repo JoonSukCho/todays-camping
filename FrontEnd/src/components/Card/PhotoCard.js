@@ -75,7 +75,7 @@ const PhotoCard = (props) => {
           </IconButton>
         }
         title={basedItem.facltNm || 'Title'}
-        subheader="September 14, 2016"
+        subheader={`${basedItem.addr1 || ''} ${basedItem.addr2 || ''}`}
       />
       <Carousel dots infinite speed={500} slidesToShow={1} slidesToScroll={1} autoplay={false}>
         <CardMedia
