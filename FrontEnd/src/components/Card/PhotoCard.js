@@ -33,7 +33,8 @@ import TestImage3 from 'assets/img/landing-bg.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // maxWidth: 345,
+    maxWidth: 1140,
+    margin: '0 auto',
   },
   media: {
     height: 0,
@@ -59,37 +60,6 @@ const PhotoCard = (props) => {
 
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
-  const [imageList, setImageList] = useState([]);
-  const [imageInfoReqParams, setImageInfoReqParams] = useState({
-    contentId: 0,
-  });
-
-  const {
-    status: imageInfoStatus,
-    data: imageInfo,
-    error: imageInfoError,
-    isFetching: imageInfoIsFetching,
-    isFetched: imageInfoIsFetched,
-    refetch: imageInfoRefecth,
-  } = useImageInfo(imageInfoReqParams);
-
-  useEffect(() => {
-    if (basedItem) {
-      setImageInfoReqParams({
-        contentId: basedItem.contentId,
-      });
-    }
-  }, [basedItem]);
-
-  useEffect(() => {
-    if (imageInfoIsFetched) {
-      setImageList(imageInfo.itemList);
-    }
-  }, [imageInfoIsFetched]);
-
-  useEffect(() => {
-    console.log('imageList', imageList);
-  }, [imageList]);
 
   // card expand handler
   const handleExpandClick = () => {
@@ -108,20 +78,11 @@ const PhotoCard = (props) => {
         subheader="September 14, 2016"
       />
       <Carousel dots infinite speed={500} slidesToShow={1} slidesToScroll={1} autoplay={false}>
-        {imageList.length > 0 ? (
-          imageList.map((imageItem) => {
-            return (
-              <CardMedia
-                key={imageItem.serialnum}
-                className={classes.media}
-                image={imageItem.imageUrl}
-                title="Paella dish"
-              />
-            );
-          })
-        ) : (
-          <CardMedia className={classes.media} image={TestImage1} title="Paella dish" />
-        )}
+        <CardMedia
+          className={classes.media}
+          image={basedItem.firstImageUrl ? basedItem.firstImageUrl : TestImage1}
+          title="Paella dish"
+        />
       </Carousel>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">

@@ -7,23 +7,22 @@ import { useQueryClient } from 'react-query';
 
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 
 // components
 import PhotoCard from 'components/Card/PhotoCard';
 
 // styles
 import styles from 'assets/jss/material-kit-react/views/componentsSections/basicsStyle.js';
-import { Grid } from '@material-ui/core';
 
 // Hooks
 import useBasedInfo from 'Hooks/api/useBasedInfo';
-import useImageInfo from 'Hooks/api/useImageInfo';
+
+// util
+import { generateShuffledArr } from 'util/arrUtil';
+import { rangeRandom } from 'util/mathUtil';
 
 const useStyles = makeStyles(styles);
-
-const shuffleArr = (arr) => {
-  return arr.sort(() => Math.random() - 0.5);
-};
 
 const SectionInfiniteList = () => {
   const queryClient = useQueryClient();
@@ -34,6 +33,10 @@ const SectionInfiniteList = () => {
     numOfRows: 0,
   });
 
+  const [initPageNo] = useState(0);
+  const [numOfRows] = useState(10);
+  const [totalPageCount, setTotalPageCount] = useState(0);
+  const [totalPageIdxArr, setTotalPageIdxArr] = useState([]);
   const [infBasedList, setInfBasedList] = useState([]);
 
   const {
@@ -45,15 +48,29 @@ const SectionInfiniteList = () => {
     refetch: basedInfoRefecth,
   } = useBasedInfo(basedInfoReqParams);
 
-  // get basedInfo Total Count
   useEffect(() => {
-    setBasedInfoReqParams({ pageNo: 0, numOfRows: 0 });
-  }, []);
+    if (totalPageCount > 0) {
+      setBasedInfoReqParams({ pageNo: rangeRandom(1, totalPageCount), numOfRows });
+    }
+  }, [totalPageCount]);
 
+  // set Total Page Index Array
+  useEffect(() => {
+    if (basedInfoIsFetched) {
+      const totalPage = Math.ceil(basedInfo.totalCount / numOfRows);
+      const shuffledPageIdxes = generateShuffledArr(totalPage).filter((idx) => idx !== totalPage);
+
+      setTotalPageCount((prev) => (prev !== totalPage ? totalPage : prev));
+      setTotalPageIdxArr(shuffledPageIdxes);
+    }
+  }, [basedInfoIsFetched]);
+
+  // set Infinite BasedList
   useEffect(() => {
     if (basedInfoIsFetched) {
       if (basedInfo.itemList.length > 0) {
-        const basedItem = basedInfo.itemList[0];
+        const basedItem = basedInfo.itemList;
+
         setInfBasedList((prev) => prev.concat(basedItem));
       }
     }
@@ -70,8 +87,8 @@ const SectionInfiniteList = () => {
           next={() => {
             setTimeout(() => {
               setBasedInfoReqParams((prev) => ({
-                pageNo: prev.pageNo + 5,
-                numOfRows: 1,
+                pageNo: totalPageIdxArr[prev.pageNo + 1],
+                numOfRows,
               }));
             }, 1000);
           }}
