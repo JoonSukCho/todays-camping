@@ -20,7 +20,7 @@ import Button from 'components/CustomButtons/Button.js';
 import Parallax from 'components/Parallax/Parallax.js';
 // sections for this page
 import HeaderLinks from 'components/Header/HeaderLinks.js';
-import SectionInfiniteList from 'views/Components/Sections/SectionInfiniteList.js';
+import SectionInfiniteList from 'views/Components/Sections/SectionInfiniteList';
 import SectionBasics from 'views/Components/Sections/SectionBasics.js';
 import SectionNavbars from 'views/Components/Sections/SectionNavbars.js';
 import SectionTabs from 'views/Components/Sections/SectionTabs.js';

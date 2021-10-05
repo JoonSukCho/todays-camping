@@ -30,7 +30,7 @@ export interface _iBasedItem {
   addr1?: string; // 주소
   addr2?: string; // 상세주소
   manageSttus?: string; // 운영상태, 관리상태
-  feature?: any; // 특징
+  featureNm?: any; // 특징
   induty?: string; // 업종
   mapX?: number; // 경도(X)
   mapY?: number; // 위도(Y)
