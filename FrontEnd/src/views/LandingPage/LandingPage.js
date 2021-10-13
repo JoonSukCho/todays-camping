@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // nodejs library that concatenates classes
 import classNames from 'classnames';
 // @material-ui/core components
@@ -26,9 +26,10 @@ const dashboardRoutes = [];
 
 const useStyles = makeStyles(styles);
 
-export default function LandingPage(props) {
+const LandingPage = (props) => {
   const classes = useStyles();
   const { ...rest } = props;
+
   return (
     <div>
       <Header
@@ -78,4 +79,6 @@ export default function LandingPage(props) {
       <Footer />
     </div>
   );
-}
+};
+
+export default LandingPage;
