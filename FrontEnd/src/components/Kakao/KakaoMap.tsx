@@ -9,7 +9,6 @@ import Fingerprint from '@material-ui/icons/Fingerprint';
 // core components
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-import InfoArea from 'components/InfoArea/InfoArea.js';
 
 import styles from 'assets/jss/material-kit-react/views/landingPageSections/productStyle.js';
 

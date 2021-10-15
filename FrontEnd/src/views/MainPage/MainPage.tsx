@@ -21,18 +21,9 @@ import Parallax from 'components/Parallax/Parallax.js';
 // sections for this page
 import HeaderLinks from 'components/Header/HeaderLinks.js';
 import SectionInfiniteList from 'views/Components/Sections/SectionInfiniteList';
-import SectionBasics from 'views/Components/Sections/SectionBasics.js';
-import SectionNavbars from 'views/Components/Sections/SectionNavbars.js';
 import SectionTabs from 'views/Components/Sections/SectionTabs.js';
 import SectionPills from 'views/Components/Sections/SectionPills.js';
-import SectionNotifications from 'views/Components/Sections/SectionNotifications.js';
-import SectionTypography from 'views/Components/Sections/SectionTypography.js';
-import SectionJavascript from 'views/Components/Sections/SectionJavascript.js';
 import SectionCarousel from 'views/Components/Sections/SectionCarousel.js';
-import SectionCompletedExamples from 'views/Components/Sections/SectionCompletedExamples.js';
-import SectionLogin from 'views/Components/Sections/SectionLogin.js';
-import SectionExamples from 'views/Components/Sections/SectionExamples.js';
-import SectionDownload from 'views/Components/Sections/SectionDownload.js';
 
 import styles from 'assets/jss/material-kit-react/views/mainPage.js';
 
@@ -72,26 +63,10 @@ export default function Components(props) {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <SectionBasics />
-        <SectionInfiniteList />
-        <SectionNavbars />
+        {/* <SectionCarousel />
         <SectionTabs />
-        <SectionPills />
-        <SectionNotifications />
-        <SectionTypography />
-        <SectionJavascript />
-        <SectionCarousel />
-        <SectionCompletedExamples />
-        <SectionLogin />
-        {/* <GridItem md={12} className={classes.textCenter}>
-          <Link to={"/login-page"} className={classes.link}>
-            <Button color="primary" size="lg" simple>
-              View Login Page
-            </Button>
-          </Link>
-        </GridItem> */}
-        {/* <SectionExamples /> */}
-        {/* <SectionDownload /> */}
+        <SectionPills /> */}
+        <SectionInfiniteList />
       </div>
       <Footer />
     </div>
