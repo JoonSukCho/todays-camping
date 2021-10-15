@@ -48,7 +48,7 @@ export default function Components(props) {
   return (
     <div>
       <Header
-        brand="Material Kit React"
+        brand="오늘의 캠핑"
         rightLinks={<HeaderLinks />}
         fixed
         color="transparent"
@@ -63,10 +63,8 @@ export default function Components(props) {
           <GridContainer>
             <GridItem>
               <div className={classes.brand}>
-                <h1 className={classes.title}>Material Kit React.</h1>
-                <h3 className={classes.subtitle}>
-                  A Badass Material-UI Kit based on Material Design.
-                </h3>
+                <h1 className={classes.title}>오늘의 캠핑</h1>
+                <h3 className={classes.subtitle}>스크롤을 내려 다양한 캠핑지를 만나보세요.</h3>
               </div>
             </GridItem>
           </GridContainer>
@@ -75,15 +73,16 @@ export default function Components(props) {
 
       <div className={classNames(classes.main, classes.mainRaised)}>
         <SectionBasics />
-        {/* <SectionNavbars /> */}
-        {/* <SectionTabs /> */}
-        {/* <SectionPills /> */}
-        {/* <SectionNotifications /> */}
-        {/* <SectionTypography /> */}
-        {/* <SectionJavascript /> */}
-        {/* <SectionCarousel /> */}
-        {/* <SectionCompletedExamples /> */}
-        {/* <SectionLogin /> */}
+        <SectionInfiniteList />
+        <SectionNavbars />
+        <SectionTabs />
+        <SectionPills />
+        <SectionNotifications />
+        <SectionTypography />
+        <SectionJavascript />
+        <SectionCarousel />
+        <SectionCompletedExamples />
+        <SectionLogin />
         {/* <GridItem md={12} className={classes.textCenter}>
           <Link to={"/login-page"} className={classes.link}>
             <Button color="primary" size="lg" simple>
@@ -93,7 +92,6 @@ export default function Components(props) {
         </GridItem> */}
         {/* <SectionExamples /> */}
         {/* <SectionDownload /> */}
-        <SectionInfiniteList />
       </div>
       <Footer />
     </div>

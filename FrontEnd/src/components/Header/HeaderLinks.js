@@ -32,7 +32,7 @@ export default function HeaderLinks(props) {
         </Button>
       </ListItem>
       <ListItem className={classes.listItem}>
-        <Button href="/landing-page" color="transparent" className={classes.navLink}>
+        <Button href="/detail-page" color="transparent" className={classes.navLink}>
           자세히보기
         </Button>
       </ListItem>
