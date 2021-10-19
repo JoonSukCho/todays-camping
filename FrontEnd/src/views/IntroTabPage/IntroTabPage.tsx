@@ -19,7 +19,7 @@ const ImgContainer = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  height: 100%;
+  height: 102%;
 `;
 
 const IntroTabPage = (props) => {
@@ -33,7 +33,7 @@ const IntroTabPage = (props) => {
   const [carouselSettings] = useState({
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 300,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
