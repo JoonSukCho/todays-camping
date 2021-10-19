@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
+
 // @material-ui/core components
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
@@ -18,21 +20,21 @@ declare global {
   }
 }
 
-const useStyles = makeStyles(() => ({
-  section: {
-    padding: '70px 0',
-    textAlign: 'center',
-  },
+const MapContainer = styled.div`
+  text-align: center;
+`;
 
-  title: {
-    color: '#3c4858',
-    fontWeight: 600,
-  },
-}));
+const Map = styled.div`
+  width: 100%;
+  height: 300px;
+
+  @media (min-width: 768px) {
+    height: 500px;
+  }
+`;
 
 const KakaoMap = (props) => {
-  const classes = useStyles();
-  const { width = '100%', height = 500, coordinate } = props;
+  const { coordinate } = props;
   const { mapX, mapY } = coordinate;
 
   useEffect(() => {
@@ -58,10 +60,9 @@ const KakaoMap = (props) => {
   }, []);
 
   return (
-    <div className={classes.section}>
-      <h2 className={classes.title}>위치</h2>
-      <div id="kakao-map" style={{ width, height }} />
-    </div>
+    <MapContainer>
+      <Map id="kakao-map" />
+    </MapContainer>
   );
 };
 

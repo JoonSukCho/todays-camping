@@ -5,7 +5,7 @@ const landingPageStyle = () =>
   createStyles({
     container: {
       zIndex: '12',
-      color: '#FFFFFF',
+      // color: '#FFFFFF',
       ...container,
     },
     title: {

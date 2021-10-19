@@ -5,8 +5,7 @@ export type _tImageItem = _iImageItem[] | _iImageItem;
 
 // interfaces
 export interface _iImageInfoReqParams {
-  pageNo: number;
-  numOfRows: number;
+  contentId: number;
 }
 
 export interface _iImageInfoBody extends _iGCResponseBody {
