@@ -38,6 +38,9 @@ export interface _iBasedItem {
   homepage?: string; // 홈페이지 url
   resveUrl?: string; // 예약페이지
   firstImageUrl?: string; // 대표이미지 url
-
+  siteBottomCl1?: string;
+  siteBottomCl2?: string;
+  siteBottomCl3?: string;
+  siteBottomCl4?: string;
   // Add Other response...
 }

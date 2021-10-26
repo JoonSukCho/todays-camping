@@ -19,7 +19,7 @@ import GridItem from 'components/Grid/GridItem.js';
 import Button from 'components/CustomButtons/Button.js';
 import HeaderLinks from 'components/Header/HeaderLinks.js';
 import Parallax from 'components/Parallax/Parallax.js';
-import KakaoMap from 'components/Kakao/KakaoMap';
+import MapTabPage from 'views/MapTabPage/MapTabPage';
 
 import styles from 'assets/jss/material-kit-react/views/landingPage.js';
 
@@ -59,7 +59,12 @@ const DetailPage = (props) => {
         <div className={classes.container} style={{ marginTop: 70, paddingTop: 20 }}>
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={8}>
-              <Tabs style={{ color: '#333' }} value={tabIdx} onChange={changeTab}>
+              <Tabs
+                style={{ color: '#333' }}
+                value={tabIdx}
+                onChange={changeTab}
+                indicatorColor="primary"
+              >
                 <Tab label="캠핑장 소개" id="introduce-tab" />
                 <Tab label="캠핑장 위치" id="map-tab" />
               </Tabs>
@@ -67,7 +72,7 @@ const DetailPage = (props) => {
                 <IntroTabPage basedItem={basedItem} />
               </TabPannel>
               <TabPannel id="map-tab" value={tabIdx} index={1}>
-                <KakaoMap coordinate={{ mapX, mapY }} />
+                <MapTabPage basedItem={basedItem} />
               </TabPannel>
             </GridItem>
           </GridContainer>

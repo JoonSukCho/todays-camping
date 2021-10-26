@@ -11,6 +11,11 @@ import 'dotenv/config';
 import App from './App.tsx';
 
 const customTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#3182f6',
+    },
+  },
   typography: {
     fontFamily: [
       '-apple-system',
