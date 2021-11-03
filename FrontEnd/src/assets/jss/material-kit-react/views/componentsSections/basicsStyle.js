@@ -6,6 +6,7 @@ const basicsStyle = () =>
   createStyles({
     sections: {
       padding: '70px 0',
+      backgroundColor: '#eee',
     },
     container,
     title: {

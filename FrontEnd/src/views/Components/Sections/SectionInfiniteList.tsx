@@ -17,6 +17,7 @@ import styles from 'assets/jss/material-kit-react/views/componentsSections/basic
 
 // Hooks
 import useBasedInfo from 'Hooks/api/useBasedInfo';
+import useHistoryState from 'Hooks/useHistoryState';
 
 // util
 import { generateShuffledArr } from 'util/arrUtil';
@@ -25,19 +26,20 @@ import { rangeRandom } from 'util/mathUtil';
 const useStyles = makeStyles(styles);
 
 const SectionInfiniteList = () => {
-  const queryClient = useQueryClient();
   const classes = useStyles();
 
-  const [basedInfoReqParams, setBasedInfoReqParams] = useState({
-    pageNo: 0,
-    numOfRows: 0,
-  });
-
-  const [initPageNo] = useState(0);
-  const [numOfRows] = useState(10);
-  const [totalPageCount, setTotalPageCount] = useState(0);
-  const [totalPageIdxArr, setTotalPageIdxArr] = useState([]);
-  const [infBasedList, setInfBasedList] = useState([]);
+  // local state
+  const [basedInfoReqParams, setBasedInfoReqParams] = useHistoryState(
+    {
+      pageNo: 0,
+      numOfRows: 0,
+    },
+    'basedInfoReqParams',
+  );
+  const [numOfRows] = useHistoryState(10, 'numOfRows');
+  const [totalPageCount, setTotalPageCount] = useHistoryState(0, 'totalPageCount');
+  const [totalPageIdxArr, setTotalPageIdxArr] = useHistoryState([], 'totalPageIdxArr');
+  const [infBasedList, setInfBasedList] = useHistoryState([], 'infBasedList');
 
   const {
     status: basedInfoStatus,
@@ -85,12 +87,10 @@ const SectionInfiniteList = () => {
         <InfiniteScroll
           dataLength={infBasedList.length}
           next={() => {
-            setTimeout(() => {
-              setBasedInfoReqParams((prev) => ({
-                pageNo: totalPageIdxArr[prev.pageNo + 1],
-                numOfRows,
-              }));
-            }, 1000);
+            setBasedInfoReqParams((prev) => ({
+              pageNo: totalPageIdxArr[prev.pageNo + 1],
+              numOfRows,
+            }));
           }}
           hasMore
           loader={<h4>Loading...</h4>}

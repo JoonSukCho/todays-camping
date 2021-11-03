@@ -21,7 +21,7 @@ import { red } from '@material-ui/core/colors';
 // @material/icons
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import SearchIcon from '@material-ui/icons/Search';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 // Hooks
@@ -41,13 +41,14 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+    '&:hover': {
+      cursor: 'pointer',
+      // transform: 'scale(1.1)',
+      // transition: 'all 0.3s ease-in-out',
+    },
   },
   expand: {
-    transform: 'rotate(0deg)',
     marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
   },
   expandOpen: {
     transform: 'rotate(180deg)',
@@ -61,71 +62,41 @@ const PhotoCard = (props) => {
   const { basedItem } = props;
 
   const classes = useStyles();
-  const [expanded, setExpanded] = useState(false);
-
-  // card expand handler
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
-  useEffect(() => {
-    // console.log(basedItem);
-  }, []);
 
   return (
     <Card className={classes.root}>
       <CardHeader
-        // action={
-        //   <IconButton aria-label="settings">
-        //     <MoreVertIcon />
-        //   </IconButton>
-        // }
         title={basedItem.facltNm || 'Title'}
         subheader={`${basedItem.addr1 || ''} ${basedItem.addr2 || ''}`}
       />
-      <CardMedia
-        className={classes.media}
-        image={basedItem.firstImageUrl ? basedItem.firstImageUrl : ReadyImage}
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {basedItem.lineIntro || ''}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
 
-        <Link
-          to={{
-            pathname: `/detail-page/${basedItem.contentId}`,
-            state: {
-              basedItem,
-            },
+      <Link
+        className={classes.expand}
+        to={{
+          pathname: `/detail-page/${basedItem.contentId}`,
+          state: {
+            basedItem,
+          },
+        }}
+      >
+        <CardMedia
+          className={classes.media}
+          image={basedItem.firstImageUrl ? basedItem.firstImageUrl : ReadyImage}
+        />
+      </Link>
+
+      <CardContent>
+        <p
+          style={{
+            fontSize: '1rem',
+            color: '#626262',
           }}
         >
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-        </Link>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-        </CardContent>
-      </Collapse>
+          {basedItem.lineIntro || ''}
+          {/* <Typography variant="h6" color="textSecondary" component="p">
+        </Typography> */}
+        </p>
+      </CardContent>
     </Card>
   );
 };

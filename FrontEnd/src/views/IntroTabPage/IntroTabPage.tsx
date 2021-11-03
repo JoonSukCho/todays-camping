@@ -88,13 +88,17 @@ const IntroTabPage = (props) => {
   return (
     <div>
       <Card carousel>
-        <Carousel {...carouselSettings}>
-          {imageList.map((imageItem) => (
-            <ImgContainer key={imageItem.serialNum}>
-              <Image src={imageItem.url} alt="No Image" />
-            </ImgContainer>
-          ))}
-        </Carousel>
+        {imageList.length > 0 ? (
+          <Carousel {...carouselSettings}>
+            {imageList.map((imageItem) => (
+              <ImgContainer key={imageItem.serialNum}>
+                <Image src={imageItem.url} alt="No Image" />
+              </ImgContainer>
+            ))}
+          </Carousel>
+        ) : (
+          <ImgContainer style={{ background: '#eee' }} />
+        )}
       </Card>
       <IntroList>
         {introList.map((intro, idx) => {
