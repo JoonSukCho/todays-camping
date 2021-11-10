@@ -7,7 +7,7 @@ import { _iBasedItem } from 'models/api/goCamping/basedInfo';
 import useImageInfo from 'Hooks/api/useImageInfo';
 
 // core components
-import Card from 'components/Card/Card.js';
+// import Card from 'components/Card/Card.js';
 import IntroList from 'components/List/IntroList';
 import IntroListItem from 'components/List/IntroListItem';
 
@@ -17,7 +17,7 @@ import {
   LocationOn as LocationOnIcon,
   Search as SearchIcon,
 } from '@material-ui/icons';
-import { Divider } from '@material-ui/core';
+import { Divider, Card } from '@material-ui/core';
 
 // Image
 import ReadyImage from 'assets/img/ready-image.jpg';
@@ -98,8 +98,8 @@ const IntroTabPage = (props) => {
   }, [imageInfoIsFetched]);
 
   return (
-    <div>
-      <Card carousel>
+    <>
+      <Card>
         {imageInfoIsFetched ? (
           <Carousel {...carouselSettings}>
             {imageList.length > 0 ? (
@@ -158,7 +158,7 @@ const IntroTabPage = (props) => {
           })}
         </IntroList>
       </ListContainer>
-    </div>
+    </>
   );
 };
 

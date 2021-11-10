@@ -9,7 +9,7 @@ const ContentContainer = styled.div`
   z-index: 12;
   margin-left: auto;
   margin-right: auto;
-  padding: 8px 16px 0;
+  padding: 16px 16px 0;
   background-color: #ffffff;
   border-radius: 8px;
 
