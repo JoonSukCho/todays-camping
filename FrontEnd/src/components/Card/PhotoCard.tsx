@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
 // lib
 import Carousel from 'react-slick';
+import styled from 'styled-components';
+import styles from 'assets/jss/material-kit-react/views/landingPage.js';
 
 // @material/core
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+import { Card, CardHeader, CardMedia, CardContent, Modal, Tabs, Tab } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 
-// @material/icons
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import SearchIcon from '@material-ui/icons/Search';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+// components
+import GridContainer from 'components/Grid/GridContainer.js';
+import GridItem from 'components/Grid/GridItem.js';
+import MapTabPage from 'views/MapTabPage/MapTabPage';
+import IntroTabPage from 'views/IntroTabPage/IntroTabPage';
 
 // Hooks
 import useImageInfo from 'Hooks/api/useImageInfo';
@@ -32,7 +26,9 @@ import ReadyImage from 'assets/img/ready-image.jpg';
 import TestImage1 from 'assets/img/sign.jpg';
 import TestImage2 from 'assets/img/main-background.jpg';
 import TestImage3 from 'assets/img/landing-bg.jpg';
+import ModalContent from 'components/Modal/ModalContent';
 
+const useMainStyles = makeStyles(styles);
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 1140,
@@ -50,54 +46,94 @@ const useStyles = makeStyles((theme) => ({
   expand: {
     marginLeft: 'auto',
   },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
+
+  modal: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }));
 
-const PhotoCard = (props) => {
-  const { basedItem } = props;
+const TabPannelContainer = styled.div`
+  padding: 20px 0;
+`;
 
-  const classes = useStyles();
+const TabPannel = (props) => {
+  const { children, id, value, index, ...other } = props;
 
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        title={basedItem.facltNm || 'Title'}
-        subheader={`${basedItem.addr1 || ''} ${basedItem.addr2 || ''}`}
-      />
+    <TabPannelContainer role="tabpanel" hidden={value !== index} id={id} {...other}>
+      {value === index && <div>{children}</div>}
+    </TabPannelContainer>
+  );
+};
 
-      <Link
-        className={classes.expand}
-        to={{
-          pathname: `/detail-page/${basedItem.contentId}`,
-          state: {
-            basedItem,
-          },
-        }}
-      >
+const PhotoCard = (props) => {
+  const { basedItem } = props;
+  const mainClasses = useMainStyles();
+  const classes = useStyles();
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  // local state
+  const [tabIdx, setTabIdx] = useState(0);
+
+  const changeTab = useCallback((e, newIdx) => {
+    setTabIdx(newIdx);
+  }, []);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  return (
+    <>
+      <Card className={classes.root}>
+        <CardHeader
+          title={basedItem.facltNm || 'Title'}
+          subheader={`${basedItem.addr1 || ''} ${basedItem.addr2 || ''}`}
+        />
+
         <CardMedia
           className={classes.media}
           image={basedItem.firstImageUrl ? basedItem.firstImageUrl : ReadyImage}
+          onClick={openModal}
         />
-      </Link>
+        <CardContent>
+          <p
+            style={{
+              fontSize: '1rem',
+              color: '#626262',
+            }}
+          >
+            {basedItem.lineIntro || ''}
+          </p>
+        </CardContent>
+      </Card>
 
-      <CardContent>
-        <p
-          style={{
-            fontSize: '1rem',
-            color: '#626262',
-          }}
-        >
-          {basedItem.lineIntro || ''}
-          {/* <Typography variant="h6" color="textSecondary" component="p">
-        </Typography> */}
-        </p>
-      </CardContent>
-    </Card>
+      <Modal className={classes.modal} open={modalOpen} onClose={closeModal}>
+        <ModalContent>
+          <Tabs
+            style={{ color: '#333' }}
+            value={tabIdx}
+            onChange={changeTab}
+            indicatorColor="primary"
+          >
+            <Tab label="캠핑장 소개" id="introduce-tab" />
+            <Tab label="캠핑장 위치" id="map-tab" />
+          </Tabs>
+          <TabPannel id="introduce-tab" value={tabIdx} index={0}>
+            <IntroTabPage basedItem={basedItem} />
+          </TabPannel>
+          <TabPannel id="map-tab" value={tabIdx} index={1}>
+            <MapTabPage basedItem={basedItem} />
+          </TabPannel>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 

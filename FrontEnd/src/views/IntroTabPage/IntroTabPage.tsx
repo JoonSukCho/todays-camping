@@ -19,6 +19,9 @@ import {
 } from '@material-ui/icons';
 import { Divider } from '@material-ui/core';
 
+// Image
+import ReadyImage from 'assets/img/ready-image.jpg';
+
 const ImgContainer = styled.div`
   height: 300px;
 
@@ -87,8 +90,8 @@ const IntroTabPage = (props) => {
 
   return (
     <div>
-      <Card carousel>
-        {imageList.length > 0 ? (
+      <Card carousel style={{ margin: 0 }}>
+        {imageInfoIsFetched ? (
           <Carousel {...carouselSettings}>
             {imageList.map((imageItem) => (
               <ImgContainer key={imageItem.serialNum}>
@@ -97,7 +100,9 @@ const IntroTabPage = (props) => {
             ))}
           </Carousel>
         ) : (
-          <ImgContainer style={{ background: '#eee' }} />
+          <ImgContainer style={{ background: '#eee' }}>
+            <Image src={ReadyImage} alt="Ready Image" />
+          </ImgContainer>
         )}
       </Card>
       <IntroList>
