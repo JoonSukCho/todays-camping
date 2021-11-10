@@ -8,9 +8,6 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Chat from '@material-ui/icons/Chat';
 import VerifiedUser from '@material-ui/icons/VerifiedUser';
 import Fingerprint from '@material-ui/icons/Fingerprint';
-// core components
-import GridContainer from 'components/Grid/GridContainer';
-import GridItem from 'components/Grid/GridItem';
 
 import styles from 'assets/jss/material-kit-react/views/landingPageSections/productStyle.js';
 

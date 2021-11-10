@@ -35,6 +35,15 @@ const Image = styled.img`
   height: 102%;
 `;
 
+const ListContainer = styled.div`
+  display: grid;
+  grid-template-columns: 50% 50%;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 100%;
+  }
+`;
+
 const IntroTabPage = (props) => {
   const basedItem: _iBasedItem = props.basedItem;
 
@@ -90,40 +99,65 @@ const IntroTabPage = (props) => {
 
   return (
     <div>
-      <Card carousel style={{ margin: 0 }}>
+      <Card carousel>
         {imageInfoIsFetched ? (
           <Carousel {...carouselSettings}>
-            {imageList.map((imageItem) => (
-              <ImgContainer key={imageItem.serialNum}>
-                <Image src={imageItem.url} alt="No Image" />
+            {imageList.length > 0 ? (
+              imageList.map((imageItem) => (
+                <ImgContainer key={imageItem.serialNum}>
+                  <Image src={imageItem.url} alt="No Image" />
+                </ImgContainer>
+              ))
+            ) : (
+              <ImgContainer>
+                <Image src={ReadyImage} alt="Ready Image" />
               </ImgContainer>
-            ))}
+            )}
           </Carousel>
         ) : (
-          <ImgContainer style={{ background: '#eee' }}>
-            <Image src={ReadyImage} alt="Ready Image" />
-          </ImgContainer>
+          <ImgContainer style={{ background: '#eee' }} />
         )}
       </Card>
-      <IntroList>
-        {introList.map((intro, idx) => {
-          return (
-            <React.Fragment key={intro.title}>
-              <IntroListItem
-                key={intro.title}
-                title={intro.title}
-                icon={{
-                  icon: intro.icon,
-                  color: intro.iconColor,
-                }}
-              >
-                {intro.contents}
-              </IntroListItem>
-              {introList.length - 1 !== idx && <Divider />}
-            </React.Fragment>
-          );
-        })}
-      </IntroList>
+      <ListContainer>
+        <IntroList>
+          {introList.map((intro, idx) => {
+            return (
+              <React.Fragment key={intro.title}>
+                <IntroListItem
+                  key={intro.title}
+                  title={intro.title}
+                  icon={{
+                    icon: intro.icon,
+                    color: intro.iconColor,
+                  }}
+                >
+                  {intro.contents}
+                </IntroListItem>
+                {introList.length - 1 !== idx && <Divider />}
+              </React.Fragment>
+            );
+          })}
+        </IntroList>
+        <IntroList>
+          {introList.map((intro, idx) => {
+            return (
+              <React.Fragment key={intro.title}>
+                <IntroListItem
+                  key={intro.title}
+                  title={intro.title}
+                  icon={{
+                    icon: intro.icon,
+                    color: intro.iconColor,
+                  }}
+                >
+                  {intro.contents}
+                </IntroListItem>
+                {introList.length - 1 !== idx && <Divider />}
+              </React.Fragment>
+            );
+          })}
+        </IntroList>
+      </ListContainer>
     </div>
   );
 };

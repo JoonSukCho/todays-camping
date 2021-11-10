@@ -9,12 +9,21 @@ import styles from 'assets/jss/material-kit-react/views/landingPage.js';
 
 // @material/core
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardHeader, CardMedia, CardContent, Modal, Tabs, Tab } from '@material-ui/core';
+import {
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  Modal,
+  Tabs,
+  Tab,
+  IconButton,
+} from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 
+import CloseIcon from '@material-ui/icons/Close';
+
 // components
-import GridContainer from 'components/Grid/GridContainer.js';
-import GridItem from 'components/Grid/GridItem.js';
 import MapTabPage from 'views/MapTabPage/MapTabPage';
 import IntroTabPage from 'views/IntroTabPage/IntroTabPage';
 
@@ -51,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  closeModalIcon: {
+    float: 'right',
   },
 }));
 
@@ -116,6 +129,9 @@ const PhotoCard = (props) => {
 
       <Modal className={classes.modal} open={modalOpen} onClose={closeModal}>
         <ModalContent>
+          <IconButton className={classes.closeModalIcon} onClick={closeModal}>
+            <CloseIcon />
+          </IconButton>
           <Tabs
             style={{ color: '#333' }}
             value={tabIdx}

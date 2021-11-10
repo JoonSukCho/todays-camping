@@ -3,27 +3,20 @@ import React from 'react';
 // nodejs library that concatenates classes
 import classNames from 'classnames';
 
-// react components for routing our app without refresh
-import { Link } from 'react-router-dom';
-
 // @material-ui/core components
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 // @material-ui/icons
 
 // core components
 import Header from 'components/Header/Header.js';
 import Footer from 'components/Footer/Footer.js';
-import GridContainer from 'components/Grid/GridContainer.js';
-import GridItem from 'components/Grid/GridItem.js';
-import Button from 'components/CustomButtons/Button.js';
+import GridContainer from 'components/Grid/GridContainer';
+import GridItem from 'components/Grid/GridItem';
 import Parallax from 'components/Parallax/Parallax.js';
 // sections for this page
 import HeaderLinks from 'components/Header/HeaderLinks.js';
 import SectionInfiniteList from 'views/Components/Sections/SectionInfiniteList';
-import SectionTabs from 'views/Components/Sections/SectionTabs.js';
-import SectionPills from 'views/Components/Sections/SectionPills.js';
-import SectionCarousel from 'views/Components/Sections/SectionCarousel.js';
 
 import styles from 'assets/jss/material-kit-react/views/mainPage.js';
 
@@ -63,9 +56,6 @@ export default function Components(props) {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        {/* <SectionCarousel />
-        <SectionTabs />
-        <SectionPills /> */}
         <SectionInfiniteList />
       </div>
       <Footer />
