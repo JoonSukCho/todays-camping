@@ -1,7 +1,7 @@
 # 개요
 고캠핑 Open API를 이용해 인스타그램 피드 형태로 랜덤 캠핑지를 추천해주는 프로젝트.
 
-## 기술 스택
+# 기술 스택
 ### Front-end
 - React
 - Typescript
@@ -12,5 +12,5 @@
 - Node.js
 - Express
 
-## 화면 설계
+# 화면 설계
 
