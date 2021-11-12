@@ -16,6 +16,7 @@ import {
   Home as HomeIcon,
   LocationOn as LocationOnIcon,
   Search as SearchIcon,
+  Phone as PhoneIcon,
 } from '@material-ui/icons';
 import { Divider, Card } from '@material-ui/core';
 
@@ -35,14 +36,49 @@ const Image = styled.img`
   height: 102%;
 `;
 
-const ListContainer = styled.div`
-  display: grid;
-  grid-template-columns: 50% 50%;
+const ListContainer = styled.div``;
 
-  @media (max-width: 768px) {
-    grid-template-columns: 100%;
+const getSiteForms = (basedItem: _iBasedItem): string => {
+  const siteForms = [];
+  if (basedItem.siteBottomCl1 > 0) {
+    siteForms.push('잔디');
   }
-`;
+
+  if (basedItem.siteBottomCl2 > 0) {
+    siteForms.push('파쇄석');
+  }
+
+  if (basedItem.siteBottomCl3 > 0) {
+    siteForms.push('테크');
+  }
+
+  if (basedItem.siteBottomCl4 > 0) {
+    siteForms.push('자갈');
+  }
+
+  if (basedItem.siteBottomCl5 > 0) {
+    siteForms.push('맨흙');
+  }
+
+  return siteForms.join(',');
+};
+
+const getCampSiteFeatures = (basedItem: _iBasedItem): string => {
+  const features = [];
+  if (basedItem.sbrsCl) {
+    const sbrsCls = basedItem.sbrsCl.split(',');
+
+    for (let i = 0; i < sbrsCls.length; i += 1) {
+      features.push(sbrsCls[i]);
+    }
+  }
+
+  if (basedItem.animalCmgCl) {
+    features.push(`애견동반 ${basedItem.animalCmgCl}`);
+  }
+
+  return features.join(', ');
+};
 
 const IntroTabPage = (props) => {
   const basedItem: _iBasedItem = props.basedItem;
@@ -64,7 +100,6 @@ const IntroTabPage = (props) => {
   const [introList] = useState([
     {
       icon: HomeIcon,
-      iconColor: '#3182f6',
       title: '홈페이지',
       contents: (
         <a href={basedItem.homepage} target="_blank">
@@ -73,16 +108,29 @@ const IntroTabPage = (props) => {
       ),
     },
     {
+      icon: SearchIcon,
+      title: '운영 기간',
+      contents: `${basedItem.operPdCl || ''}`,
+    },
+    {
       icon: LocationOnIcon,
-      iconColor: '#3182f6',
       title: '주소',
       contents: `${basedItem.addr1 || ''} ${basedItem.addr2 || ''}`,
     },
     {
       icon: SearchIcon,
-      iconColor: '#3182f6',
+      title: '사이트 형태',
+      contents: getSiteForms(basedItem),
+    },
+    {
+      icon: PhoneIcon,
+      title: '전화번호',
+      contents: `${basedItem.tel || ''}`,
+    },
+    {
+      icon: SearchIcon,
       title: '특징',
-      contents: `${basedItem.siteBottomCl1 || ''}`,
+      contents: getCampSiteFeatures(basedItem),
     },
   ]);
 
@@ -123,36 +171,10 @@ const IntroTabPage = (props) => {
           {introList.map((intro, idx) => {
             return (
               <React.Fragment key={intro.title}>
-                <IntroListItem
-                  key={intro.title}
-                  title={intro.title}
-                  icon={{
-                    icon: intro.icon,
-                    color: intro.iconColor,
-                  }}
-                >
+                <IntroListItem key={intro.title} title={intro.title} Icon={intro.icon}>
                   {intro.contents}
                 </IntroListItem>
-                {introList.length - 1 !== idx && <Divider />}
-              </React.Fragment>
-            );
-          })}
-        </IntroList>
-        <IntroList>
-          {introList.map((intro, idx) => {
-            return (
-              <React.Fragment key={intro.title}>
-                <IntroListItem
-                  key={intro.title}
-                  title={intro.title}
-                  icon={{
-                    icon: intro.icon,
-                    color: intro.iconColor,
-                  }}
-                >
-                  {intro.contents}
-                </IntroListItem>
-                {introList.length - 1 !== idx && <Divider />}
+                {/* {introList.length - 1 !== idx && <Divider />} */}
               </React.Fragment>
             );
           })}

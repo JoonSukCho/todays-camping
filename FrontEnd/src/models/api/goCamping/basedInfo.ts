@@ -38,9 +38,13 @@ export interface _iBasedItem {
   homepage?: string; // 홈페이지 url
   resveUrl?: string; // 예약페이지
   firstImageUrl?: string; // 대표이미지 url
-  siteBottomCl1?: string;
-  siteBottomCl2?: string;
-  siteBottomCl3?: string;
-  siteBottomCl4?: string;
-  // Add Other response...
+  siteBottomCl1?: number; // 잔디
+  siteBottomCl2?: number; // 파쇄석
+  siteBottomCl3?: number; // 테크
+  siteBottomCl4?: number; // 자갈
+  siteBottomCl5?: number; // 맨흙
+  sbrsCl?: string; // 부대시설
+  animalCmgCl?: string; // 애완동물 출입
+  operPdCl?: string; // 운영기간
+  operDeCl?: string; // 운영일
 }
