@@ -11,6 +11,16 @@ import useImageInfo from 'Hooks/api/useImageInfo';
 import IntroList from 'components/List/IntroList';
 import IntroListItem from 'components/List/IntroListItem';
 
+// modules
+import {
+  getCampSiteFeatures,
+  getDetailAddress,
+  getHomePageURL,
+  getOperPd,
+  getPhoneNumber,
+  getSiteForms,
+} from 'modules/getIntroInfo';
+
 // @material-ui
 import {
   Home as HomeIcon,
@@ -38,49 +48,7 @@ const Image = styled.img`
 
 const ListContainer = styled.div``;
 
-const getSiteForms = (basedItem: _iBasedItem): string => {
-  const siteForms = [];
-  if (basedItem.siteBottomCl1 > 0) {
-    siteForms.push('잔디');
-  }
-
-  if (basedItem.siteBottomCl2 > 0) {
-    siteForms.push('파쇄석');
-  }
-
-  if (basedItem.siteBottomCl3 > 0) {
-    siteForms.push('테크');
-  }
-
-  if (basedItem.siteBottomCl4 > 0) {
-    siteForms.push('자갈');
-  }
-
-  if (basedItem.siteBottomCl5 > 0) {
-    siteForms.push('맨흙');
-  }
-
-  return siteForms.join(',');
-};
-
-const getCampSiteFeatures = (basedItem: _iBasedItem): string => {
-  const features = [];
-  if (basedItem.sbrsCl) {
-    const sbrsCls = basedItem.sbrsCl.split(',');
-
-    for (let i = 0; i < sbrsCls.length; i += 1) {
-      features.push(sbrsCls[i]);
-    }
-  }
-
-  if (basedItem.animalCmgCl) {
-    features.push(`애견동반 ${basedItem.animalCmgCl}`);
-  }
-
-  return features.join(', ');
-};
-
-const IntroTabPage = (props) => {
+const IntroTabView = (props) => {
   const basedItem: _iBasedItem = props.basedItem;
 
   const { data: imageInfo, isFetched: imageInfoIsFetched } = useImageInfo({
@@ -102,20 +70,20 @@ const IntroTabPage = (props) => {
       icon: HomeIcon,
       title: '홈페이지',
       contents: (
-        <a href={basedItem.homepage} target="_blank">
-          {basedItem.homepage}
+        <a href={getHomePageURL(basedItem)} target="_blank" rel="noreferrer">
+          {getHomePageURL(basedItem)}
         </a>
       ),
     },
     {
       icon: SearchIcon,
       title: '운영 기간',
-      contents: `${basedItem.operPdCl || ''}`,
+      contents: getOperPd(basedItem),
     },
     {
       icon: LocationOnIcon,
       title: '주소',
-      contents: `${basedItem.addr1 || ''} ${basedItem.addr2 || ''}`,
+      contents: getDetailAddress(basedItem),
     },
     {
       icon: SearchIcon,
@@ -125,7 +93,7 @@ const IntroTabPage = (props) => {
     {
       icon: PhoneIcon,
       title: '전화번호',
-      contents: `${basedItem.tel || ''}`,
+      contents: getPhoneNumber(basedItem),
     },
     {
       icon: SearchIcon,
@@ -184,4 +152,4 @@ const IntroTabPage = (props) => {
   );
 };
 
-export default IntroTabPage;
+export default IntroTabView;

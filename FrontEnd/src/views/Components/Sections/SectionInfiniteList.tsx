@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 // components
-import PhotoCard from 'components/Card/PhotoCard';
+import PhotoFeed from 'components/Feed/PhotoFeed';
 
 // styles
 import styles from 'assets/jss/material-kit-react/views/componentsSections/basicsStyle.js';
@@ -100,7 +100,7 @@ const SectionInfiniteList = () => {
           <Grid container spacing={8} style={{ flexGrow: 1 }}>
             {infBasedList.map((infBasedItem, idx) => (
               <Grid key={String(idx)} item lg={12} xs={12}>
-                <PhotoCard basedItem={infBasedItem}>Hello</PhotoCard>
+                <PhotoFeed basedItem={infBasedItem} />
               </Grid>
             ))}
           </Grid>

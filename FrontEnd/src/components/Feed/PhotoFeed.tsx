@@ -24,8 +24,8 @@ import { red } from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
 
 // components
-import MapTabPage from 'views/MapTabPage/MapTabPage';
-import IntroTabPage from 'views/IntroTabPage/IntroTabPage';
+import MapTabView from 'views/MapTabView/MapTabView';
+import IntroTabView from 'views/IntroTabView/IntroTabView';
 
 // Hooks
 import useImageInfo from 'Hooks/api/useImageInfo';
@@ -81,14 +81,12 @@ const TabPannel = (props) => {
   );
 };
 
-const PhotoCard = (props) => {
+const PhotoFeed = (props) => {
   const { basedItem } = props;
-  const mainClasses = useMainStyles();
   const classes = useStyles();
 
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  // local state
   const [tabIdx, setTabIdx] = useState(0);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const changeTab = useCallback((e, newIdx) => {
     setTabIdx(newIdx);
@@ -142,10 +140,10 @@ const PhotoCard = (props) => {
             <Tab label="캠핑장 위치" id="map-tab" />
           </Tabs>
           <TabPannel id="introduce-tab" value={tabIdx} index={0}>
-            <IntroTabPage basedItem={basedItem} />
+            <IntroTabView basedItem={basedItem} />
           </TabPannel>
           <TabPannel id="map-tab" value={tabIdx} index={1}>
-            <MapTabPage basedItem={basedItem} />
+            <MapTabView basedItem={basedItem} />
           </TabPannel>
         </ModalContent>
       </Modal>
@@ -153,4 +151,4 @@ const PhotoCard = (props) => {
   );
 };
 
-export default PhotoCard;
+export default PhotoFeed;
