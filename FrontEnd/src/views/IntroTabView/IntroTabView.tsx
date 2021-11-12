@@ -10,6 +10,7 @@ import useImageInfo from 'Hooks/api/useImageInfo';
 // import Card from 'components/Card/Card.js';
 import IntroList from 'components/List/IntroList';
 import IntroListItem from 'components/List/IntroListItem';
+import CarouselDot from 'components/CustomIcons/CarouselDot';
 
 // modules
 import {
@@ -63,6 +64,15 @@ const IntroTabView = (props) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
+    appendDots: (dots: any[]) => {
+      return (
+        <ul>
+          {dots.map((dot) => (
+            <CarouselDot key={dot.key} active={dot.props.className === 'slick-active'} />
+          ))}
+        </ul>
+      );
+    },
   });
   const [imageList, setImageList] = useState([]);
   const [introList] = useState([

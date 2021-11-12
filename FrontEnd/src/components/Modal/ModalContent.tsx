@@ -12,6 +12,7 @@ const ContentContainer = styled.div`
   padding: 16px 16px 0;
   background-color: #ffffff;
   border-radius: 8px;
+  overflow-y: auto;
 
   @media (min-width: 0px) {
     max-width: 350px;
