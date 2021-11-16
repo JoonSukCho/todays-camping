@@ -28,6 +28,8 @@ import {
   LocationOn as LocationOnIcon,
   Search as SearchIcon,
   Phone as PhoneIcon,
+  Schedule as ScheduleIcon,
+  FilterHdr as FilterHdrIcon,
 } from '@material-ui/icons';
 import { Divider, Card } from '@material-ui/core';
 
@@ -48,6 +50,11 @@ const Image = styled.img`
 `;
 
 const ListContainer = styled.div``;
+
+const HomePageLink = styled.a`
+  text-decoration: none;
+  color: #3182f6;
+`;
 
 const IntroTabView = (props) => {
   const basedItem: _iBasedItem = props.basedItem;
@@ -80,13 +87,13 @@ const IntroTabView = (props) => {
       icon: HomeIcon,
       title: '홈페이지',
       contents: (
-        <a href={getHomePageURL(basedItem)} target="_blank" rel="noreferrer">
+        <HomePageLink href={getHomePageURL(basedItem)} target="_blank" rel="noreferrer">
           {getHomePageURL(basedItem)}
-        </a>
+        </HomePageLink>
       ),
     },
     {
-      icon: SearchIcon,
+      icon: ScheduleIcon,
       title: '운영 기간',
       contents: getOperPd(basedItem),
     },
@@ -96,7 +103,7 @@ const IntroTabView = (props) => {
       contents: getDetailAddress(basedItem),
     },
     {
-      icon: SearchIcon,
+      icon: FilterHdrIcon,
       title: '사이트 형태',
       contents: getSiteForms(basedItem),
     },

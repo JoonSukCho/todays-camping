@@ -85,6 +85,9 @@ const SectionInfiniteList = () => {
   return (
     <div className={classes.sections}>
       <div className={classes.container}>
+        <div className={classes.title}>
+          <h2 style={{ fontWeight: 600 }}>추천 캠핑장 &#127969;</h2>
+        </div>
         <InfiniteScroll
           style={{ overflow: 'hidden' }}
           dataLength={infBasedList.length}
@@ -100,7 +103,9 @@ const SectionInfiniteList = () => {
           loader={<CirCularLoader />}
           // scrollableTarget="scrollableDiv"
           endMessage={
-            <EndMessageComponent variant="h4">더 이상 피드가 없습니다.</EndMessageComponent>
+            <EndMessageComponent variant="h4">
+              더 이상 피드가 없습니다. &#128517;
+            </EndMessageComponent>
           }
         >
           <GridContainer>

@@ -17,6 +17,11 @@ const DenseListItem = styled(ListItem)`
   padding-bottom: 0px;
 `;
 
+const IconAvatar = styled(Avatar)`
+  color: #3182f6;
+  background-color: #ffffff;
+`;
+
 const useStyles = makeStyles(() => ({
   listItemText: {
     fontWeight: 500,
@@ -30,9 +35,9 @@ const IntroListItem = (props) => {
   return (
     <DenseListItem alignItems="flex-start">
       <ListItemAvatar>
-        <Avatar style={{ backgroundColor: '#3182f6' }} variant="square">
-          <Icon />
-        </Avatar>
+        <IconAvatar variant="square">
+          <Icon style={{ fontSize: 28 }} />
+        </IconAvatar>
       </ListItemAvatar>
       <ListItemText
         classes={{ primary: classes.listItemText }}
