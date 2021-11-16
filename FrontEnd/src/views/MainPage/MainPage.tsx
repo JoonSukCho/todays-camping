@@ -38,6 +38,11 @@ const ScrollGuide = styled.div`
   text-align: center;
 `;
 
+const ScrollGuideText = styled.p`
+  color: #ffffff;
+  padding-top: 66px;
+`;
+
 export default function Components(props) {
   const classes = useStyles();
   const { ...rest } = props;
@@ -67,7 +72,7 @@ export default function Components(props) {
         </div>
         <ScrollGuide>
           <ScrollGuideIcon />
-          <p style={{ color: '#fff', paddingTop: 66 }}>스크롤을 내려보세요</p>
+          <ScrollGuideText>스크롤을 내려보세요</ScrollGuideText>
         </ScrollGuide>
       </Parallax>
 

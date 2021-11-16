@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
 // lib
-import _ from 'lodash';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useQueryClient } from 'react-query';
 
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 
 // components
 import PhotoFeed from 'components/Feed/PhotoFeed';
+import CirCularLoader from 'components/Loader/CirCularLoader';
 
 // styles
 import styles from 'assets/jss/material-kit-react/views/componentsSections/basicsStyle.js';
@@ -21,6 +19,8 @@ import useBasedInfo from 'Hooks/api/useBasedInfo';
 // util
 import { generateShuffledArr } from 'util/arrUtil';
 import { rangeRandom } from 'util/mathUtil';
+import GridContainer from 'components/Grid/GridContainer';
+import GridItem from 'components/Grid/GridItem';
 
 const useStyles = makeStyles(styles);
 
@@ -81,15 +81,18 @@ const SectionInfiniteList = () => {
           <h2 style={{ fontWeight: 600 }}>추천 캠핑장</h2>
         </div>
         <InfiniteScroll
+          style={{ overflow: 'hidden' }}
           dataLength={infBasedList.length}
           next={() => {
-            setBasedInfoReqParams((prev) => ({
-              pageNo: totalPageIdxArr[prev.pageNo + 1],
-              numOfRows,
-            }));
+            setTimeout(() => {
+              setBasedInfoReqParams((prev) => ({
+                pageNo: totalPageIdxArr[prev.pageNo + 1],
+                numOfRows,
+              }));
+            }, 200000);
           }}
           hasMore
-          loader={<h4>Loading...</h4>}
+          loader={<CirCularLoader />}
           // scrollableTarget="scrollableDiv"
           endMessage={
             <p style={{ textAlign: 'center' }}>
@@ -97,13 +100,13 @@ const SectionInfiniteList = () => {
             </p>
           }
         >
-          <Grid container spacing={8} style={{ flexGrow: 1 }}>
+          <GridContainer>
             {infBasedList.map((infBasedItem, idx) => (
-              <Grid key={String(idx)} item lg={12} xs={12}>
+              <GridItem key={String(idx)} style={{ paddingTop: 16, paddingBottom: 16 }}>
                 <PhotoFeed basedItem={infBasedItem} />
-              </Grid>
+              </GridItem>
             ))}
-          </Grid>
+          </GridContainer>
         </InfiniteScroll>
       </div>
     </div>

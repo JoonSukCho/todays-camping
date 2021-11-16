@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 1140,
     margin: '0 auto',
+    padding: 8,
   },
   media: {
     height: 0,
@@ -69,6 +70,11 @@ const useStyles = makeStyles((theme) => ({
 
 const TabPannelContainer = styled.div`
   padding: 20px 0;
+`;
+
+const ContentText = styled.p`
+  font-size: 1rem;
+  color: #626262;
 `;
 
 const TabPannel = (props) => {
@@ -114,14 +120,7 @@ const PhotoFeed = (props) => {
           onClick={openModal}
         />
         <CardContent>
-          <p
-            style={{
-              fontSize: '1rem',
-              color: '#626262',
-            }}
-          >
-            {basedItem.lineIntro || ''}
-          </p>
+          <ContentText>{basedItem.lineIntro || ''}</ContentText>
         </CardContent>
       </Card>
 
