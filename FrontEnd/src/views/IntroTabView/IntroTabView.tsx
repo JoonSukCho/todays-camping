@@ -86,10 +86,12 @@ const IntroTabView = (props) => {
     {
       icon: HomeIcon,
       title: '홈페이지',
-      contents: (
+      contents: basedItem.homepage ? (
         <HomePageLink href={getHomePageURL(basedItem)} target="_blank" rel="noreferrer">
           {getHomePageURL(basedItem)}
         </HomePageLink>
+      ) : (
+        '정보 미제공'
       ),
     },
     {

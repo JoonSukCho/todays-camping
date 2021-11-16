@@ -2,8 +2,6 @@ import { _iBasedItem } from 'models/api/goCamping/basedInfo';
 import { IsValidatedURL } from 'util/validateUtil';
 
 export const getHomePageURL = (basedItem: _iBasedItem): string => {
-  if (!basedItem.homepage) return '';
-
   if (IsValidatedURL(basedItem.homepage)) {
     return basedItem.homepage;
   }
@@ -12,7 +10,7 @@ export const getHomePageURL = (basedItem: _iBasedItem): string => {
 };
 
 export const getOperPd = (basedItem: _iBasedItem): string => {
-  return `${basedItem.operPdCl || ''}`;
+  return `${basedItem.operPdCl || '정보 미제공'}`;
 };
 
 export const getDetailAddress = (basedItem: _iBasedItem): string => {
@@ -41,11 +39,15 @@ export const getSiteForms = (basedItem: _iBasedItem): string => {
     siteForms.push('맨흙');
   }
 
+  if (siteForms.length === 0) {
+    return '정보 미제공';
+  }
+
   return siteForms.join(',');
 };
 
 export const getPhoneNumber = (basedItem: _iBasedItem): string => {
-  return `${basedItem.tel || ''}`;
+  return `${basedItem.tel || '정보 미제공'}`;
 };
 
 export const getCampSiteFeatures = (basedItem: _iBasedItem): string => {
