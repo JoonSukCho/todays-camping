@@ -79,7 +79,7 @@ export default function Components(props) {
       <div className={classNames(classes.main, classes.mainRaised)}>
         <SectionInfiniteList />
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 // lib
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -21,8 +22,15 @@ import { generateShuffledArr } from 'util/arrUtil';
 import { rangeRandom } from 'util/mathUtil';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
+
+const EndMessageComponent = styled(Typography)`
+  font-weight: 600;
+  margin-top: 36px;
+  text-align: center;
+`;
 
 const SectionInfiniteList = () => {
   const classes = useStyles();
@@ -77,9 +85,6 @@ const SectionInfiniteList = () => {
   return (
     <div className={classes.sections}>
       <div className={classes.container}>
-        <div className={classes.title}>
-          <h2 style={{ fontWeight: 600 }}>추천 캠핑장</h2>
-        </div>
         <InfiniteScroll
           style={{ overflow: 'hidden' }}
           dataLength={infBasedList.length}
@@ -91,13 +96,11 @@ const SectionInfiniteList = () => {
               }));
             }, 200000);
           }}
-          hasMore
+          hasMore={false}
           loader={<CirCularLoader />}
           // scrollableTarget="scrollableDiv"
           endMessage={
-            <p style={{ textAlign: 'center' }}>
-              <b>Yay! You have seen it all</b>
-            </p>
+            <EndMessageComponent variant="h4">더 이상 피드가 없습니다.</EndMessageComponent>
           }
         >
           <GridContainer>
