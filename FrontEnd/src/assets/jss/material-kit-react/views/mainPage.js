@@ -13,11 +13,19 @@ const componentsStyle = () =>
       fontWeight: '600',
       display: 'inline-block',
       position: 'relative',
+
+      '@media (max-width: 576px)': {
+        fontSize: '2.5rem',
+      },
     },
     subtitle: {
       fontSize: '1.313rem',
       maxWidth: '500px',
       margin: '10px 0 0',
+
+      '@media (max-width: 576px)': {
+        fontSize: '1rem',
+      },
     },
     main: {
       background: '#FFFFFF',

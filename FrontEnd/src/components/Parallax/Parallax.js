@@ -46,9 +46,12 @@ export default function Parallax(props) {
       className={parallaxClasses}
       style={{
         ...style,
-        backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${image})`,
-        backgroundSize: 'cover',
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${image})`,
+        // backgroundSize: 'cover',
+        backgroundSize: '100%',
+        backgroundColor: '#000000',
         backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         transform: transform,
       }}
     >
