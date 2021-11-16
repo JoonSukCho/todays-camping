@@ -92,14 +92,12 @@ const SectionInfiniteList = () => {
           style={{ overflow: 'hidden' }}
           dataLength={infBasedList.length}
           next={() => {
-            setTimeout(() => {
-              setBasedInfoReqParams((prev) => ({
-                pageNo: totalPageIdxArr[prev.pageNo + 1],
-                numOfRows,
-              }));
-            }, 200000);
+            setBasedInfoReqParams((prev) => ({
+              pageNo: totalPageIdxArr[prev.pageNo + 1],
+              numOfRows,
+            }));
           }}
-          hasMore={false}
+          hasMore
           loader={<CirCularLoader />}
           // scrollableTarget="scrollableDiv"
           endMessage={
