@@ -15,7 +15,7 @@ import Footer from 'components/Footer/Footer.js';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import Parallax from 'components/Parallax/Parallax.js';
-import ScrollGuideIcon from 'components/CustomIcons/ScrollGuideIcon';
+
 // sections for this page
 import HeaderLinks from 'components/Header/HeaderLinks.js';
 import SectionInfiniteList from 'views/Components/Sections/SectionInfiniteList';
@@ -25,25 +25,11 @@ import styles from 'assets/jss/material-kit-react/views/mainPage.js';
 // Image
 // import BackgroundImage from 'assets/img/main-background.jpg';
 import BackgroundImage from 'assets/img/campfire-background.gif';
+import ScrollGuide from 'components/ScrollGuide/ScrollGuide';
 
 const useStyles = makeStyles(styles);
 
-const ScrollGuide = styled.div`
-  width: 100%;
-  position: absolute;
-  color: #fff;
-  bottom: 5%;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  text-align: center;
-`;
-
-const ScrollGuideText = styled.p`
-  color: #ffffff;
-  padding-top: 66px;
-`;
-
-export default function Components(props) {
+const MainPage = (props) => {
   const classes = useStyles();
   const { ...rest } = props;
   return (
@@ -69,11 +55,8 @@ export default function Components(props) {
               </div>
             </GridItem>
           </GridContainer>
+          <ScrollGuide />
         </div>
-        <ScrollGuide>
-          <ScrollGuideIcon />
-          <ScrollGuideText>스크롤을 내려보세요</ScrollGuideText>
-        </ScrollGuide>
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
@@ -82,4 +65,6 @@ export default function Components(props) {
       {/* <Footer /> */}
     </div>
   );
-}
+};
+
+export default MainPage;

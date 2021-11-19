@@ -49,7 +49,12 @@ const Image = styled.img`
   height: 102%;
 `;
 
-const ListContainer = styled.div``;
+const ListContainer = styled.div`
+  overflow-y: auto;
+  @media (max-width: 768px) {
+    max-height: 300px;
+  }
+`;
 
 const HomePageLink = styled.a`
   text-decoration: none;
@@ -71,7 +76,7 @@ const IntroTabView = (props) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
-    lazyLoad: true,
+    lazyLoad: 'ondemand',
     appendDots: (dots: any[]) => {
       return (
         <ul>

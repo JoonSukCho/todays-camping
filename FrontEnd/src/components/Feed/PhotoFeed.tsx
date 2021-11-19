@@ -18,10 +18,14 @@ import {
   Tabs,
   Tab,
   IconButton,
+  CardActions,
+  Button,
+  Collapse,
 } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 
 import CloseIcon from '@material-ui/icons/Close';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // components
 import MapTabView from 'views/MapTabView/MapTabView';
@@ -53,8 +57,16 @@ const useStyles = makeStyles((theme) => ({
       // transition: 'all 0.3s ease-in-out',
     },
   },
+
   expand: {
+    transform: 'rotate(0deg)',
     marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
   },
 
   modal: {
@@ -106,6 +118,11 @@ const PhotoFeed = (props) => {
     setModalOpen(false);
   };
 
+  const [expanded, setExpanded] = React.useState(false);
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
   return (
     <>
       <Card className={classes.root}>
@@ -119,9 +136,27 @@ const PhotoFeed = (props) => {
           image={basedItem.firstImageUrl ? basedItem.firstImageUrl : ReadyImage}
           onClick={openModal}
         />
-        <CardContent>
+        {/* <CardContent>
           <ContentText>{basedItem.lineIntro || ''}</ContentText>
-        </CardContent>
+        </CardContent> */}
+        <CardActions disableSpacing>
+          <Button size="small" color="primary">
+            이미지 더보기
+          </Button>
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>blah</CardContent>
+        </Collapse>
       </Card>
 
       <Modal className={classes.modal} open={modalOpen} onClose={closeModal}>
