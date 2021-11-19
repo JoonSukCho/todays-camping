@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 // lib
 import Carousel from 'react-slick';
 import styled from 'styled-components';
-import styles from 'assets/jss/material-kit-react/views/landingPage.js';
 
 // @material/core
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,12 +23,34 @@ import {
 } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 
-import CloseIcon from '@material-ui/icons/Close';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// modules
+import {
+  getCampSiteFeatures,
+  getDetailAddress,
+  getHomePageURL,
+  getOperPd,
+  getPhoneNumber,
+  getSiteForms,
+} from 'modules/getIntroInfo';
+
+// @material-ui
+import {
+  Home as HomeIcon,
+  LocationOn as LocationOnIcon,
+  Search as SearchIcon,
+  Phone as PhoneIcon,
+  Schedule as ScheduleIcon,
+  FilterHdr as FilterHdrIcon,
+  Close as CloseIcon,
+} from '@material-ui/icons';
 
 // components
+import ModalContent from 'components/Modal/ModalContent';
+import ExpandMoreButton from 'components/Buttons/ExpandMoreButton';
 import MapTabView from 'views/MapTabView/MapTabView';
 import IntroTabView from 'views/IntroTabView/IntroTabView';
+import IntroList from 'components/List/IntroList';
+import IntroListItem from 'components/List/IntroListItem';
 
 // Hooks
 import useImageInfo from 'Hooks/api/useImageInfo';
@@ -37,11 +58,7 @@ import useImageInfo from 'Hooks/api/useImageInfo';
 // Image
 import ReadyImage from 'assets/img/ready-image.jpg';
 import TestImage1 from 'assets/img/sign.jpg';
-import TestImage2 from 'assets/img/main-background.jpg';
-import TestImage3 from 'assets/img/landing-bg.jpg';
-import ModalContent from 'components/Modal/ModalContent';
 
-const useMainStyles = makeStyles(styles);
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 1140,
@@ -56,17 +73,6 @@ const useStyles = makeStyles((theme) => ({
       // transform: 'scale(1.1)',
       // transition: 'all 0.3s ease-in-out',
     },
-  },
-
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
   },
 
   modal: {
@@ -84,10 +90,12 @@ const TabPannelContainer = styled.div`
   padding: 20px 0;
 `;
 
-const ContentText = styled.p`
-  font-size: 1rem;
-  color: #626262;
+const HomePageLink = styled.a`
+  text-decoration: none;
+  color: #3182f6;
 `;
+
+const ListContainer = styled.div``;
 
 const TabPannel = (props) => {
   const { children, id, value, index, ...other } = props;
@@ -105,6 +113,7 @@ const PhotoFeed = (props) => {
 
   const [tabIdx, setTabIdx] = useState(0);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [expandFeed, setExpandFeed] = useState<boolean>(false);
 
   const changeTab = useCallback((e, newIdx) => {
     setTabIdx(newIdx);
@@ -118,19 +127,54 @@ const PhotoFeed = (props) => {
     setModalOpen(false);
   };
 
-  const [expanded, setExpanded] = React.useState(false);
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const feedExpand = () => {
+    setExpandFeed(!expandFeed);
   };
+
+  // list
+  const [introList] = useState([
+    {
+      icon: HomeIcon,
+      title: '홈페이지',
+      contents: basedItem.homepage ? (
+        <HomePageLink href={getHomePageURL(basedItem)} target="_blank" rel="noreferrer">
+          {getHomePageURL(basedItem)}
+        </HomePageLink>
+      ) : (
+        '정보 미제공'
+      ),
+    },
+    {
+      icon: ScheduleIcon,
+      title: '운영 기간',
+      contents: getOperPd(basedItem),
+    },
+    {
+      icon: LocationOnIcon,
+      title: '주소',
+      contents: getDetailAddress(basedItem),
+    },
+    {
+      icon: FilterHdrIcon,
+      title: '사이트 형태',
+      contents: getSiteForms(basedItem),
+    },
+    {
+      icon: PhoneIcon,
+      title: '전화번호',
+      contents: getPhoneNumber(basedItem),
+    },
+    {
+      icon: SearchIcon,
+      title: '특징',
+      contents: getCampSiteFeatures(basedItem),
+    },
+  ]);
 
   return (
     <>
       <Card className={classes.root}>
-        <CardHeader
-          title={basedItem.facltNm || 'Title'}
-          subheader={`${basedItem.addr1 || ''} ${basedItem.addr2 || ''}`}
-        />
-
+        <CardHeader title={basedItem.facltNm || 'Title'} subheader={getDetailAddress(basedItem)} />
         <CardMedia
           className={classes.media}
           image={basedItem.firstImageUrl ? basedItem.firstImageUrl : ReadyImage}
@@ -143,19 +187,24 @@ const PhotoFeed = (props) => {
           <Button size="small" color="primary">
             이미지 더보기
           </Button>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
+          <ExpandMoreButton expanded={expandFeed} handler={feedExpand} />
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>blah</CardContent>
+        <Collapse in={expandFeed} timeout="auto" unmountOnExit>
+          <CardContent>
+            <ListContainer>
+              <IntroList>
+                {introList.map((intro, idx) => {
+                  return (
+                    <React.Fragment key={intro.title}>
+                      <IntroListItem key={intro.title} title={intro.title} Icon={intro.icon}>
+                        {intro.contents}
+                      </IntroListItem>
+                    </React.Fragment>
+                  );
+                })}
+              </IntroList>
+            </ListContainer>
+          </CardContent>
         </Collapse>
       </Card>
 
