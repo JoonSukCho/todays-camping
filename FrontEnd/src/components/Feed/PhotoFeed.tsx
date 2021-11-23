@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { Link } from 'react-router-dom';
 
 // lib
 import Carousel from 'react-slick';
@@ -14,14 +13,12 @@ import {
   CardMedia,
   CardContent,
   Modal,
-  Tabs,
-  Tab,
-  IconButton,
   CardActions,
   Button,
   Collapse,
+  Typography,
+  darken,
 } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
 
 // modules
 import {
@@ -41,13 +38,14 @@ import {
   Phone as PhoneIcon,
   Schedule as ScheduleIcon,
   FilterHdr as FilterHdrIcon,
-  Close as CloseIcon,
 } from '@material-ui/icons';
 
 // components
+import OuterLink from 'components/Link/OuterLink';
+import ModalHeader from 'components/Modal/ModalHeader';
+import ModalFooter from 'components/Modal/ModalFooter';
 import ModalContent from 'components/Modal/ModalContent';
 import ExpandMoreButton from 'components/Buttons/ExpandMoreButton';
-import MapTabView from 'views/MapTabView/MapTabView';
 import IntroTabView from 'views/IntroTabView/IntroTabView';
 import IntroList from 'components/List/IntroList';
 import IntroListItem from 'components/List/IntroListItem';
@@ -57,7 +55,8 @@ import useImageInfo from 'Hooks/api/useImageInfo';
 
 // Image
 import ReadyImage from 'assets/img/ready-image.jpg';
-import TestImage1 from 'assets/img/sign.jpg';
+import ModalContainer from 'components/Modal/ModalContainer';
+import ModalLink from 'components/Link/ModalLink';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,11 +67,6 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
-    '&:hover': {
-      cursor: 'pointer',
-      // transform: 'scale(1.1)',
-      // transition: 'all 0.3s ease-in-out',
-    },
   },
 
   modal: {
@@ -80,44 +74,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  closeModalIcon: {
-    float: 'right',
-  },
 }));
 
-const TabPannelContainer = styled.div`
-  padding: 20px 0;
-`;
-
-const HomePageLink = styled.a`
-  text-decoration: none;
-  color: #3182f6;
-`;
-
 const ListContainer = styled.div``;
-
-const TabPannel = (props) => {
-  const { children, id, value, index, ...other } = props;
-
-  return (
-    <TabPannelContainer role="tabpanel" hidden={value !== index} id={id} {...other}>
-      {value === index && <div>{children}</div>}
-    </TabPannelContainer>
-  );
-};
 
 const PhotoFeed = (props) => {
   const { basedItem } = props;
   const classes = useStyles();
 
-  const [tabIdx, setTabIdx] = useState(0);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [expandFeed, setExpandFeed] = useState<boolean>(false);
-
-  const changeTab = useCallback((e, newIdx) => {
-    setTabIdx(newIdx);
-  }, []);
 
   const openModal = () => {
     setModalOpen(true);
@@ -137,9 +103,7 @@ const PhotoFeed = (props) => {
       icon: HomeIcon,
       title: '홈페이지',
       contents: basedItem.homepage ? (
-        <HomePageLink href={getHomePageURL(basedItem)} target="_blank" rel="noreferrer">
-          {getHomePageURL(basedItem)}
-        </HomePageLink>
+        <OuterLink href={getHomePageURL(basedItem)}>{getHomePageURL(basedItem)}</OuterLink>
       ) : (
         '정보 미제공'
       ),
@@ -152,7 +116,7 @@ const PhotoFeed = (props) => {
     {
       icon: LocationOnIcon,
       title: '주소',
-      contents: getDetailAddress(basedItem),
+      contents: <ModalLink onClick={openModal}>{getDetailAddress(basedItem)}</ModalLink>,
     },
     {
       icon: FilterHdrIcon,
@@ -178,13 +142,12 @@ const PhotoFeed = (props) => {
         <CardMedia
           className={classes.media}
           image={basedItem.firstImageUrl ? basedItem.firstImageUrl : ReadyImage}
-          onClick={openModal}
         />
         {/* <CardContent>
           <ContentText>{basedItem.lineIntro || ''}</ContentText>
         </CardContent> */}
         <CardActions disableSpacing>
-          <Button size="small" color="primary">
+          <Button size="small" color="primary" onClick={openModal}>
             이미지 더보기
           </Button>
           <ExpandMoreButton expanded={expandFeed} handler={feedExpand} />
@@ -209,26 +172,27 @@ const PhotoFeed = (props) => {
       </Card>
 
       <Modal className={classes.modal} open={modalOpen} onClose={closeModal}>
-        <ModalContent>
-          <IconButton className={classes.closeModalIcon} onClick={closeModal}>
-            <CloseIcon />
-          </IconButton>
-          <Tabs
-            style={{ color: '#333' }}
-            value={tabIdx}
-            onChange={changeTab}
-            indicatorColor="primary"
-          >
-            <Tab label="캠핑장 소개" id="introduce-tab" />
-            <Tab label="캠핑장 위치" id="map-tab" />
-          </Tabs>
-          <TabPannel id="introduce-tab" value={tabIdx} index={0}>
+        <ModalContainer>
+          <ModalHeader>
+            <Typography variant="h5">이미지 더보기</Typography>
+          </ModalHeader>
+          <ModalContent>
             <IntroTabView basedItem={basedItem} />
-          </TabPannel>
-          <TabPannel id="map-tab" value={tabIdx} index={1}>
-            <MapTabView basedItem={basedItem} />
-          </TabPannel>
-        </ModalContent>
+          </ModalContent>
+          <ModalFooter onClose={closeModal} />
+        </ModalContainer>
+      </Modal>
+
+      <Modal className={classes.modal} open={modalOpen} onClose={closeModal}>
+        <ModalContainer>
+          <ModalHeader>
+            <Typography variant="h5">이미지 더보기</Typography>
+          </ModalHeader>
+          <ModalContent>
+            <IntroTabView basedItem={basedItem} />
+          </ModalContent>
+          <ModalFooter onClose={closeModal} />
+        </ModalContainer>
       </Modal>
     </>
   );

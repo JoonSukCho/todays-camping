@@ -1,12 +1,13 @@
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
+import { Card } from '@material-ui/core';
+
 type DivProps = React.HTMLProps<HTMLDivElement>;
 
-const ContentContainer = styled.div`
+const Container = styled(Card)`
   width: 100%;
-  margin: 16px 0;
-  /* z-index: 12;
+  z-index: 12;
   margin-left: auto;
   margin-right: auto;
   padding: 16px;
@@ -15,30 +16,33 @@ const ContentContainer = styled.div`
 
   @media (min-width: 0px) {
     max-width: 350px;
+    height: 434px;
   }
 
   @media (min-width: 576px) {
     max-width: 500px;
+    height: 434px;
   }
   @media (min-width: 768px) {
     max-width: 720px;
+    height: 634px;
   }
   @media (min-width: 992px) {
     max-width: 960px;
+    height: 634px;
   }
   @media (min-width: 1200px) {
     max-width: 1140px;
-  } */
+    height: 634px;
+  }
 `;
 
-// @material-ui Issue
-// Modal 내부에 function component를 처리하려면 forwardRef가 필요
-const ModalContent = forwardRef<HTMLDivElement, DivProps>(({ children }, ref) => {
+const ModalContainer = forwardRef<HTMLDivElement, DivProps>(({ children }, ref) => {
   return (
-    <ContentContainer ref={ref} tabIndex={-1}>
+    <Container ref={ref} tabIndex={-1}>
       {children}
-    </ContentContainer>
+    </Container>
   );
 });
 
-export default ModalContent;
+export default ModalContainer;

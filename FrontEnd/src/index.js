@@ -18,10 +18,10 @@ const customTheme = createMuiTheme({
   },
   typography: {
     fontFamily: [
+      'Spoqa Han Sans Neo',
+      '"Segoe UI"',
       '-apple-system',
       'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Spoqa Han Sans Neo',
       '"Helvetica Neue"',
       'Arial',
       'sans-serif',

@@ -7,30 +7,9 @@ import { _iBasedItem } from 'models/api/goCamping/basedInfo';
 import useImageInfo from 'Hooks/api/useImageInfo';
 
 // core components
-// import Card from 'components/Card/Card.js';
-import IntroList from 'components/List/IntroList';
-import IntroListItem from 'components/List/IntroListItem';
 import CarouselDot from 'components/CustomIcons/CarouselDot';
 
-// modules
-import {
-  getCampSiteFeatures,
-  getDetailAddress,
-  getHomePageURL,
-  getOperPd,
-  getPhoneNumber,
-  getSiteForms,
-} from 'modules/getIntroInfo';
-
 // @material-ui
-import {
-  Home as HomeIcon,
-  LocationOn as LocationOnIcon,
-  Search as SearchIcon,
-  Phone as PhoneIcon,
-  Schedule as ScheduleIcon,
-  FilterHdr as FilterHdrIcon,
-} from '@material-ui/icons';
 import { Divider, Card } from '@material-ui/core';
 
 // Image
@@ -47,18 +26,6 @@ const ImgContainer = styled.div`
 const Image = styled.img`
   width: 100%;
   height: 102%;
-`;
-
-const ListContainer = styled.div`
-  overflow-y: auto;
-  @media (max-width: 768px) {
-    max-height: 300px;
-  }
-`;
-
-const HomePageLink = styled.a`
-  text-decoration: none;
-  color: #3182f6;
 `;
 
 const IntroTabView = (props) => {
@@ -88,44 +55,6 @@ const IntroTabView = (props) => {
     },
   });
   const [imageList, setImageList] = useState([]);
-  const [introList] = useState([
-    {
-      icon: HomeIcon,
-      title: '홈페이지',
-      contents: basedItem.homepage ? (
-        <HomePageLink href={getHomePageURL(basedItem)} target="_blank" rel="noreferrer">
-          {getHomePageURL(basedItem)}
-        </HomePageLink>
-      ) : (
-        '정보 미제공'
-      ),
-    },
-    {
-      icon: ScheduleIcon,
-      title: '운영 기간',
-      contents: getOperPd(basedItem),
-    },
-    {
-      icon: LocationOnIcon,
-      title: '주소',
-      contents: getDetailAddress(basedItem),
-    },
-    {
-      icon: FilterHdrIcon,
-      title: '사이트 형태',
-      contents: getSiteForms(basedItem),
-    },
-    {
-      icon: PhoneIcon,
-      title: '전화번호',
-      contents: getPhoneNumber(basedItem),
-    },
-    {
-      icon: SearchIcon,
-      title: '특징',
-      contents: getCampSiteFeatures(basedItem),
-    },
-  ]);
 
   useEffect(() => {
     if (imageInfoIsFetched) {
@@ -139,41 +68,25 @@ const IntroTabView = (props) => {
   }, [imageInfoIsFetched]);
 
   return (
-    <>
-      <Card>
-        {imageInfoIsFetched ? (
-          <Carousel {...carouselSettings}>
-            {imageList.length > 0 ? (
-              imageList.map((imageItem) => (
-                <ImgContainer key={imageItem.serialNum}>
-                  <Image src={imageItem.url} alt="No Image" />
-                </ImgContainer>
-              ))
-            ) : (
-              <ImgContainer>
-                <Image src={ReadyImage} alt="Ready Image" />
+    <Card>
+      {imageInfoIsFetched ? (
+        <Carousel {...carouselSettings}>
+          {imageList.length > 0 ? (
+            imageList.map((imageItem) => (
+              <ImgContainer key={imageItem.serialNum}>
+                <Image src={imageItem.url} alt="No Image" />
               </ImgContainer>
-            )}
-          </Carousel>
-        ) : (
-          <ImgContainer style={{ background: '#eee' }} />
-        )}
-      </Card>
-      <ListContainer>
-        <IntroList>
-          {introList.map((intro, idx) => {
-            return (
-              <React.Fragment key={intro.title}>
-                <IntroListItem key={intro.title} title={intro.title} Icon={intro.icon}>
-                  {intro.contents}
-                </IntroListItem>
-                {/* {introList.length - 1 !== idx && <Divider />} */}
-              </React.Fragment>
-            );
-          })}
-        </IntroList>
-      </ListContainer>
-    </>
+            ))
+          ) : (
+            <ImgContainer>
+              <Image src={ReadyImage} alt="Ready Image" />
+            </ImgContainer>
+          )}
+        </Carousel>
+      ) : (
+        <ImgContainer style={{ background: '#eee' }} />
+      )}
+    </Card>
   );
 };
 
