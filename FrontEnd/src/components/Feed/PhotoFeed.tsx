@@ -47,6 +47,7 @@ import ModalFooter from 'components/Modal/ModalFooter';
 import ModalContent from 'components/Modal/ModalContent';
 import ExpandMoreButton from 'components/Buttons/ExpandMoreButton';
 import IntroTabView from 'views/IntroTabView/IntroTabView';
+import MapTabView from 'views/MapTabView/MapTabView';
 import IntroList from 'components/List/IntroList';
 import IntroListItem from 'components/List/IntroListItem';
 
@@ -58,6 +59,7 @@ import useModal from 'Hooks/useModal';
 import ReadyImage from 'assets/img/ready-image.jpg';
 import ModalContainer from 'components/Modal/ModalContainer';
 import ModalLink from 'components/Link/ModalLink';
+import TelLink from 'components/Link/TelLink';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,24 +106,24 @@ const PhotoFeed = (props) => {
       ),
     },
     {
-      icon: ScheduleIcon,
-      title: '운영 기간',
-      contents: getOperPd(basedItem),
-    },
-    {
       icon: LocationOnIcon,
       title: '주소',
       contents: <ModalLink onClick={mapModalOpen}>{getDetailAddress(basedItem)}</ModalLink>,
     },
     {
+      icon: PhoneIcon,
+      title: '전화번호',
+      contents: <TelLink tel={getPhoneNumber(basedItem)}>{getPhoneNumber(basedItem)}</TelLink>,
+    },
+    {
+      icon: ScheduleIcon,
+      title: '운영 기간',
+      contents: getOperPd(basedItem),
+    },
+    {
       icon: FilterHdrIcon,
       title: '사이트 형태',
       contents: getSiteForms(basedItem),
-    },
-    {
-      icon: PhoneIcon,
-      title: '전화번호',
-      contents: getPhoneNumber(basedItem),
     },
     {
       icon: SearchIcon,
@@ -169,7 +171,7 @@ const PhotoFeed = (props) => {
       <Modal className={classes.modal} open={imageModalOpenFlag} onClose={imageModalClose}>
         <ModalContainer>
           <ModalHeader>
-            <Typography variant="h5">이미지 더보기</Typography>
+            <Typography variant="h6">이미지 더보기</Typography>
           </ModalHeader>
           <ModalContent>
             <IntroTabView basedItem={basedItem} />
@@ -181,10 +183,10 @@ const PhotoFeed = (props) => {
       <Modal className={classes.modal} open={mapModalOpenFlag} onClose={mapModalClose}>
         <ModalContainer>
           <ModalHeader>
-            <Typography variant="h5">이미지 더보기</Typography>
+            <Typography variant="h6">{getDetailAddress(basedItem)}</Typography>
           </ModalHeader>
           <ModalContent>
-            <IntroTabView basedItem={basedItem} />
+            <MapTabView basedItem={basedItem} />
           </ModalContent>
           <ModalFooter onClose={mapModalClose} />
         </ModalContainer>
