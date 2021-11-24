@@ -52,6 +52,7 @@ import IntroListItem from 'components/List/IntroListItem';
 
 // Hooks
 import useImageInfo from 'Hooks/api/useImageInfo';
+import useModal from 'Hooks/useModal';
 
 // Image
 import ReadyImage from 'assets/img/ready-image.jpg';
@@ -82,16 +83,10 @@ const PhotoFeed = (props) => {
   const { basedItem } = props;
   const classes = useStyles();
 
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [imageModalOpenFlag, imageModalOpen, imageModalClose] = useModal();
+  const [mapModalOpenFlag, mapModalOpen, mapModalClose] = useModal();
+
   const [expandFeed, setExpandFeed] = useState<boolean>(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
 
   const feedExpand = () => {
     setExpandFeed(!expandFeed);
@@ -116,7 +111,7 @@ const PhotoFeed = (props) => {
     {
       icon: LocationOnIcon,
       title: '주소',
-      contents: <ModalLink onClick={openModal}>{getDetailAddress(basedItem)}</ModalLink>,
+      contents: <ModalLink onClick={mapModalOpen}>{getDetailAddress(basedItem)}</ModalLink>,
     },
     {
       icon: FilterHdrIcon,
@@ -147,7 +142,7 @@ const PhotoFeed = (props) => {
           <ContentText>{basedItem.lineIntro || ''}</ContentText>
         </CardContent> */}
         <CardActions disableSpacing>
-          <Button size="small" color="primary" onClick={openModal}>
+          <Button size="small" color="primary" onClick={imageModalOpen}>
             이미지 더보기
           </Button>
           <ExpandMoreButton expanded={expandFeed} handler={feedExpand} />
@@ -171,7 +166,7 @@ const PhotoFeed = (props) => {
         </Collapse>
       </Card>
 
-      <Modal className={classes.modal} open={modalOpen} onClose={closeModal}>
+      <Modal className={classes.modal} open={imageModalOpenFlag} onClose={imageModalClose}>
         <ModalContainer>
           <ModalHeader>
             <Typography variant="h5">이미지 더보기</Typography>
@@ -179,11 +174,11 @@ const PhotoFeed = (props) => {
           <ModalContent>
             <IntroTabView basedItem={basedItem} />
           </ModalContent>
-          <ModalFooter onClose={closeModal} />
+          <ModalFooter onClose={imageModalClose} />
         </ModalContainer>
       </Modal>
 
-      <Modal className={classes.modal} open={modalOpen} onClose={closeModal}>
+      <Modal className={classes.modal} open={mapModalOpenFlag} onClose={mapModalClose}>
         <ModalContainer>
           <ModalHeader>
             <Typography variant="h5">이미지 더보기</Typography>
@@ -191,7 +186,7 @@ const PhotoFeed = (props) => {
           <ModalContent>
             <IntroTabView basedItem={basedItem} />
           </ModalContent>
-          <ModalFooter onClose={closeModal} />
+          <ModalFooter onClose={mapModalClose} />
         </ModalContainer>
       </Modal>
     </>
