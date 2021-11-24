@@ -43,7 +43,7 @@ const IntroTabView = (props) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
-    lazyLoad: 'ondemand',
+    lazyLoad: 'progressive',
     appendDots: (dots: any[]) => {
       return (
         <ul>

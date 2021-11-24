@@ -135,7 +135,11 @@ const PhotoFeed = (props) => {
   return (
     <>
       <Card className={classes.root}>
-        <CardHeader title={basedItem.facltNm || 'Title'} subheader={getDetailAddress(basedItem)} />
+        <CardHeader
+          title={basedItem.facltNm || 'Title'}
+          subheader={getDetailAddress(basedItem)}
+          style={{ paddingLeft: 8 }}
+        />
         <CardMedia
           className={classes.media}
           image={basedItem.firstImageUrl ? basedItem.firstImageUrl : ReadyImage}
