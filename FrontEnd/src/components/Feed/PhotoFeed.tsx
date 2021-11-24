@@ -60,6 +60,7 @@ import ReadyImage from 'assets/img/ready-image.jpg';
 import ModalContainer from 'components/Modal/ModalContainer';
 import ModalLink from 'components/Link/ModalLink';
 import TelLink from 'components/Link/TelLink';
+import BackDropIOSWorkaround from 'components/BackDrop/BackDropIOSWorkaround';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -172,7 +173,12 @@ const PhotoFeed = (props) => {
         </Collapse>
       </Card>
 
-      <Modal className={classes.modal} open={imageModalOpenFlag} onClose={imageModalClose}>
+      <Modal
+        BackdropComponent={BackDropIOSWorkaround}
+        className={classes.modal}
+        open={imageModalOpenFlag}
+        onClose={imageModalClose}
+      >
         <ModalContainer>
           <ModalHeader>
             <Typography variant="h6">이미지 더보기</Typography>
