@@ -1,7 +1,7 @@
 import React from 'react';
 import KakaoMap from 'components/Kakao/KakaoMap';
 
-const MapTabView = (props) => {
+const MapModalView = (props) => {
   const { basedItem } = props;
   const { mapX, mapY } = basedItem;
 
@@ -12,4 +12,4 @@ const MapTabView = (props) => {
   );
 };
 
-export default MapTabView;
+export default MapModalView;

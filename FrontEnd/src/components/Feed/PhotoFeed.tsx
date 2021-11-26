@@ -46,8 +46,8 @@ import ModalHeader from 'components/Modal/ModalHeader';
 import ModalFooter from 'components/Modal/ModalFooter';
 import ModalContent from 'components/Modal/ModalContent';
 import ExpandMoreButton from 'components/Buttons/ExpandMoreButton';
-import IntroTabView from 'views/IntroTabView/IntroTabView';
-import MapTabView from 'views/MapTabView/MapTabView';
+import ImageModalView from 'views/ModalView/ImageModalView';
+import MapModalView from 'views/ModalView/MapModalView';
 import IntroList from 'components/List/IntroList';
 import IntroListItem from 'components/List/IntroListItem';
 
@@ -190,7 +190,7 @@ const PhotoFeed = (props) => {
             </Typography>
           </ModalHeader>
           <ModalContent>
-            <IntroTabView basedItem={basedItem} />
+            <ImageModalView basedItem={basedItem} />
           </ModalContent>
           <ModalFooter onClose={imageModalClose} />
         </ModalContainer>
@@ -199,12 +199,13 @@ const PhotoFeed = (props) => {
       <Modal className={classes.modal} open={mapModalOpenFlag} onClose={mapModalClose}>
         <ModalContainer>
           <ModalHeader>
-            <Typography variant="h6" style={{ fontSize: '1rem' }}>
+            <Typography variant="h6" variantMapping={{ h6: 'span' }} style={{ fontSize: '1rem' }}>
               {getDetailAddress(basedItem)}
             </Typography>
+            <HomeIcon />
           </ModalHeader>
           <ModalContent>
-            <MapTabView basedItem={basedItem} />
+            <MapModalView basedItem={basedItem} />
           </ModalContent>
           <ModalFooter onClose={mapModalClose} />
         </ModalContainer>

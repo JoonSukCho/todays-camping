@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Carousel from 'react-slick';
+import Carousel, { Settings } from 'react-slick';
 import styled from 'styled-components';
 import { _iBasedItem } from 'models/api/goCamping/basedInfo';
 
@@ -28,7 +28,7 @@ const Image = styled.img`
   height: 102%;
 `;
 
-const IntroTabView = (props) => {
+const ImageModalView = (props) => {
   const basedItem: _iBasedItem = props.basedItem;
 
   const { data: imageInfo, isFetched: imageInfoIsFetched } = useImageInfo({
@@ -36,7 +36,7 @@ const IntroTabView = (props) => {
   });
 
   // local state
-  const [carouselSettings] = useState({
+  const [carouselSettings] = useState<Settings>({
     dots: true,
     infinite: true,
     speed: 300,
@@ -90,4 +90,4 @@ const IntroTabView = (props) => {
   );
 };
 
-export default IntroTabView;
+export default ImageModalView;
