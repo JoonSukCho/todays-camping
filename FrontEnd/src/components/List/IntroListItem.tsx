@@ -43,7 +43,7 @@ const IntroListItem = (props) => {
         classes={{ primary: classes.listItemText }}
         primary={title}
         secondary={children}
-        style={{ fontWeight: 500 }}
+        secondaryTypographyProps={{ style: { whiteSpace: 'normal', wordWrap: 'break-word' } }}
       />
     </DenseListItem>
   );

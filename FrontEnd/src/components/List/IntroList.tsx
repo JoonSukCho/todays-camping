@@ -5,14 +5,11 @@ import styled from 'styled-components';
 import { List } from '@material-ui/core';
 
 const GridList = styled(List)`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
+  @media (min-width: 768px) {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
   }
 `;
 

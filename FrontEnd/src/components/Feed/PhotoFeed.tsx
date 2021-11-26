@@ -114,7 +114,11 @@ const PhotoFeed = (props) => {
     {
       icon: PhoneIcon,
       title: '전화번호',
-      contents: <TelLink tel={getPhoneNumber(basedItem)}>{getPhoneNumber(basedItem)}</TelLink>,
+      contents: basedItem.tel ? (
+        <TelLink tel={getPhoneNumber(basedItem)}>{getPhoneNumber(basedItem)}</TelLink>
+      ) : (
+        '정보 미제공'
+      ),
     },
     {
       icon: ScheduleIcon,
@@ -137,7 +141,7 @@ const PhotoFeed = (props) => {
     <>
       <Card className={classes.root}>
         <CardHeader
-          title={basedItem.facltNm || 'Title'}
+          title={basedItem.facltNm}
           subheader={getDetailAddress(basedItem)}
           style={{ paddingLeft: 8 }}
         />
@@ -181,7 +185,9 @@ const PhotoFeed = (props) => {
       >
         <ModalContainer>
           <ModalHeader>
-            <Typography variant="h6">이미지 더보기</Typography>
+            <Typography variant="h6" style={{ fontSize: '1rem' }}>
+              {basedItem.facltNm}
+            </Typography>
           </ModalHeader>
           <ModalContent>
             <IntroTabView basedItem={basedItem} />
@@ -193,7 +199,9 @@ const PhotoFeed = (props) => {
       <Modal className={classes.modal} open={mapModalOpenFlag} onClose={mapModalClose}>
         <ModalContainer>
           <ModalHeader>
-            <Typography variant="h6">{getDetailAddress(basedItem)}</Typography>
+            <Typography variant="h6" style={{ fontSize: '1rem' }}>
+              {getDetailAddress(basedItem)}
+            </Typography>
           </ModalHeader>
           <ModalContent>
             <MapTabView basedItem={basedItem} />
