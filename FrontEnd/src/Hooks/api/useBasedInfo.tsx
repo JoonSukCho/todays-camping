@@ -44,6 +44,7 @@ const getBasedInfo = async (params): Promise<_iBasedInfo> => {
 const useBasedInfo = (params: _iBasedInfoReqParams) => {
   return useQuery<_iBasedInfo, Error>(['basedInfo', params], () => getBasedInfo(params), {
     enabled: !!params,
+    refetchOnWindowFocus: false,
   });
 };
 

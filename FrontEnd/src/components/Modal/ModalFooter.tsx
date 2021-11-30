@@ -4,19 +4,13 @@ import { Button } from '@material-ui/core';
 
 const Footer = styled.div`
   width: 100%;
-  height: 36px;
+  /* height: 34px; */
   display: flex;
   justify-content: flex-end;
 `;
 
-const ModalFooter = ({ onClose }) => {
-  return (
-    <Footer>
-      <Button autoFocus onClick={onClose} color="primary">
-        닫기
-      </Button>
-    </Footer>
-  );
+const ModalFooter = ({ children }) => {
+  return <Footer>{children}</Footer>;
 };
 
 export default ModalFooter;

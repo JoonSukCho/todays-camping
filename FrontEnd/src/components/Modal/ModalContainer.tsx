@@ -16,24 +16,24 @@ const Container = styled(Card)`
 
   @media (min-width: 0px) {
     max-width: 350px;
-    height: 434px;
+    max-height: 482px;
   }
 
   @media (min-width: 576px) {
     max-width: 500px;
-    height: 434px;
+    max-height: 482px;
   }
   @media (min-width: 768px) {
     max-width: 720px;
-    height: 634px;
+    max-height: 682px;
   }
   @media (min-width: 992px) {
     max-width: 960px;
-    height: 634px;
+    max-height: 682px;
   }
   @media (min-width: 1200px) {
     max-width: 1140px;
-    height: 634px;
+    max-height: 682px;
   }
 `;
 

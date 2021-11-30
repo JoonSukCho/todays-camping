@@ -3,7 +3,9 @@ import styled from 'styled-components';
 
 const Header = styled.div`
   width: 100%;
-  height: 36px;
+  display: flex;
+  align-items: center;
+  /* height: 34px; */
 `;
 
 const ModalHeader = ({ children }) => {

@@ -18,6 +18,7 @@ import {
   Collapse,
   Typography,
   darken,
+  IconButton,
 } from '@material-ui/core';
 
 // modules
@@ -38,6 +39,7 @@ import {
   Phone as PhoneIcon,
   Schedule as ScheduleIcon,
   FilterHdr as FilterHdrIcon,
+  FileCopy as FileCopyIcon,
 } from '@material-ui/icons';
 
 // components
@@ -60,7 +62,6 @@ import ReadyImage from 'assets/img/ready-image.jpg';
 import ModalContainer from 'components/Modal/ModalContainer';
 import ModalLink from 'components/Link/ModalLink';
 import TelLink from 'components/Link/TelLink';
-import BackDropIOSWorkaround from 'components/BackDrop/BackDropIOSWorkaround';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -177,37 +178,48 @@ const PhotoFeed = (props) => {
         </Collapse>
       </Card>
 
-      <Modal
-        BackdropComponent={BackDropIOSWorkaround}
-        className={classes.modal}
-        open={imageModalOpenFlag}
-        onClose={imageModalClose}
-      >
+      <Modal className={classes.modal} open={imageModalOpenFlag} onClose={imageModalClose}>
         <ModalContainer>
           <ModalHeader>
-            <Typography variant="h6" style={{ fontSize: '1rem' }}>
-              {basedItem.facltNm}
-            </Typography>
+            <Typography variant="h6">{basedItem.facltNm}</Typography>
           </ModalHeader>
           <ModalContent>
             <ImageModalView basedItem={basedItem} />
           </ModalContent>
-          <ModalFooter onClose={imageModalClose} />
+          <ModalFooter>
+            <Button autoFocus onClick={imageModalClose} color="primary">
+              닫기
+            </Button>
+          </ModalFooter>
         </ModalContainer>
       </Modal>
 
       <Modal className={classes.modal} open={mapModalOpenFlag} onClose={mapModalClose}>
         <ModalContainer>
           <ModalHeader>
-            <Typography variant="h6" variantMapping={{ h6: 'span' }} style={{ fontSize: '1rem' }}>
+            <IconButton
+              size="small"
+              style={{ marginRight: 8 }}
+              onClick={() => {
+                navigator.clipboard.writeText(getDetailAddress(basedItem)).then(() => {
+                  alert('주소가 클립보드에 복사 되었습니다.');
+                });
+              }}
+            >
+              <FileCopyIcon />
+            </IconButton>
+            <Typography variant="h6" variantMapping={{ h6: 'span' }}>
               {getDetailAddress(basedItem)}
             </Typography>
-            <HomeIcon />
           </ModalHeader>
           <ModalContent>
             <MapModalView basedItem={basedItem} />
           </ModalContent>
-          <ModalFooter onClose={mapModalClose} />
+          <ModalFooter>
+            <Button autoFocus onClick={mapModalClose} color="primary">
+              닫기
+            </Button>
+          </ModalFooter>
         </ModalContainer>
       </Modal>
     </>
