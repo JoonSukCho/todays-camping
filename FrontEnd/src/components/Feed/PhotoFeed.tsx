@@ -201,9 +201,11 @@ const PhotoFeed = (props) => {
               size="small"
               style={{ marginRight: 8 }}
               onClick={() => {
-                navigator.clipboard.writeText(getDetailAddress(basedItem)).then(() => {
-                  alert('주소가 클립보드에 복사 되었습니다.');
-                });
+                if (navigator.clipboard) {
+                  navigator.clipboard.writeText(getDetailAddress(basedItem)).then(() => {
+                    alert('주소가 클립보드에 복사 되었습니다.');
+                  });
+                }
               }}
             >
               <FileCopyIcon />
