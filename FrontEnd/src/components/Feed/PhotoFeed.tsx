@@ -19,6 +19,8 @@ import {
   Typography,
   darken,
   IconButton,
+  Popper,
+  Popover,
 } from '@material-ui/core';
 
 // modules
@@ -90,10 +92,23 @@ const PhotoFeed = (props) => {
   const [imageModalOpenFlag, imageModalOpen, imageModalClose] = useModal();
   const [mapModalOpenFlag, mapModalOpen, mapModalClose] = useModal();
 
-  const [expandFeed, setExpandFeed] = useState<boolean>(false);
+  const [feedExpand, setFeedExpand] = useState<boolean>(false);
 
-  const feedExpand = () => {
-    setExpandFeed(!expandFeed);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+
+    setTimeout(() => {
+      setAnchorEl(null);
+    }, 1000);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popper' : undefined;
+
+  const expandFeed = () => {
+    setFeedExpand(!feedExpand);
   };
 
   // list
@@ -140,7 +155,7 @@ const PhotoFeed = (props) => {
 
   return (
     <>
-      <Card className={classes.root}>
+      <Card className={classes.root} elevation={0}>
         <CardHeader
           title={basedItem.facltNm}
           subheader={getDetailAddress(basedItem)}
@@ -150,16 +165,13 @@ const PhotoFeed = (props) => {
           className={classes.media}
           image={basedItem.firstImageUrl ? basedItem.firstImageUrl : ReadyImage}
         />
-        {/* <CardContent>
-          <ContentText>{basedItem.lineIntro || ''}</ContentText>
-        </CardContent> */}
         <CardActions disableSpacing>
           <Button size="small" color="primary" onClick={imageModalOpen}>
             이미지 더보기
           </Button>
-          <ExpandMoreButton expanded={expandFeed} handler={feedExpand} />
+          <ExpandMoreButton expanded={feedExpand} handler={expandFeed} />
         </CardActions>
-        <Collapse in={expandFeed} timeout="auto" unmountOnExit>
+        <Collapse in={feedExpand} timeout="auto" unmountOnExit>
           <CardContent>
             <ListContainer>
               <IntroList>
@@ -196,15 +208,36 @@ const PhotoFeed = (props) => {
 
       <Modal className={classes.modal} open={mapModalOpenFlag} onClose={mapModalClose}>
         <ModalContainer>
+          <Popover
+            open={open}
+            anchorEl={anchorEl}
+            elevation={0}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+            PaperProps={{
+              style: {
+                background: '#f5f6fa',
+                padding: 8,
+              },
+            }}
+          >
+            <Typography variant="subtitle2">주소가 클립보드에 복사 되었습니다.</Typography>
+          </Popover>
           <ModalHeader>
             <IconButton
+              aria-describedby={id}
               size="small"
               style={{ marginRight: 8 }}
-              onClick={() => {
+              onClick={(e) => {
                 if (navigator.clipboard) {
-                  navigator.clipboard.writeText(getDetailAddress(basedItem)).then(() => {
-                    alert('주소가 클립보드에 복사 되었습니다.');
-                  });
+                  navigator.clipboard.writeText(getDetailAddress(basedItem)).then(() => {});
+                  handleClick(e);
                 }
               }}
             >

@@ -85,9 +85,9 @@ const SectionInfiniteList = () => {
   return (
     <div className={classes.sections}>
       <div className={classes.container}>
-        <div className={classes.title}>
+        {/* <div className={classes.title}>
           <h2 style={{ fontWeight: 600 }}>추천 캠핑장 &#127969;</h2>
-        </div>
+        </div> */}
         <InfiniteScroll
           style={{ overflow: 'hidden' }}
           dataLength={infBasedList.length}

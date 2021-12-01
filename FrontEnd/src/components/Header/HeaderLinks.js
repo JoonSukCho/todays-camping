@@ -30,7 +30,8 @@ export default function HeaderLinks(props) {
           홈
         </Button>
       </ListItem>
-      <ListItem className={classes.listItem}>
+
+      {/* <ListItem className={classes.listItem}>
         <Button href="/test-page" color="transparent" className={classes.navLink}>
           테스트
         </Button>
@@ -48,9 +49,10 @@ export default function HeaderLinks(props) {
         >
           로그아웃
         </Button>
-      </ListItem>
+      </ListItem> */}
 
-      <ListItem className={classes.listItem}>
+      {/* 아이콘 버튼 예제 */}
+      {/* <ListItem className={classes.listItem}>
         <Tooltip
           id="instagram-tooltip"
           title="Follow us on instagram"
@@ -66,7 +68,7 @@ export default function HeaderLinks(props) {
             <i className={classes.socialIcons + ' fab fa-instagram'} />
           </Button>
         </Tooltip>
-      </ListItem>
+      </ListItem> */}
     </List>
   );
 }
