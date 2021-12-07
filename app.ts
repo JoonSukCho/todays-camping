@@ -22,7 +22,7 @@ const oAuthKakao = require('./routes/oauth/kakao');
 // express settings
 const app = express();
 app.set('port', process.env.PORT || 4001);
-app.use(express.static(path.join(__dirname, '../FrontEnd/build')));
+app.use(express.static(path.join(__dirname, 'FrontEnd/build')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
