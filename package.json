@@ -4,7 +4,8 @@
   "description": "backend",
   "main": "server.js",
   "engines": {
-    "node": "14.x"
+    "node": "14.x",
+    "npm": "6.x"
   },
   "dependencies": {
     "@types/passport-kakao": "^0.2.1",
