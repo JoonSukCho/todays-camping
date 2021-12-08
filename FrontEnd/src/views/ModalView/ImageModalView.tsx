@@ -68,7 +68,7 @@ const ImageModalView = (props) => {
   }, [imageInfoIsFetched]);
 
   return (
-    <Card>
+    <Card style={{ touchAction: 'pan-x' }}>
       {imageInfoIsFetched ? (
         <Carousel {...carouselSettings}>
           {imageList.length > 0 ? (
