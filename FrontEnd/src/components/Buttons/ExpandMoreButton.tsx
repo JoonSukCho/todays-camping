@@ -7,7 +7,7 @@ import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
 interface ButtonProps {
   expanded: boolean;
-  handler: Function;
+  handler: () => void;
 }
 
 const Button = styled(IconButton)`

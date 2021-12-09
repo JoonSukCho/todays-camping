@@ -1,16 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-// @material-ui/core components
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-
-// @material-ui/icons
-import Chat from '@material-ui/icons/Chat';
-import VerifiedUser from '@material-ui/icons/VerifiedUser';
-import Fingerprint from '@material-ui/icons/Fingerprint';
-
-import styles from 'assets/jss/material-kit-react/views/landingPageSections/productStyle.js';
-
 declare global {
   interface Window {
     kakao: any;
