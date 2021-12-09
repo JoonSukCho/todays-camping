@@ -236,7 +236,7 @@ const PhotoFeed = (props) => {
               style={{ marginRight: 8 }}
               onClick={(e) => {
                 if (navigator.clipboard) {
-                  navigator.clipboard.writeText(getDetailAddress(basedItem)).then(() => {});
+                  navigator.clipboard.writeText(getDetailAddress(basedItem));
                   handleClick(e);
                 }
 
