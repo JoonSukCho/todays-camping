@@ -18,6 +18,8 @@ const getBasedInfo = async (params): Promise<_iBasedInfo> => {
     params,
   });
 
+  console.log('getBasedInfo data', data);
+
   const basedInfoBody: _iBasedInfoBody = data.response.body;
   const { totalCount, pageNo, numOfRows, items } = basedInfoBody;
   const basedInfo: _iBasedInfo = {} as _iBasedInfo;

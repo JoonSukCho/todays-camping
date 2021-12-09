@@ -22,10 +22,6 @@ const oAuthKakao = require('./routes/oauth/kakao');
 // express settings
 const app = express();
 
-app.listen(process.env.PORT || 3001, () => {
-  console.log('Example app listening on port 3001');
-});
-
 app.set('port', process.env.PORT || 3001);
 app.use(express.static(path.join(__dirname, 'FrontEnd/build')));
 app.use(express.json());
@@ -51,6 +47,11 @@ app.use('/goCamping/searchList', searchList);
 app.use('/oauth/kakao', oAuthKakao);
 
 app.get('*', (req, res) => {
+  console.log('============== app.get("*")');
   res.sendFile(path.join(__dirname + '../FrontEnd/build/index.html'));
 });
 // ====================================
+
+app.listen(process.env.PORT || 3001, () => {
+  console.log(`Example app listening on port ${process.env.PORT}`);
+});
