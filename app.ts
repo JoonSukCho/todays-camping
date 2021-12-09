@@ -21,7 +21,7 @@ const oAuthKakao = require('./routes/oauth/kakao');
 // ====================================
 // express settings
 const app = express();
-app.set('port', process.env.PORT || 4001);
+app.set('port', process.env.PORT || 3001);
 app.use(express.static(path.join(__dirname, 'FrontEnd/build')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -50,6 +50,6 @@ app.get('*', (req, res) => {
 });
 // ====================================
 
-app.listen(4001, () => {
-  console.log('Example app listening on port 4001');
+app.listen(process.env.PORT || 3001, () => {
+  console.log('Example app listening on port 3001');
 });

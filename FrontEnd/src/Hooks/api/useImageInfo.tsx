@@ -13,7 +13,7 @@ import {
 const getImageInfo = async (params): Promise<_iImageInfo> => {
   // const ipAddress = process.env.REACT_APP_IP_ADDRESS;
   // const serverPort = process.env.REACT_APP_SERVER_PORT;
-  const { data } = await axios.get(`http://localhost:4001/goCamping/imageList`, {
+  const { data } = await axios.get(`http://localhost:3001/goCamping/imageList`, {
     params,
   });
 
