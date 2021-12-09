@@ -1,6 +1,0 @@
-{
-    "root": "FrontEnd/build/",
-    "routes": {
-        "/**": "index.html"
-    }
-}
