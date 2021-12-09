@@ -239,6 +239,8 @@ const PhotoFeed = (props) => {
                   navigator.clipboard.writeText(getDetailAddress(basedItem)).then(() => {});
                   handleClick(e);
                 }
+
+                return true;
               }}
             >
               <FileCopyIcon />
