@@ -29,7 +29,7 @@
   },
   "scripts": {
     "prestart": "tsc",
-    "start": "ts-node app.ts",
+    "start": "ts-node --max_old_space_size=2560 app.ts",
     "heroku-postbuild": "cd FrontEnd && npm install && npm run build",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "nodemon --exec ts-node app.ts",
