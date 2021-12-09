@@ -32,7 +32,6 @@ app.use(passport.session());
 // ====================================
 // routes
 // index
-app.use('/', indexRouter);
 
 // goCamping
 app.use('/goCamping/basedList', basedList);
