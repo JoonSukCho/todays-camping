@@ -11,10 +11,16 @@ import {
 } from 'models/api/goCamping/basedInfo';
 
 const getBasedInfo = async (params): Promise<_iBasedInfo> => {
-  // const ipAddress = process.env.REACT_APP_IP_ADDRESS;
-  // const serverPort = process.env.REACT_APP_SERVER_PORT;
-  // const { data } = await axios.get(`${ipAddress}:${serverPort}/goCamping/basedList`, {
-  const { data } = await axios.get(`/goCamping/basedList`, {
+  let basedInfoURL = '/goCamping/basedList';
+
+  if (process.env.NODE_ENV === 'development') {
+    const ipAddress = process.env.REACT_APP_IP_ADDRESS;
+    const serverPort = process.env.REACT_APP_SERVER_PORT;
+
+    basedInfoURL = `${ipAddress}:${serverPort}/goCamping/basedList`;
+  }
+
+  const { data } = await axios.get(basedInfoURL, {
     params,
   });
 
