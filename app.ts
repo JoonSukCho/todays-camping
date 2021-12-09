@@ -49,8 +49,7 @@ app.listen(process.env.PORT || 3001, () => {
 
 app.use(express.static(path.join(__dirname, 'FrontEnd/build')));
 
-app.get('*', (req, res) => {
-  console.log('============== app.get("*")');
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname + '../FrontEnd/build/index.html'));
 });
 // ====================================
