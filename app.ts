@@ -34,10 +34,10 @@ app.use(passport.session());
 // index
 
 // goCamping
-app.use('/goCamping/basedList', basedList);
-app.use('/goCamping/imageList', imageList);
-app.use('/goCamping/locationBasedList', locationBasedList);
-app.use('/goCamping/searchList', searchList);
+app.use('/api/goCamping/basedList', basedList);
+app.use('/api/goCamping/imageList', imageList);
+app.use('/api/goCamping/locationBasedList', locationBasedList);
+app.use('/api/goCamping/searchList', searchList);
 
 // oauth
 app.use('/oauth/kakao', oAuthKakao);
@@ -48,7 +48,7 @@ app.listen(process.env.PORT || 3001, () => {
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'FrontEnd/build')));
-  app.get('/', (req, res) => {
+  app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname + '../FrontEnd/build/index.html'));
   });
 }

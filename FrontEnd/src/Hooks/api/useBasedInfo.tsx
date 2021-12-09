@@ -11,7 +11,7 @@ import {
 } from 'models/api/goCamping/basedInfo';
 
 const getBasedInfo = async (params): Promise<_iBasedInfo> => {
-  let basedInfoURL = `https://todays-camping.herokuapp.com/goCamping/basedList`;
+  let basedInfoURL = `https://todays-camping.herokuapp.com/api/goCamping/basedList`;
 
   if (process.env.NODE_ENV === 'development') {
     const ipAddress = process.env.REACT_APP_IP_ADDRESS;
