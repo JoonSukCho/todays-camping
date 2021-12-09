@@ -30,6 +30,12 @@ app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get('/test', (req, res) => {
+  res.send({
+    data: 'test',
+  });
+});
+
 app.get('/goCamping/basedList', (req, res) => {
   const baseURL = 'http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/imageList?';
   const { contentId } = req.query;
