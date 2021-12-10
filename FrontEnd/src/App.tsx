@@ -20,7 +20,7 @@ const App = () => {
         <Route path="/test-page" component={RecoilCounter} />
         <Route path="/oauth/kakao/callback" component={OAuth2RedirectHandler} />
         <Route path="/login-page" component={LoginPage} />
-        <Route path="/" component={MainPage} />
+        <Route exact path="/" component={MainPage} />
       </Switch>
     </Router>
   );

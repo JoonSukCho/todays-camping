@@ -10,7 +10,7 @@ const OAuth2RedirectHandler = ({ history }) => {
   useEffect(() => {
     axios({
       method: 'GET',
-      url: `http://localhost:3001/oauth/kakao/callback?code=${code}`,
+      url: `http://localhost:4001/oauth/kakao/callback?code=${code}`,
     })
       .then((res) => {
         const ACCESS_TOKEN = res.data.accessToken;

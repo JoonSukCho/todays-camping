@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 
 const getBasedList = async () => {
-  const { data } = await axios.get('http://localhost:3001/goCamping/basedList', {
+  const { data } = await axios.get('http://localhost:4001/goCamping/basedList', {
     params: {
       pageNo: 1,
       nomOfRows: 10,

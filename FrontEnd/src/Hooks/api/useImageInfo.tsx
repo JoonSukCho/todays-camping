@@ -11,7 +11,7 @@ import {
 } from 'models/api/goCamping/imageInfo';
 
 const getImageInfo = async (params): Promise<_iImageInfo> => {
-  let imageInfoURL = 'https://todays-camping.herokuapp.com/api/goCamping/imageList';
+  let imageInfoURL = 'https://todays-camping.herokuapp.com/goCamping/imageList';
 
   if (process.env.NODE_ENV === 'development') {
     const ipAddress = process.env.REACT_APP_IP_ADDRESS;
