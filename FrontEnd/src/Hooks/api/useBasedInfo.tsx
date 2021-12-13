@@ -20,6 +20,12 @@ const getBasedInfo = async (params): Promise<_iBasedInfo> => {
     basedInfoURL = `${ipAddress}:${serverPort}/goCamping/basedList`;
   }
 
+  console.log(
+    await axios.get(basedInfoURL, {
+      params,
+    }),
+  );
+
   const { data } = await axios.get(basedInfoURL, {
     params,
   });
