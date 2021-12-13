@@ -32,8 +32,6 @@ router.get('/', (req, res) => {
     '&' +
     '_type=json';
 
-  console.log('basedList queryParams', queryParams);
-
   request(
     {
       url: baseURL + queryParams,
@@ -41,7 +39,6 @@ router.get('/', (req, res) => {
     },
 
     (err, response, body) => {
-      console.log('basedList responseBody', body);
       res.send(body);
     },
   );
