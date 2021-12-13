@@ -14,7 +14,7 @@ const locationBasedList = require('./routes/goCamping/locationBasedList');
 const searchList = require('./routes/goCamping/searchList');
 
 // oauth
-const oAuthKakao = require('./routes/oauth/kakao');
+// const oAuthKakao = require('./routes/oauth/kakao');
 // ====================================
 
 // ====================================
@@ -39,7 +39,7 @@ app.use('/goCamping/locationBasedList', locationBasedList);
 app.use('/goCamping/searchList', searchList);
 
 // // oauth
-app.use('/oauth/kakao', oAuthKakao);
+// app.use('/oauth/kakao', oAuthKakao);
 
 app.listen(process.env.PORT || 4001, () => {
   console.log(`Listening on port ${process.env.PORT}`);
