@@ -3,10 +3,9 @@ import * as cors from 'cors';
 import * as passport from 'passport';
 import * as path from 'path';
 
+console.log('BackEnd app.ts 실행 --------------------');
 // ====================================
 // router import
-// index
-const indexRouter = require('./routes/index');
 
 // goCamping
 const basedList = require('./routes/goCamping/basedList');
@@ -43,12 +42,13 @@ app.use('/goCamping/searchList', searchList);
 app.use('/oauth/kakao', oAuthKakao);
 
 app.listen(process.env.PORT || 4001, () => {
-  console.log(`Example app listening on port ${process.env.PORT}`);
+  console.log(`Listening on port ${process.env.PORT}`);
 });
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'FrontEnd/build')));
   app.get('/*', (req, res) => {
+    console.log('app.get* -----------------------------');
     res.sendFile(path.join(__dirname + '../FrontEnd/build/index.html'));
   });
 }
