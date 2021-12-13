@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "backend",
-  "main": "server.js",
+  "main": "app.ts",
   "engines": {
     "node": "14.x",
     "npm": "6.x"
@@ -35,7 +35,7 @@
     "dev:server": "nodemon --exec ts-node app.ts",
     "dev:client": "cd FrontEnd && npm start"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "chojs28",
+  "license": "MIT",
   "keywords": []
 }
