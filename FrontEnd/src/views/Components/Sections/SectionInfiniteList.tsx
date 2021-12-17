@@ -6,6 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 
 // components
 import PhotoFeed from 'components/Feed/PhotoFeed';
@@ -16,13 +17,15 @@ import styles from 'assets/jss/material-kit-react/views/componentsSections/basic
 
 // Hooks
 import useBasedInfo from 'Hooks/api/useBasedInfo';
+import useTotalBasedCnt from 'Hooks/api/useTotalBasedCnt';
 
 // util
 import { generateShuffledArr } from 'util/arrUtil';
-import { rangeRandom } from 'util/mathUtil';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-import { Typography } from '@material-ui/core';
+
+// models
+import { _iBasedInfoReqParams } from 'models/api/goCamping/basedInfo';
 
 const useStyles = makeStyles(styles);
 
@@ -32,46 +35,64 @@ const EndMessageComponent = styled(Typography)`
   text-align: center;
 `;
 
+const NUM_OF_ROWS = 10;
 const SectionInfiniteList = () => {
   const classes = useStyles();
 
   // local state
-  const [basedInfoReqParams, setBasedInfoReqParams] = useState({
+  const [basedInfoReqParams, setBasedInfoReqParams] = useState<_iBasedInfoReqParams>({
     pageNo: 0,
     numOfRows: 0,
   });
-  const [numOfRows] = useState(10);
-  const [totalPageCount, setTotalPageCount] = useState(0);
-  const [totalPageIdxArr, setTotalPageIdxArr] = useState([]);
+  const [shuffledPageIdxArr, setShuffledPageIdxArr] = useState([]);
   const [infBasedList, setInfBasedList] = useState([]);
 
   const {
-    status: basedInfoStatus,
     data: basedInfo,
     error: basedInfoError,
-    isFetching: basedInfoIsFetching,
     isFetched: basedInfoIsFetched,
-    refetch: basedInfoRefecth,
+    refetch: getBasedInfo,
   } = useBasedInfo(basedInfoReqParams);
 
+  const {
+    data: totalBasedCnt,
+    error: totalBasedCntError,
+    isFetching: totalBasedCntIsFetching,
+    isFetched: totalBasedCntIsFetched,
+    refetch: getTotalBasedCnt,
+  } = useTotalBasedCnt();
+
+  // Infinite Scroll의 next 요청
+  const fetchNextData = () => {
+    setBasedInfoReqParams((prev) => ({
+      pageNo: shuffledPageIdxArr[prev.pageNo + 1],
+      numOfRows: NUM_OF_ROWS,
+    }));
+  };
+
+  // Init 하면 basedInfo의 total 갯수를 가져온다.
   useEffect(() => {
-    if (totalPageCount > 0) {
-      setBasedInfoReqParams({ pageNo: rangeRandom(1, totalPageCount), numOfRows });
-    }
-  }, [totalPageCount]);
+    getTotalBasedCnt();
+  }, []);
 
-  // set Total Page Index Array
+  // 랜덤 페이지 요청을 보내기 위한 셔플 배열 생성
   useEffect(() => {
-    if (basedInfoIsFetched) {
-      const totalPage = Math.ceil(basedInfo.totalCount / numOfRows);
-      const shuffledPageIdxes = generateShuffledArr(totalPage).filter((idx) => idx !== totalPage);
+    if (totalBasedCntIsFetched) {
+      const totalPage = Math.ceil(totalBasedCnt / NUM_OF_ROWS);
+      const shuffledPageIdxArr = generateShuffledArr(totalPage).filter((idx) => idx !== totalPage);
 
-      setTotalPageCount((prev) => (prev !== totalPage ? totalPage : prev));
-      setTotalPageIdxArr(shuffledPageIdxes);
+      setShuffledPageIdxArr(shuffledPageIdxArr);
     }
-  }, [basedInfoIsFetched]);
+  }, [totalBasedCntIsFetched]);
 
-  // set Infinite BasedList
+  // basedInfo 요청 (parameter가 변경될 때 요청을 보낸다)
+  useEffect(() => {
+    if (basedInfoReqParams.pageNo !== 0) {
+      getBasedInfo();
+    }
+  }, [basedInfoReqParams]);
+
+  // Infinite Based List를 만든다.
   useEffect(() => {
     if (basedInfoIsFetched) {
       if (basedInfo.itemList.length > 0) {
@@ -82,21 +103,14 @@ const SectionInfiniteList = () => {
     }
   }, [basedInfoIsFetched]);
 
+  if (totalBasedCntIsFetching) return <CirCularLoader />;
   return (
     <div className={classes.sections}>
       <div className={classes.container}>
-        {/* <div className={classes.title}>
-          <h2 style={{ fontWeight: 600 }}>추천 캠핑장 &#127969;</h2>
-        </div> */}
         <InfiniteScroll
           style={{ overflow: 'hidden' }}
           dataLength={infBasedList.length}
-          next={() => {
-            setBasedInfoReqParams((prev) => ({
-              pageNo: totalPageIdxArr[prev.pageNo + 1],
-              numOfRows,
-            }));
-          }}
+          next={fetchNextData}
           hasMore
           loader={<CirCularLoader />}
           // scrollableTarget="scrollableDiv"

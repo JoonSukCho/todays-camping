@@ -50,8 +50,7 @@ const getBasedInfo = async (params): Promise<_iBasedInfo> => {
 // useQuery는 generic만 지원
 const useBasedInfo = (params: _iBasedInfoReqParams) => {
   return useQuery<_iBasedInfo, Error>(['basedInfo', params], () => getBasedInfo(params), {
-    enabled: !!params,
-    refetchOnWindowFocus: false,
+    enabled: false,
   });
 };
 
