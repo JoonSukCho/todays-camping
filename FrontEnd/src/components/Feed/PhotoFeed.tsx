@@ -166,9 +166,11 @@ const PhotoFeed = (props) => {
           image={basedItem.firstImageUrl ? basedItem.firstImageUrl : ReadyImage}
         />
         <CardActions disableSpacing>
-          <Button size="small" color="primary" onClick={imageModalOpen}>
-            이미지 더보기
-          </Button>
+          {basedItem.firstImageUrl && (
+            <Button size="small" color="primary" onClick={imageModalOpen}>
+              이미지 더보기
+            </Button>
+          )}
           <ExpandMoreButton expanded={feedExpand} handler={expandFeed} />
         </CardActions>
         <Collapse in={feedExpand} timeout="auto" unmountOnExit>
