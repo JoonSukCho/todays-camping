@@ -1,5 +1,5 @@
 # todays-camping (오늘의 캠핑) 이란?
-[오늘의 캠핑](https://todays-camping.herokuapp.com/)  
+### [오늘의 캠핑](https://todays-camping.herokuapp.com/)  
 국내의 다양한 캠핑지를 인스타그램 피드 형태로 볼 수 있도록 만든 토이 프로젝트 입니다. 
 
 
@@ -7,7 +7,7 @@
  1. 공공데이터포털, 카카오, 네이버 등 Open API 사용 경험.
  2. 프론트엔드 트렌드에 따른 신기술 학습.
  3. 프론트엔드 프로젝트 구조, 상태 관리 구조, 화면 설계 등 전반적인 설계능력 향상.
- 4. 사용자에게 좋은 UX/UI에 대한 고민.
+ 4. 사용자에게 좋은 UX/UI를 제공하기 위해 다양한 문서 참고 및 적용.
  5. 백엔드 구조를 이해하기 위한 경험.
 
 
@@ -20,9 +20,9 @@
 
 
 # 화면 설계
+### [화면 설계서](https://ovenapp.io/project/yv9X0PCMjLFKuiQ6kZLqx9Y3NDxikBy1#jFRbf)  
 아직까지 다양한 요구사항이나 복잡한 비즈니스 로직이 없고, Kakao Oven을 경험해보고자 이를 이용하여 간단히 화면 설계.  
 (추후 프로젝트 규모가 커질 경우 피그마로 설계 문서를 이관할 예정)  
-[화면 설계서](https://ovenapp.io/project/yv9X0PCMjLFKuiQ6kZLqx9Y3NDxikBy1#jFRbf)
 
 
 # 기술 스택
@@ -38,13 +38,18 @@
 - Node.js
 - Express
 
+### etc
+- git
+- 공공데이터포털 Open API
+- 카카오 Open API
+
 
 # 배포 환경
 Heroku를 이용하여 배포하였으며, Heroku Sleep을 방지하기 위해 Heroku Kaffeine에 등록.
 
 
 # 앞으로 추가 할 기능
-1. 로그인, 회원가입
+1. 로그인(소셜 로그인 포함), 회원가입
 2. 좋아요 버튼 및 좋아요 누른 피드만 모아서 보기
 3. 키워드 검색
 
