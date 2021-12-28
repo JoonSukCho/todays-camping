@@ -6,7 +6,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 import 'assets/scss/material-kit-react.scss?v=1.10.0';
 
 // pages for this product
-import LoginPage from 'views/LoginPage/LoginPage.js';
+import LoginPage from 'views/LoginPage/LoginPage';
 import MainPage from 'views/MainPage/MainPage';
 import OAuth2RedirectHandler from 'views/OAuth/OAuth2RedirectHandler';
 import RecoilCounter from 'views/TestPage/RecoilCounter';
