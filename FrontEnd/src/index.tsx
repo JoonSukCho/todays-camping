@@ -8,7 +8,7 @@ import { RecoilRoot } from 'recoil';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import 'dotenv/config';
-import App from './App.tsx';
+import App from 'App';
 
 const customTheme = createMuiTheme({
   palette: {

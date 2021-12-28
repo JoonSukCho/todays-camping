@@ -10,16 +10,11 @@ import Email from '@material-ui/icons/Email';
 import People from '@material-ui/icons/People';
 
 // core components
-import Header from 'components/Header/Header.js';
-import HeaderLinks from 'components/Header/HeaderLinks.js';
+import Header from 'components/Header/Header';
+import HeaderLinks from 'components/Header/HeaderLinks';
 import Footer from 'components/Footer/Footer.js';
-import GridContainer from 'components/Grid/GridContainer.tsx';
-import GridItem from 'components/Grid/GridItem.tsx';
-import Button from 'components/CustomButtons/Button.js';
-import Card from 'components/Card/Card.js';
-import CardBody from 'components/Card/CardBody.js';
-import CardHeader from 'components/Card/CardHeader.js';
-import CardFooter from 'components/Card/CardFooter.js';
+import GridContainer from 'components/Grid/GridContainer';
+import GridItem from 'components/Grid/GridItem';
 
 import styles from 'assets/jss/material-kit-react/views/loginPage.js';
 
