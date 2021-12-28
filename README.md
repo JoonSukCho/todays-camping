@@ -55,6 +55,5 @@ Heroku를 이용하여 배포하였으며, Heroku Sleep을 방지하기 위해 H
 
 # 앞으로 사용 해 볼 기술
 1. recoil
-2. GraphQL
-3. DB (미정)  
+2. mySQL
 
