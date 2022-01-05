@@ -3,11 +3,6 @@ import * as express from 'express';
 import * as cors from 'cors';
 import * as passport from 'passport';
 import * as path from 'path';
-import * as mysql from 'mysql2';
-
-// db
-const dbConfig = require('./config/db.config');
-const connection = mysql.createConnection(dbConfig);
 
 // router import
 const basedList = require('./routes/goCamping/basedList');
@@ -32,16 +27,6 @@ app.use('/goCamping/imageList', imageList);
 app.use('/goCamping/locationBasedList', locationBasedList);
 app.use('/goCamping/searchList', searchList);
 // app.use('/oauth/kakao', oAuthKakao);
-
-app.get('/db-test', (req, res) => {
-  connection.connect();
-
-  connection.query(`SELECT * FROM Users`, (err, rows) => {
-    res.send(rows);
-  });
-
-  connection.end();
-});
 
 // listen port
 app.listen(process.env.PORT || 4001, () => {
