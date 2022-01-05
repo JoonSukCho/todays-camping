@@ -10,6 +10,7 @@ import LoginPage from 'views/LoginPage/LoginPage';
 import MainPage from 'views/MainPage/MainPage';
 import OAuth2RedirectHandler from 'views/OAuth/OAuth2RedirectHandler';
 import RecoilCounter from 'views/TestPage/RecoilCounter';
+import NotFound from 'views/Error/NotFound';
 
 const hist = createBrowserHistory();
 
@@ -17,10 +18,13 @@ const App = () => {
   return (
     <Router history={hist}>
       <Switch>
+        <Route exact path="/" component={MainPage} />
+
+        <Route path="/login-page" component={LoginPage} />
         <Route path="/test-page" component={RecoilCounter} />
         <Route path="/oauth/kakao/callback" component={OAuth2RedirectHandler} />
-        <Route path="/login-page" component={LoginPage} />
-        <Route exact path="/" component={MainPage} />
+
+        <Route path="*" component={NotFound} />
       </Switch>
     </Router>
   );

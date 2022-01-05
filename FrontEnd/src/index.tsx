@@ -7,6 +7,8 @@ import { RecoilRoot } from 'recoil';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+import GlobalStyle from 'styles/globalStyle';
+
 import 'dotenv/config';
 import App from 'App';
 
@@ -51,6 +53,7 @@ const queryClient = new QueryClient({
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
     <RecoilRoot>
+      <GlobalStyle />
       <ThemeProvider theme={customTheme}>
         <App />
       </ThemeProvider>
