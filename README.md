@@ -40,6 +40,7 @@
 
 ### etc
 - git
+- heroku
 - 공공데이터포털 Open API
 - 카카오 Open API
 
