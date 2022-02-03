@@ -12,6 +12,8 @@ import 'public/scss/material-kit-react.scss?v=1.10.0';
 import 'public/css/fonts.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const kakaoAppKey = process.env.NEXT_PUBLIC_JS_KEY;
+
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -43,7 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>오늘의 캠핑</title>
         <script
           type="text/javascript"
-          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=97f5320edbef07141359c2f04cd9bcc6"
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoAppKey}`}
         ></script>
       </Head>
       <QueryClientProvider client={queryClient}>
