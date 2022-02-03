@@ -8,7 +8,6 @@
     "npm": "6.x"
   },
   "dependencies": {
-    "@types/passport-kakao": "^0.2.1",
     "concurrently": "^6.4.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -25,7 +24,8 @@
     "nodemon": "^2.0.12",
     "source-map-support": "^0.5.19",
     "@types/express": "^4.17.13",
-    "@types/node": "^16.7.1"
+    "@types/node": "^16.7.1",
+    "@types/passport-kakao": "^0.2.1"
   },
   "scripts": {
     "start": "ts-node --max_old_space_size=2560 app.ts",
