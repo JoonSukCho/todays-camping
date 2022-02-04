@@ -55,14 +55,34 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         <meta name="theme-color" content="#000000" />
+        <meta
+          name="google-site-verification"
+          content="_8ugsblGFpOipbnoC-93ojIr69xwJK1od9Gj5aO_OlE"
+        />
         <link rel="manifest" href="/manifest.json" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon.png" />
         <title>오늘의 캠핑</title>
         <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+          page_path: window.location.pathname,
+        });
+      `,
+          }}
+        />
+        <script
           type="text/javascript"
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoAppKey}`}
-        ></script>
+        />
       </Head>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
