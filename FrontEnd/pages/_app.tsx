@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { GlobalStyle } from 'styles/globalStyle';
 import { QueryClientProvider, QueryClient } from 'react-query';
@@ -8,11 +9,26 @@ import { theme } from 'styles/theme';
 import { ThemeProvider } from 'styled-components';
 import { ThemeProvider as MUIThemeProvider, StylesProvider } from '@material-ui/core/styles';
 
+import * as ga from 'lib/ga';
+
 import 'public/scss/material-kit-react.scss?v=1.10.0';
 import 'public/css/fonts.css';
+import { useEffect } from 'react';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const kakaoAppKey = process.env.NEXT_PUBLIC_JS_KEY;
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      ga.pageview(url);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
   const queryClient = new QueryClient({
     defaultOptions: {
