@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import { NextSeo } from 'next-seo';
 import styled from 'styled-components';
 
 // core components
@@ -20,6 +21,18 @@ const Home: NextPage = (props) => {
 
   return (
     <div>
+      <NextSeo
+        title="오늘의 캠핑"
+        description="국내의 다양한 캠핑지를 만나보세요"
+        canonical="https://todays-camping.vercel.app"
+        openGraph={{
+          type: 'website',
+          url: 'https://todays-camping.vercel.app',
+          title: '국내의 다양한 캠핑지, 오늘의 캠핑',
+          description: '국내의 다양한 캠핑지를 만나보세요',
+          site_name: 'todays-camping',
+        }}
+      />
       <Header
         brand="오늘의 캠핑"
         rightLinks={<HeaderLinks />}
