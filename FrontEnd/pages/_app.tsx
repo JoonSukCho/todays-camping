@@ -7,7 +7,10 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
 import { theme } from 'styles/theme';
 import { ThemeProvider } from 'styled-components';
-import { ThemeProvider as MUIThemeProvider, StylesProvider } from '@material-ui/core/styles';
+import {
+  ThemeProvider as MUIThemeProvider,
+  StylesProvider,
+} from '@material-ui/core/styles';
 
 import * as ga from 'lib/ga';
 
@@ -19,6 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const kakaoAppKey = process.env.NEXT_PUBLIC_JS_KEY;
   const router = useRouter();
 
+  // 구글 애널리틱스 페이지 이동 조회
   useEffect(() => {
     const handleRouteChange = (url) => {
       ga.pageview(url);
