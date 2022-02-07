@@ -73,14 +73,18 @@ const Home: NextPage = (props) => {
     refetch: getTotalBasedCnt,
   } = useTotalBasedCnt();
 
-  // Infinite Scroll의 next 요청
+  // Infinite Scroll의 next data 요청
   const fetchNextData = () => {
-    if (shuffledPageIdxArr.length > 0) {
-      setBasedInfoReqParams((prev) => ({
-        pageNo: shuffledPageIdxArr[prev.pageNo + 1],
-        numOfRows: NUM_OF_ROWS,
-      }));
-    }
+    const shuffledInterval = setInterval(() => {
+      if (shuffledPageIdxArr.length > 0) {
+        setBasedInfoReqParams((prev) => ({
+          pageNo: shuffledPageIdxArr[prev.pageNo + 1],
+          numOfRows: NUM_OF_ROWS,
+        }));
+
+        clearInterval(shuffledInterval);
+      }
+    }, 300);
   };
 
   // basedInfo의 total 갯수를 요청
@@ -98,11 +102,6 @@ const Home: NextPage = (props) => {
       );
     }
   }, [totalBasedCntIsFetched]);
-
-  // 셔플 배열이 생성되면 basedInfo를 요청한다.
-  useEffect(() => {
-    fetchNextData();
-  }, [shuffledPageIdxArr]);
 
   // basedInfo 요청 (parameter가 변경될 때 요청을 보낸다)
   useEffect(() => {
