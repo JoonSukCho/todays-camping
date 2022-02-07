@@ -30,9 +30,7 @@
   },
   "scripts": {
     "start": "ts-node --max_old_space_size=2560 app.ts",
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "dev:server": "nodemon --exec ts-node app.ts",
-    "dev:client": "cd FrontEnd && npm run dev"
+    "dev": "nodemon --exec ts-node app.ts"
   },
   "author": "chojs28",
   "license": "MIT",

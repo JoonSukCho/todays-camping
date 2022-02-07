@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 interface ParallaxStyleProps {
-  filter?: string;
+  filtered?: string;
   image?: string;
   small?: boolean;
   transform?: number;
@@ -12,7 +12,7 @@ interface ParallaxProps extends ParallaxStyleProps {
   children?: React.ReactNode;
 }
 
-const Parallax = ({ filter, children, image, small }: ParallaxProps) => {
+const Parallax = ({ filtered, children, image, small }: ParallaxProps) => {
   const [transform, setTransform] = useState<number>(0);
 
   useEffect(() => {
@@ -39,7 +39,12 @@ const Parallax = ({ filter, children, image, small }: ParallaxProps) => {
   };
 
   return (
-    <Container filter={filter} image={image} small={small} transform={transform}>
+    <Container
+      filtered={filtered}
+      image={image}
+      small={small}
+      transform={transform}
+    >
       {children}
     </Container>
   );
@@ -65,8 +70,8 @@ const Container = styled.div<ParallaxStyleProps>`
   display: flex;
   align-items: center;
 
-  ${({ filter }) =>
-    filter &&
+  ${({ filtered }) =>
+    filtered &&
     css`
   &:before {
     background: rgba(0, 0, 0, 0.5);

@@ -75,28 +75,34 @@ const Home: NextPage = (props) => {
 
   // Infinite Scroll의 next 요청
   const fetchNextData = () => {
-    setBasedInfoReqParams((prev) => ({
-      pageNo: shuffledPageIdxArr[prev.pageNo + 1],
-      numOfRows: NUM_OF_ROWS,
-    }));
+    if (shuffledPageIdxArr.length > 0) {
+      setBasedInfoReqParams((prev) => ({
+        pageNo: shuffledPageIdxArr[prev.pageNo + 1],
+        numOfRows: NUM_OF_ROWS,
+      }));
+    }
   };
 
-  // Init 하면 basedInfo의 total 갯수를 가져온다.
+  // basedInfo의 total 갯수를 요청
   useEffect(() => {
     getTotalBasedCnt();
   }, []);
 
-  // 랜덤 페이지 요청을 보내기 위한 셔플 배열 생성
+  // 랜덤 피드 요청을 보내기 위한 셔플 배열 생성
   useEffect(() => {
     if (totalBasedCntIsFetched) {
       const totalPage = Math.ceil(totalBasedCnt / NUM_OF_ROWS);
-      const shuffledPageIdxArr = generateShuffledArr(totalPage).filter(
-        (idx) => idx !== totalPage,
-      );
 
-      setShuffledPageIdxArr(shuffledPageIdxArr);
+      setShuffledPageIdxArr(
+        generateShuffledArr(totalPage).filter((idx) => idx !== totalPage),
+      );
     }
   }, [totalBasedCntIsFetched]);
+
+  // 셔플 배열이 생성되면 basedInfo를 요청한다.
+  useEffect(() => {
+    fetchNextData();
+  }, [shuffledPageIdxArr]);
 
   // basedInfo 요청 (parameter가 변경될 때 요청을 보낸다)
   useEffect(() => {
@@ -107,12 +113,10 @@ const Home: NextPage = (props) => {
 
   // Infinite Based List를 만든다.
   useEffect(() => {
-    if (basedInfoIsFetched) {
-      if (basedInfo.itemList.length > 0) {
-        const basedItem = basedInfo.itemList;
+    if (basedInfoIsFetched && basedInfo.itemList.length > 0) {
+      const basedItem = basedInfo.itemList;
 
-        setInfBasedList((prev) => prev.concat(basedItem));
-      }
+      setInfBasedList((prev) => prev.concat(basedItem));
     }
   }, [basedInfoIsFetched]);
 
