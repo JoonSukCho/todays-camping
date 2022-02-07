@@ -1,1 +1,1 @@
-web: ts-node app.ts
+web: cd BackEnd ts-node app.ts
