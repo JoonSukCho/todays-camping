@@ -1,6 +1,7 @@
-import type { NextPage } from 'next';
+import { GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -27,13 +28,16 @@ import styles from 'public/jss/material-kit-react/views/componentsSections/basic
 
 // Hooks
 import useBasedInfo from 'Hooks/api/useBasedInfo';
-import useTotalBasedCnt from 'Hooks/api/useTotalBasedCnt';
 
 // util
 import { generateShuffledArr } from 'util/arrUtil';
 
 // models
 import { _iBasedInfoReqParams } from 'models/api/goCamping/basedInfo';
+
+interface HomeProps {
+  shuffledPageIdxArr: number[];
+}
 
 const useStyles = makeStyles(styles);
 
@@ -45,8 +49,7 @@ const EndMessageComponent = styled(Typography)`
 
 const NUM_OF_ROWS = 10;
 
-const Home: NextPage = (props) => {
-  const { ...rest } = props;
+const Home = ({ shuffledPageIdxArr }: HomeProps) => {
   const classes = useStyles();
 
   // local state
@@ -55,7 +58,6 @@ const Home: NextPage = (props) => {
       pageNo: 0,
       numOfRows: 0,
     });
-  const [shuffledPageIdxArr, setShuffledPageIdxArr] = useState([]);
   const [infBasedList, setInfBasedList] = useState([]);
 
   const {
@@ -65,43 +67,15 @@ const Home: NextPage = (props) => {
     refetch: getBasedInfo,
   } = useBasedInfo(basedInfoReqParams);
 
-  const {
-    data: totalBasedCnt,
-    error: totalBasedCntError,
-    isFetching: totalBasedCntIsFetching,
-    isFetched: totalBasedCntIsFetched,
-    refetch: getTotalBasedCnt,
-  } = useTotalBasedCnt();
-
   // Infinite Scroll의 next data 요청
   const fetchNextData = () => {
-    const shuffledInterval = setInterval(() => {
-      if (shuffledPageIdxArr.length > 0) {
-        setBasedInfoReqParams((prev) => ({
-          pageNo: shuffledPageIdxArr[prev.pageNo + 1],
-          numOfRows: NUM_OF_ROWS,
-        }));
-
-        clearInterval(shuffledInterval);
-      }
-    }, 300);
-  };
-
-  // basedInfo의 total 갯수를 요청
-  useEffect(() => {
-    getTotalBasedCnt();
-  }, []);
-
-  // 랜덤 피드 요청을 보내기 위한 셔플 배열 생성
-  useEffect(() => {
-    if (totalBasedCntIsFetched) {
-      const totalPage = Math.ceil(totalBasedCnt / NUM_OF_ROWS);
-
-      setShuffledPageIdxArr(
-        generateShuffledArr(totalPage).filter((idx) => idx !== totalPage),
-      );
+    if (shuffledPageIdxArr.length > 0) {
+      setBasedInfoReqParams((prev) => ({
+        pageNo: shuffledPageIdxArr[prev.pageNo + 1],
+        numOfRows: NUM_OF_ROWS,
+      }));
     }
-  }, [totalBasedCntIsFetched]);
+  };
 
   // basedInfo 요청 (parameter가 변경될 때 요청을 보낸다)
   useEffect(() => {
@@ -142,7 +116,6 @@ const Home: NextPage = (props) => {
           height: 400,
           color: 'white',
         }}
-        {...rest}
       />
       <Parallax image={'/img/campfire-background.gif'}>
         <ParallaxContent>
@@ -226,5 +199,35 @@ const BodyContainer = styled.div`
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
     0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 `;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  let basedInfoURL = `https://todays-camping.herokuapp.com/goCamping/basedList`;
+
+  if (process.env.NODE_ENV === 'development') {
+    const ipAddress = process.env.NEXT_PUBLIC_IP_ADDRESS;
+    const serverPort = process.env.NEXT_PUBLIC_SERVER_PORT;
+
+    basedInfoURL = `${ipAddress}:${serverPort}/goCamping/basedList`;
+  }
+
+  const { data } = await axios.get(basedInfoURL, {
+    params: {
+      pageNo: 0,
+      numOfRows: 0,
+    },
+  });
+  const { totalCount } = data.response.body;
+
+  const totalPage = Math.ceil(totalCount / NUM_OF_ROWS);
+  const shuffledPageIdxArr = generateShuffledArr(totalPage).filter(
+    (idx) => idx !== totalPage,
+  );
+
+  return {
+    props: {
+      shuffledPageIdxArr: shuffledPageIdxArr,
+    },
+  };
+};
 
 export default Home;
