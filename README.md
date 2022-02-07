@@ -1,5 +1,5 @@
 # todays-camping (오늘의 캠핑) 이란?
-### [오늘의 캠핑](https://todays-camping.herokuapp.com/)  
+### [오늘의 캠핑](https://todays-camping.vercel.app/)  
 국내의 다양한 캠핑지를 인스타그램 피드 형태로 볼 수 있도록 만든 토이 프로젝트 입니다. 
 
 
@@ -28,6 +28,7 @@
 # 기술 스택
 ### Front-end
 - React
+- Next.js
 - Typescript
 - Material-ui
 - react-query
@@ -40,12 +41,15 @@
 
 ### etc
 - git
+- heroku
+- vercel
 - 공공데이터포털 Open API
 - 카카오 Open API
 
 
 # 배포 환경
-Heroku를 이용하여 배포하였으며, Heroku Sleep을 방지하기 위해 Heroku Kaffeine에 등록.
+Frontend - Vercel
+Backend - Heroku
 
 
 # 앞으로 추가 할 기능
