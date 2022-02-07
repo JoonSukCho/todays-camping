@@ -50,10 +50,11 @@ const Home: NextPage = (props) => {
   const classes = useStyles();
 
   // local state
-  const [basedInfoReqParams, setBasedInfoReqParams] = useState<_iBasedInfoReqParams>({
-    pageNo: 0,
-    numOfRows: 0,
-  });
+  const [basedInfoReqParams, setBasedInfoReqParams] =
+    useState<_iBasedInfoReqParams>({
+      pageNo: 0,
+      numOfRows: 0,
+    });
   const [shuffledPageIdxArr, setShuffledPageIdxArr] = useState([]);
   const [infBasedList, setInfBasedList] = useState([]);
 
@@ -89,7 +90,9 @@ const Home: NextPage = (props) => {
   useEffect(() => {
     if (totalBasedCntIsFetched) {
       const totalPage = Math.ceil(totalBasedCnt / NUM_OF_ROWS);
-      const shuffledPageIdxArr = generateShuffledArr(totalPage).filter((idx) => idx !== totalPage);
+      const shuffledPageIdxArr = generateShuffledArr(totalPage).filter(
+        (idx) => idx !== totalPage,
+      );
 
       setShuffledPageIdxArr(shuffledPageIdxArr);
     }
@@ -169,7 +172,10 @@ const Home: NextPage = (props) => {
             >
               <GridContainer>
                 {infBasedList.map((infBasedItem, idx) => (
-                  <GridItem key={String(idx)} style={{ paddingTop: 16, paddingBottom: 16 }}>
+                  <GridItem
+                    key={String(idx)}
+                    style={{ paddingTop: 16, paddingBottom: 16 }}
+                  >
                     <PhotoFeed basedItem={infBasedItem} />
                   </GridItem>
                 ))}
@@ -214,8 +220,8 @@ const BodyContainer = styled.div`
   position: relative;
   z-index: 3;
   border-radius: 6px;
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),
-    0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 `;
 
 export default Home;

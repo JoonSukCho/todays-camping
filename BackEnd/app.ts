@@ -33,11 +33,11 @@ app.listen(process.env.PORT || 4001, () => {
   console.log(`Listening on port ${process.env.PORT || 4001} !!!`);
 });
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'FrontEnd/build')));
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname + '../FrontEnd/build/index.html'));
-  });
-}
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, 'FrontEnd/build')));
+//   app.get('/*', (req, res) => {
+//     res.sendFile(path.join(__dirname + '../FrontEnd/build/index.html'));
+//   });
+// }
 
 // ====================================
