@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 interface ParallaxStyleProps {
-  filtered?: string;
+  filtered?: boolean;
   image?: string;
-  small?: boolean;
+  height?: number;
+  bgColor?: string;
   transform?: number;
 }
 
@@ -12,7 +13,13 @@ interface ParallaxProps extends ParallaxStyleProps {
   children?: React.ReactNode;
 }
 
-const Parallax = ({ filtered, children, image, small }: ParallaxProps) => {
+const Parallax = ({
+  filtered,
+  children,
+  image,
+  height,
+  bgColor,
+}: ParallaxProps) => {
   const [transform, setTransform] = useState<number>(0);
 
   useEffect(() => {
@@ -42,7 +49,8 @@ const Parallax = ({ filtered, children, image, small }: ParallaxProps) => {
     <Container
       filtered={filtered}
       image={image}
-      small={small}
+      height={height}
+      bgColor={bgColor}
       transform={transform}
     >
       {children}
@@ -53,16 +61,18 @@ const Parallax = ({ filtered, children, image, small }: ParallaxProps) => {
 export default Parallax;
 
 const Container = styled.div<ParallaxStyleProps>`
-  height: 100vh;
+  background-color: ${({ bgColor }) => (bgColor ? bgColor : `#000000`)};
+  background-position: center center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-image: ${({ image }) =>
+    image
+      ? `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url(${image})`
+      : 'none'};
+  height: ${({ height }) => (height ? `${height}px` : `100vh`)};
   max-height: 1000px;
   overflow: hidden;
   position: relative;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-    url(${({ image }) => image});
-  background-position: center center;
-  background-size: 100%;
-  background-color: #000000;
-  background-repeat: no-repeat;
   transform: translate3d(0, ${({ transform }) => transform}px, 0);
   margin: 0;
   padding: 0;
@@ -87,10 +97,4 @@ const Container = styled.div<ParallaxStyleProps>`
       content: '';
     },
   `}
-
-  ${({ small }) =>
-    small &&
-    css`
-      height: 380px;
-    `}
 `;

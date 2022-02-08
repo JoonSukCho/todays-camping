@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 // mui
-import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 
 // core components
 import Header from 'components/Header/Header';
 import HeaderLinks from 'components/Header/HeaderLinks';
+import MainSection from 'components/Section/MainSection';
 import Footer from 'components/Footer/Footer.js';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
@@ -22,9 +22,6 @@ import CirCularLoader from 'components/Loader/CirCularLoader';
 
 // Icons
 import ScrollGuide from 'components/ScrollGuide/ScrollGuide';
-
-// styles
-import styles from 'public/jss/material-kit-react/views/componentsSections/basicsStyle.js';
 
 // Hooks
 import useBasedInfo from 'Hooks/api/useBasedInfo';
@@ -39,8 +36,6 @@ interface HomeProps {
   shuffledPageIdxArr: number[];
 }
 
-const useStyles = makeStyles(styles);
-
 const EndMessageComponent = styled(Typography)`
   font-weight: 600;
   margin-top: 36px;
@@ -50,8 +45,6 @@ const EndMessageComponent = styled(Typography)`
 const NUM_OF_ROWS = 10;
 
 const Home = ({ shuffledPageIdxArr }: HomeProps) => {
-  const classes = useStyles();
-
   // local state
   const [basedInfoReqParams, setBasedInfoReqParams] =
     useState<_iBasedInfoReqParams>({
@@ -131,35 +124,31 @@ const Home = ({ shuffledPageIdxArr }: HomeProps) => {
         </ParallaxContent>
       </Parallax>
 
-      <BodyContainer>
-        <div className={classes.sections}>
-          <div className={classes.container}>
-            <InfiniteScroll
-              style={{ overflow: 'hidden' }}
-              dataLength={infBasedList.length}
-              next={fetchNextData}
-              hasMore
-              loader={<CirCularLoader />}
-              endMessage={
-                <EndMessageComponent variant="h4">
-                  더 이상 피드가 없습니다. &#128517;
-                </EndMessageComponent>
-              }
-            >
-              <GridContainer>
-                {infBasedList.map((infBasedItem, idx) => (
-                  <GridItem
-                    key={String(idx)}
-                    style={{ paddingTop: 16, paddingBottom: 16 }}
-                  >
-                    <PhotoFeed basedItem={infBasedItem} />
-                  </GridItem>
-                ))}
-              </GridContainer>
-            </InfiniteScroll>
-          </div>
-        </div>
-      </BodyContainer>
+      <MainSection>
+        <InfiniteScroll
+          style={{ overflow: 'hidden' }}
+          dataLength={infBasedList.length}
+          next={fetchNextData}
+          hasMore
+          loader={<CirCularLoader />}
+          endMessage={
+            <EndMessageComponent variant="h4">
+              더 이상 피드가 없습니다. &#128517;
+            </EndMessageComponent>
+          }
+        >
+          <GridContainer>
+            {infBasedList.map((infBasedItem, idx) => (
+              <GridItem
+                key={String(idx)}
+                style={{ paddingTop: 16, paddingBottom: 16 }}
+              >
+                <PhotoFeed basedItem={infBasedItem} />
+              </GridItem>
+            ))}
+          </GridContainer>
+        </InfiniteScroll>
+      </MainSection>
       {/* <Footer /> */}
     </div>
   );
@@ -189,15 +178,6 @@ const SubTitle = styled.h3`
   @media (max-width: 576px) {
     font-size: 1rem;
   }
-`;
-
-const BodyContainer = styled.div`
-  background: #ffffff;
-  position: relative;
-  z-index: 3;
-  border-radius: 6px;
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
-    0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 `;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
