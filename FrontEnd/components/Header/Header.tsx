@@ -41,12 +41,16 @@ const Header = (props) => {
     const { color, changeColorOnScroll } = props;
     const windowsScrollTop = window.pageYOffset;
     if (windowsScrollTop > changeColorOnScroll.height) {
-      document.body.getElementsByTagName('header')[0].classList.remove(classes[color]);
+      document.body
+        .getElementsByTagName('header')[0]
+        .classList.remove(classes[color]);
       document.body
         .getElementsByTagName('header')[0]
         .classList.add(classes[changeColorOnScroll.color]);
     } else {
-      document.body.getElementsByTagName('header')[0].classList.add(classes[color]);
+      document.body
+        .getElementsByTagName('header')[0]
+        .classList.add(classes[color]);
       document.body
         .getElementsByTagName('header')[0]
         .classList.remove(classes[changeColorOnScroll.color]);
@@ -55,7 +59,7 @@ const Header = (props) => {
 
   const appBarClasses = classNames({
     [classes.appBar]: true,
-    [classes[color]]: color,
+    // [classes[color]]: color,
     [classes.absolute]: absolute,
     [classes.fixed]: fixed,
   });
@@ -79,7 +83,11 @@ const Header = (props) => {
           {rightLinks}
         </Hidden>
         <Hidden mdUp>
-          <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerToggle}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerToggle}
+          >
             <Menu />
           </IconButton>
         </Hidden>

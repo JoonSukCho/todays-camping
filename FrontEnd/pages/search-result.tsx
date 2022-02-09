@@ -1,19 +1,19 @@
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+
 import { Button, TextField } from '@material-ui/core';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-import Header from 'components/Header/Header';
-import HeaderLinks from 'components/Header/HeaderLinks';
+import AppLayout from 'components/Layout/AppLayout';
 import Parallax from 'components/Parallax/Parallax';
 import ParallaxContent from 'components/Parallax/ParallaxContent';
 import MainSection from 'components/Section/MainSection';
 import useSearchInfo from 'Hooks/api/useSearchInfo';
+import useInput from 'Hooks/useInput';
 import { _iSearchInfoReqParams } from 'models/api/goCamping/searchInfo';
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { removeAllBlank } from 'util/utils';
 
 const SearchResult = () => {
-  const [keyword, setKeyword] = useState<string>('');
+  const [keyword, onChangeKeyword] = useInput<string>('');
   const [searchInfoReqParams, setSearchInfoReqParams] =
     useState<_iSearchInfoReqParams>(null);
 
@@ -23,10 +23,6 @@ const SearchResult = () => {
     isFetched: searchInfoIsFetched,
     refetch: getSearchInfo,
   } = useSearchInfo(searchInfoReqParams);
-
-  const inputChangeHandler = (e) => {
-    setKeyword(e.target.value);
-  };
 
   const searchHandler = () => {
     setSearchInfoReqParams({
@@ -49,13 +45,7 @@ const SearchResult = () => {
   }, [searchInfoIsFetched]);
 
   return (
-    <>
-      <Header
-        brand="오늘의 캠핑"
-        rightLinks={<HeaderLinks />}
-        fixed
-        color="black"
-      />
+    <AppLayout>
       <Parallax height={500} bgColor="rgba(0, 0, 0, 0.8)">
         <ParallaxContent>
           <GridContainer>
@@ -72,9 +62,10 @@ const SearchResult = () => {
                 }}
               >
                 <TextField
+                  autoFocus
                   placeholder="키워드 검색"
                   variant="outlined"
-                  onChange={inputChangeHandler}
+                  onChange={onChangeKeyword}
                   style={{ background: '#fff', borderRadius: 8, width: '100%' }}
                   InputProps={{
                     endAdornment: (
@@ -96,7 +87,7 @@ const SearchResult = () => {
       <MainSection>
         <div style={{ height: 1000 }}>Section </div>
       </MainSection>
-    </>
+    </AppLayout>
   );
 };
 

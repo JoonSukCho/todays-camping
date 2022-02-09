@@ -1,7 +1,4 @@
-import { GetServerSideProps } from 'next';
-import { NextSeo } from 'next-seo';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -9,10 +6,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Typography } from '@material-ui/core';
 
 // core components
-import Header from 'components/Header/Header';
-import HeaderLinks from 'components/Header/HeaderLinks';
+import AppLayout from 'components/Layout/AppLayout';
 import MainSection from 'components/Section/MainSection';
-import Footer from 'components/Footer/Footer.js';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import Parallax from 'components/Parallax/Parallax';
@@ -87,29 +82,7 @@ const Home = () => {
   }, [basedInfoIsFetched]);
 
   return (
-    <div>
-      <NextSeo
-        title="오늘의 캠핑"
-        description="국내의 다양한 캠핑지를 만나보세요"
-        canonical="https://todays-camping.vercel.app"
-        openGraph={{
-          type: 'website',
-          url: 'https://todays-camping.vercel.app',
-          title: '국내의 다양한 캠핑지, 오늘의 캠핑',
-          description: '국내의 다양한 캠핑지를 만나보세요',
-          site_name: 'todays-camping',
-        }}
-      />
-      <Header
-        brand="오늘의 캠핑"
-        rightLinks={<HeaderLinks />}
-        fixed
-        color="transparent"
-        changeColorOnScroll={{
-          height: 400,
-          color: 'white',
-        }}
-      />
+    <AppLayout>
       <Parallax image={'/img/campfire-background.gif'}>
         <ParallaxContent>
           <GridContainer>
@@ -149,8 +122,7 @@ const Home = () => {
           </GridContainer>
         </InfiniteScroll>
       </MainSection>
-      {/* <Footer /> */}
-    </div>
+    </AppLayout>
   );
 };
 
