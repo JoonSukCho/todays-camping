@@ -65,6 +65,7 @@ export const GlobalStyle = createGlobalStyle`
         font-weight: 500;
     }
     p {
+        font-family: 'Spoqa Han Sans Neo', 'Helvetica', 'Arial', sans-serif;
         font-size: 14px;
         margin: 0 0 10px;
     }

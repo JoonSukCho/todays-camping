@@ -27,14 +27,10 @@ import ScrollGuide from 'components/ScrollGuide/ScrollGuide';
 import useBasedInfo from 'Hooks/api/useBasedInfo';
 
 // util
-import { generateShuffledArr } from 'util/arrUtil';
+import { generateShuffledArr } from 'util/utils';
 
 // models
 import { _iBasedInfoReqParams } from 'models/api/goCamping/basedInfo';
-
-interface HomeProps {
-  shuffledPageIdxArr: number[];
-}
 
 const EndMessageComponent = styled(Typography)`
   font-weight: 600;
@@ -48,7 +44,6 @@ const totalPage = Math.ceil(totalCount / NUM_OF_ROWS);
 const shuffledPageIdxArr = generateShuffledArr(totalPage).filter(
   (idx) => idx !== totalPage,
 );
-// const Home = ({ shuffledPageIdxArr }: HomeProps) => {
 const Home = () => {
   // local state
   const [basedInfoReqParams, setBasedInfoReqParams] =
@@ -184,39 +179,5 @@ const SubTitle = styled.h3`
     font-size: 1rem;
   }
 `;
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   // let basedInfoURL = `https://todays-camping.herokuapp.com/goCamping/basedList`;
-
-//   // if (process.env.NODE_ENV === 'development') {
-//   //   const ipAddress = process.env.NEXT_PUBLIC_IP_ADDRESS;
-//   //   const serverPort = process.env.NEXT_PUBLIC_SERVER_PORT;
-
-//   //   basedInfoURL = `${ipAddress}:${serverPort}/goCamping/basedList`;
-//   // }
-
-//   // const { data } = await axios.get(basedInfoURL, {
-//   //   params: {
-//   //     pageNo: 0,
-//   //     numOfRows: 0,
-//   //   },
-//   // });
-//   // console.log('request getServerSideProps !!!', data.response.body);
-//   // const { totalCount } = data.response.body;
-
-//   // totalCount API요청 시간이 오래 걸리는 경우가 종종 발생하여
-//   // 2022. 02. 08 기준으로 조회한 totalCount를 하드코딩하여 사용.
-//   const totalCount = 2910;
-//   const totalPage = Math.ceil(totalCount / NUM_OF_ROWS);
-//   const shuffledPageIdxArr = generateShuffledArr(totalPage).filter(
-//     (idx) => idx !== totalPage,
-//   );
-
-//   return {
-//     props: {
-//       shuffledPageIdxArr: shuffledPageIdxArr,
-//     },
-//   };
-// };
 
 export default Home;
