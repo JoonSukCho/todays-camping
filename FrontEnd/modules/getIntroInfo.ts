@@ -1,5 +1,5 @@
 import { _iBasedItem } from 'models/api/goCamping/basedInfo';
-import { IsValidatedURL } from 'util/validateUtil';
+import { IsValidatedURL } from 'util/utils';
 
 export const getHomePageURL = (basedItem: _iBasedItem): string => {
   if (IsValidatedURL(basedItem.homepage)) {
