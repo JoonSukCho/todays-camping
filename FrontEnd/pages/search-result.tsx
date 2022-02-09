@@ -46,7 +46,7 @@ const SearchResult = () => {
 
   return (
     <AppLayout>
-      <Parallax height={500} bgColor="rgba(0, 0, 0, 0.8)">
+      <Parallax height={300} bgColor="rgba(0, 0, 0, 0.8)">
         <ParallaxContent>
           <GridContainer>
             <GridItem>

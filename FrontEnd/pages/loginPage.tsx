@@ -12,7 +12,7 @@ import People from '@material-ui/icons/People';
 // core components
 import Header from 'components/Header/Header';
 import HeaderLinks from 'components/Header/HeaderLinks';
-import Footer from 'components/Footer/Footer.js';
+import Footer from 'components/Footer/Footer';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 

@@ -22,47 +22,40 @@ export default function HeaderLinks(props) {
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
         <Button href="/" className={classes.navLink}>
-          홈
-        </Button>
-      </ListItem>
-
-      {/* <ListItem className={classes.listItem}>
-        <Button href="/test-page" color="transparent" className={classes.navLink}>
-          테스트
-        </Button>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Button href="/login-page" color="transparent" className={classes.navLink}>
-          로그인
+          Home
         </Button>
       </ListItem>
       <ListItem className={classes.listItem}>
         <Button
-          href={`https://kauth.kakao.com/oauth/logout?client_id=${process.env.NEXT_PUBLIC_REST_API_KEY}&logout_redirect_uri=${process.env.NEXT_PUBLIC_LOGOUT_REDIRECT_URI}`}
-          color="transparent"
+          href="https://chojs28-dev.notion.site/chojs28-dev/JS-DevLog-fadf338bf8b0448e86eba897d69b0b8a"
+          target="_blank"
           className={classes.navLink}
         >
-          로그아웃
+          Blog
         </Button>
-      </ListItem> */}
-
-      {/* 아이콘 버튼 예제 */}
-      {/* <ListItem className={classes.listItem}>
-        <Tooltip
-          id="instagram-tooltip"
-          title="Follow us on instagram"
-          placement={window.innerWidth > 959 ? 'top' : 'left'}
-          classes={{ tooltip: classes.tooltip }}
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Button
+          href="mailto:chojs28@gmail.com"
+          target="_blank"
+          className={classes.navLink}
         >
-          <Button
-            color="transparent"
-            href="https://www.instagram.com/CreativeTimOfficial?ref=creativetim"
-            target="_blank"
-            className={classes.navLink}
-          >
-            <i className={classes.socialIcons + ' fab fa-instagram'} />
-          </Button>
-        </Tooltip>
+          Mail
+        </Button>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Button
+          href="https://github.com/JoonSukCho"
+          target="_blank"
+          className={classes.navLink}
+        >
+          Github
+        </Button>
+      </ListItem>
+      {/* <ListItem className={classes.listItem}>
+        <IconButton color="inherit" style={{ padding: '0.8rem' }}>
+          <Apps />
+        </IconButton>
       </ListItem> */}
     </List>
   );
