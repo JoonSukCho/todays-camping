@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ReactPaginate from 'react-paginate';
 
+import { Search as SearchIcon } from '@material-ui/icons';
+
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import AppLayout from 'components/Layout/AppLayout';
@@ -72,12 +74,34 @@ const SearchResult = ({ router: { query } }) => {
                 </GridItem>
               ))
             ) : (
-              <GridItem>검색 결과가 없습니다.</GridItem>
+              <NoResultContainer>
+                <SearchIcon
+                  style={{
+                    color: 'rgba(0,0,0,0.54)',
+                    alignSelf: 'center',
+                    fontSize: '4rem',
+                  }}
+                />
+                <NoResultText>검색 결과가 없습니다.</NoResultText>
+                <NoResultSubText>추천 키워드</NoResultSubText>
+                <NoResultSubText
+                  style={{
+                    marginTop: 0,
+                    color: '#565656',
+                    fontSize: '1.1rem',
+                  }}
+                >
+                  숲, 바다, 오토, 애견, 야영장
+                </NoResultSubText>
+              </NoResultContainer>
             )
           ) : (
-            <CirCularLoader />
+            <LoaderContainer>
+              <CirCularLoader />
+            </LoaderContainer>
           )}
-          {searchInfoIsFetched && (
+
+          {searchInfoIsFetched && searchInfo.itemList.length > 0 && (
             <nav style={{ width: '100%', paddingBottom: 8 }}>
               <ReactPaginate
                 previousLabel="<"
@@ -103,5 +127,31 @@ const SearchResult = ({ router: { query } }) => {
     </AppLayout>
   );
 };
+
+const NoResultContainer = styled.div`
+  width: 100%;
+  height: calc(100vh - 455px);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+`;
+
+const NoResultText = styled.h1`
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #3182f6;
+`;
+
+const NoResultSubText = styled.h3`
+  font-size: 1.313rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: 38px;
+`;
+
+const LoaderContainer = styled.div`
+  width: 100%;
+  height: calc(100vh - 455px);
+`;
 
 export default withRouter(SearchResult);

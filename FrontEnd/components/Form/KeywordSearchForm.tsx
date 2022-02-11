@@ -69,7 +69,7 @@ const KeywordSearchForm = ({ initialValue }: KeywordSearchFormProps) => {
 
 const Container = styled.div`
   padding: 20px 0px 20px 0px;
-  margin-top: 25px;
+  margin-top: 50px;
   border-radius: 8px;
   padding-bottom: 25px;
 `;

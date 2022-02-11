@@ -2,6 +2,7 @@ import { NextSeo } from 'next-seo';
 import Header from 'components/Header/Header';
 import HeaderLinks from 'components/Header/HeaderLinks';
 import Footer from 'components/Footer/Footer';
+import TopButton from 'components/Buttons/TopButton';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -24,6 +25,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       />
       <Header brand="오늘의 캠핑" rightLinks={<HeaderLinks />} fixed />
       {children}
+      <TopButton />
       <Footer />
     </div>
   );
