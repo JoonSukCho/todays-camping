@@ -43,7 +43,6 @@ const KeywordSearchForm = ({
   return (
     <Container spacing={spacing}>
       <TextField
-        autoFocus
         placeholder="키워드 검색"
         variant="outlined"
         value={keyword}
