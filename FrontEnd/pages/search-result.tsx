@@ -1,7 +1,8 @@
+import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import ReactPaginate from 'react-paginate';
 
-import { Button, TextField } from '@material-ui/core';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import AppLayout from 'components/Layout/AppLayout';
@@ -9,11 +10,14 @@ import Parallax from 'components/Parallax/Parallax';
 import ParallaxContent from 'components/Parallax/ParallaxContent';
 import MainSection from 'components/Section/MainSection';
 import useSearchInfo from 'Hooks/api/useSearchInfo';
-import useInput from 'Hooks/useInput';
 import { _iSearchInfoReqParams } from 'models/api/goCamping/searchInfo';
+import PhotoFeed from 'components/Feed/PhotoFeed';
+import CirCularLoader from 'components/Loader/CirCularLoader';
+import KeywordSearchForm from 'components/Form/KeywordSearchForm';
 
-const SearchResult = () => {
-  const [keyword, onChangeKeyword] = useInput<string>('');
+const NUM_OF_ROWS = 10;
+const SearchResult = ({ router: { query } }) => {
+  const [pageNo, setPageNo] = useState<number>(1);
   const [searchInfoReqParams, setSearchInfoReqParams] =
     useState<_iSearchInfoReqParams>(null);
 
@@ -24,13 +28,19 @@ const SearchResult = () => {
     refetch: getSearchInfo,
   } = useSearchInfo(searchInfoReqParams);
 
-  const searchHandler = () => {
-    setSearchInfoReqParams({
-      numOfRows: 10,
-      pageNo: 1,
-      keyword,
-    });
+  const handlePageClick = (e: { selected: number }) => {
+    setPageNo(e.selected + 1);
   };
+
+  useEffect(() => {
+    if (query.keyword) {
+      setSearchInfoReqParams({
+        numOfRows: NUM_OF_ROWS,
+        pageNo,
+        keyword: query.keyword,
+      });
+    }
+  }, [query, pageNo]);
 
   useEffect(() => {
     if (searchInfoReqParams) {
@@ -38,83 +48,60 @@ const SearchResult = () => {
     }
   }, [searchInfoReqParams]);
 
-  useEffect(() => {
-    if (searchInfoIsFetched) {
-      console.log(keyword, searchInfo);
-    }
-  }, [searchInfoIsFetched]);
-
   return (
     <AppLayout>
       <Parallax height={300} bgColor="rgba(0, 0, 0, 0.8)">
         <ParallaxContent>
           <GridContainer>
             <GridItem>
-              {/* <TitleContainer>
-                <Title>키워드 검색</Title>
-              </TitleContainer> */}
-              <div
-                style={{
-                  padding: '20px 0px 20px 0px',
-                  marginTop: '25px',
-                  borderRadius: '8px',
-                  paddingBottom: '25px',
-                }}
-              >
-                <TextField
-                  autoFocus
-                  placeholder="키워드 검색"
-                  variant="outlined"
-                  onChange={onChangeKeyword}
-                  style={{ background: '#fff', borderRadius: 8, width: '100%' }}
-                  InputProps={{
-                    endAdornment: (
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={searchHandler}
-                      >
-                        검색
-                      </Button>
-                    ),
-                  }}
-                />
-              </div>
+              <KeywordSearchForm initialValue={query.keyword} />
             </GridItem>
           </GridContainer>
         </ParallaxContent>
       </Parallax>
       <MainSection>
-        <div style={{ height: 1000 }}>Section </div>
+        <GridContainer>
+          {searchInfoIsFetched ? (
+            searchInfo.itemList.length > 0 ? (
+              searchInfo.itemList.map((searchItem, idx) => (
+                <GridItem
+                  key={String(idx)}
+                  style={{ paddingTop: 16, paddingBottom: 16 }}
+                >
+                  <PhotoFeed basedItem={searchItem} />
+                </GridItem>
+              ))
+            ) : (
+              <GridItem>검색 결과가 없습니다.</GridItem>
+            )
+          ) : (
+            <CirCularLoader />
+          )}
+          {searchInfoIsFetched && (
+            <nav style={{ width: '100%', paddingBottom: 8 }}>
+              <ReactPaginate
+                previousLabel="<"
+                nextLabel=">"
+                pageCount={
+                  searchInfo.totalCount === 0
+                    ? 1
+                    : Math.ceil(searchInfo.totalCount / NUM_OF_ROWS)
+                }
+                pageRangeDisplayed={2}
+                forcePage={pageNo - 1}
+                onPageChange={handlePageClick}
+                containerClassName="pagination"
+                previousLinkClassName="pagination-previous-link"
+                nextLinkClassName="pagination-next-link"
+                disabledClassName="pagination-link--disabled"
+                activeClassName="pagination-link--active"
+              />
+            </nav>
+          )}
+        </GridContainer>
       </MainSection>
     </AppLayout>
   );
 };
 
-const TitleContainer = styled.div`
-  color: #ffffff;
-  text-align: left;
-`;
-
-const Title = styled.h1`
-  font-size: 3.2rem;
-  font-weight: 600;
-  display: inline-block;
-  position: relative;
-
-  @media (max-width: 576px) {
-    font-size: 2.5rem;
-  }
-`;
-
-const SubTitle = styled.h3`
-  font-size: 1.313rem;
-  max-width: 500px;
-  margin: 10px 0 0;
-
-  @media (max-width: 576px) {
-    font-size: 1rem;
-  }
-`;
-
-export default SearchResult;
+export default withRouter(SearchResult);
