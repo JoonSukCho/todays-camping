@@ -86,6 +86,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           type="text/javascript"
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoAppKey}`}
         />
+        <script
+          defer
+          src="https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js"
+        />
       </Head>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
