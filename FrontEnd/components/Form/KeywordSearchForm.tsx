@@ -9,9 +9,13 @@ import { useEffect } from 'react';
 
 interface KeywordSearchFormProps {
   initialValue?: string;
+  spacing?: number;
 }
 
-const KeywordSearchForm = ({ initialValue }: KeywordSearchFormProps) => {
+const KeywordSearchForm = ({
+  initialValue,
+  spacing,
+}: KeywordSearchFormProps) => {
   const keyword = useRecoilValue<string>(keywordState);
   const setKeyword = useSetRecoilState(keywordState);
 
@@ -37,7 +41,7 @@ const KeywordSearchForm = ({ initialValue }: KeywordSearchFormProps) => {
   }, [initialValue]);
 
   return (
-    <Container>
+    <Container spacing={spacing}>
       <TextField
         autoFocus
         placeholder="키워드 검색"
@@ -67,9 +71,9 @@ const KeywordSearchForm = ({ initialValue }: KeywordSearchFormProps) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<KeywordSearchFormProps>`
   padding: 20px 0px 20px 0px;
-  margin-top: 50px;
+  margin-top: ${({ spacing }) => (spacing ? `${spacing}px` : '16px')};
   border-radius: 8px;
   padding-bottom: 25px;
 `;

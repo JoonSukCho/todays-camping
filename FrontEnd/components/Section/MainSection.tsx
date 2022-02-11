@@ -23,22 +23,9 @@ const Section = styled.section`
 
 const Container = styled.div`
   width: 100%;
-  padding: 70px 15px 0px 15px;
+  padding: 50px 15px 0px 15px;
   margin: 0 auto;
   background-color: #f5f6fa;
-
-  @media (min-width: 576px) : {
-    max-width: 540px;
-  }
-  @media (min-width: 768px) : {
-    max-width: 720px;
-  }
-  @media (min-width: 992px) : {
-    max-width: 960px;
-  }
-  @media (min-width: 1200px) : {
-    max-width: 1140px;
-  }
 `;
 
 export default MainSection;
