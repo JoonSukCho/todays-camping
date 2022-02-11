@@ -14,6 +14,7 @@ import Parallax from 'components/Parallax/Parallax';
 import ParallaxContent from 'components/Parallax/ParallaxContent';
 import PhotoFeed from 'components/Feed/PhotoFeed';
 import CirCularLoader from 'components/Loader/CirCularLoader';
+import KeywordSearchForm from 'components/Form/KeywordSearchForm';
 
 // Icons
 import ScrollGuide from 'components/ScrollGuide/ScrollGuide';
@@ -91,6 +92,7 @@ const Home = () => {
                 <Title>오늘의 캠핑</Title>
                 <SubTitle>우리나라의 다양한 캠핑지를 만나보세요.</SubTitle>
               </TitleContainer>
+              <KeywordSearchForm />
             </GridItem>
           </GridContainer>
           <ScrollGuide />
