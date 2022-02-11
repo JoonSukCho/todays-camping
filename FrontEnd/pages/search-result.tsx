@@ -56,7 +56,7 @@ const SearchResult = ({ router: { query } }) => {
         <ParallaxContent>
           <GridContainer>
             <GridItem>
-              <KeywordSearchForm initialValue={query.keyword} />
+              <KeywordSearchForm initialValue={query.keyword} spacing={50} />
             </GridItem>
           </GridContainer>
         </ParallaxContent>
@@ -130,10 +130,15 @@ const SearchResult = ({ router: { query } }) => {
 
 const NoResultContainer = styled.div`
   width: 100%;
-  height: calc(100vh - 455px);
+  height: calc(100vh - 435px);
   display: flex;
   flex-direction: column;
   text-align: center;
+`;
+
+const LoaderContainer = styled.div`
+  width: 100%;
+  height: calc(100vh - 435px);
 `;
 
 const NoResultText = styled.h1`
@@ -147,11 +152,6 @@ const NoResultSubText = styled.h3`
   font-weight: 600;
   color: rgba(0, 0, 0, 0.5);
   margin-top: 38px;
-`;
-
-const LoaderContainer = styled.div`
-  width: 100%;
-  height: calc(100vh - 455px);
 `;
 
 export default withRouter(SearchResult);

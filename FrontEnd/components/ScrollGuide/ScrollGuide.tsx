@@ -6,7 +6,7 @@ const Container = styled.div`
   width: 100%;
   position: absolute;
   color: #fff;
-  bottom: 5%;
+  bottom: 10%;
   left: 50%;
   transform: translate(-50%, 0%);
   text-align: center;

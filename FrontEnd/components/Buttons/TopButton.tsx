@@ -40,7 +40,7 @@ const TopButton = () => {
         bottom: '20px',
         right: '20px',
         zIndex: 999,
-        backgroundColor: 'rgba(0, 0, 0, 0.54)',
+        backgroundColor: '#3182f6',
         color: '#fff',
         transition: 'all 0.3s ease-in-out',
       }}
