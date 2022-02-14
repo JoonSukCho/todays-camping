@@ -63,6 +63,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           name="google-site-verification"
           content="_8ugsblGFpOipbnoC-93ojIr69xwJK1od9Gj5aO_OlE"
         />
+        <meta
+          name="google-site-verification"
+          content="_8ugsblGFpOipbnoC-93ojIr69xwJK1od9Gj5aO_OlE"
+        />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon.png" />
         <title>오늘의 캠핑</title>
