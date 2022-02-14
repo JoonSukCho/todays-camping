@@ -21,7 +21,7 @@ const ScrollGuide = () => {
   return (
     <Container>
       <ScrollGuideIcon />
-      <ScrollGuideText>스크롤을 내려보세요</ScrollGuideText>
+      <ScrollGuideText>키워드가 생각나지 않는다면?</ScrollGuideText>
     </Container>
   );
 };
