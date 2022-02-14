@@ -27,6 +27,7 @@ import { generateShuffledArr } from 'util/utils';
 
 // models
 import { _iBasedInfoReqParams } from 'models/api/goCamping/basedInfo';
+import ErrorResponse from 'components/Error/ErrorResponse';
 
 const EndMessageComponent = styled(Typography)`
   font-weight: 600;
@@ -75,7 +76,11 @@ const Home = () => {
 
   // Infinite Based List를 만든다.
   useEffect(() => {
-    if (basedInfoIsFetched && basedInfo.itemList.length > 0) {
+    if (
+      basedInfoIsFetched &&
+      !basedInfoError &&
+      basedInfo.itemList.length > 0
+    ) {
       const basedItem = basedInfo.itemList;
 
       setInfBasedList((prev) => prev.concat(basedItem));
@@ -100,29 +105,33 @@ const Home = () => {
       </Parallax>
 
       <MainSection>
-        <InfiniteScroll
-          style={{ overflow: 'hidden' }}
-          dataLength={infBasedList.length}
-          next={fetchNextData}
-          hasMore
-          loader={<CirCularLoader />}
-          endMessage={
-            <EndMessageComponent variant="h4">
-              더 이상 피드가 없습니다. &#128517;
-            </EndMessageComponent>
-          }
-        >
-          <GridContainer>
-            {infBasedList.map((infBasedItem, idx) => (
-              <GridItem
-                key={String(idx)}
-                style={{ paddingTop: 16, paddingBottom: 16 }}
-              >
-                <PhotoFeed basedItem={infBasedItem} />
-              </GridItem>
-            ))}
-          </GridContainer>
-        </InfiniteScroll>
+        {basedInfoError ? (
+          <ErrorResponse errorMessage={basedInfoError.message} />
+        ) : (
+          <InfiniteScroll
+            style={{ overflow: 'hidden' }}
+            dataLength={infBasedList.length}
+            next={fetchNextData}
+            hasMore
+            loader={<CirCularLoader />}
+            endMessage={
+              <EndMessageComponent variant="h4">
+                더 이상 피드가 없습니다. &#128517;
+              </EndMessageComponent>
+            }
+          >
+            <GridContainer>
+              {infBasedList.map((infBasedItem, idx) => (
+                <GridItem
+                  key={String(idx)}
+                  style={{ paddingTop: 16, paddingBottom: 16 }}
+                >
+                  <PhotoFeed basedItem={infBasedItem} />
+                </GridItem>
+              ))}
+            </GridContainer>
+          </InfiniteScroll>
+        )}
       </MainSection>
     </AppLayout>
   );
