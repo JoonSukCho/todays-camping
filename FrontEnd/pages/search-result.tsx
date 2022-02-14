@@ -16,6 +16,7 @@ import { _iSearchInfoReqParams } from 'models/api/goCamping/searchInfo';
 import PhotoFeed from 'components/Feed/PhotoFeed';
 import CirCularLoader from 'components/Loader/CirCularLoader';
 import KeywordSearchForm from 'components/Form/KeywordSearchForm';
+import ErrorResponse from 'components/Error/ErrorResponse';
 
 const NUM_OF_ROWS = 10;
 const SearchResult = ({ router: { query } }) => {
@@ -62,8 +63,11 @@ const SearchResult = ({ router: { query } }) => {
         </ParallaxContent>
       </Parallax>
       <MainSection>
+        {searchInfoError && (
+          <ErrorResponse errorMessage={searchInfoError.message} />
+        )}
         <GridContainer>
-          {searchInfoIsFetched ? (
+          {searchInfoIsFetched && !searchInfoError ? (
             searchInfo.itemList.length > 0 ? (
               searchInfo.itemList.map((searchItem, idx) => (
                 <GridItem
@@ -101,27 +105,29 @@ const SearchResult = ({ router: { query } }) => {
             </LoaderContainer>
           )}
 
-          {searchInfoIsFetched && searchInfo.itemList.length > 0 && (
-            <nav style={{ width: '100%', paddingBottom: 8 }}>
-              <ReactPaginate
-                previousLabel="<"
-                nextLabel=">"
-                pageCount={
-                  searchInfo.totalCount === 0
-                    ? 1
-                    : Math.ceil(searchInfo.totalCount / NUM_OF_ROWS)
-                }
-                pageRangeDisplayed={2}
-                forcePage={pageNo - 1}
-                onPageChange={handlePageClick}
-                containerClassName="pagination"
-                previousLinkClassName="pagination-previous-link"
-                nextLinkClassName="pagination-next-link"
-                disabledClassName="pagination-link--disabled"
-                activeClassName="pagination-link--active"
-              />
-            </nav>
-          )}
+          {searchInfoIsFetched &&
+            !searchInfoError &&
+            searchInfo.itemList.length > 0 && (
+              <nav style={{ width: '100%', paddingBottom: 8 }}>
+                <ReactPaginate
+                  previousLabel="<"
+                  nextLabel=">"
+                  pageCount={
+                    searchInfo.totalCount === 0
+                      ? 1
+                      : Math.ceil(searchInfo.totalCount / NUM_OF_ROWS)
+                  }
+                  pageRangeDisplayed={2}
+                  forcePage={pageNo - 1}
+                  onPageChange={handlePageClick}
+                  containerClassName="pagination"
+                  previousLinkClassName="pagination-previous-link"
+                  nextLinkClassName="pagination-next-link"
+                  disabledClassName="pagination-link--disabled"
+                  activeClassName="pagination-link--active"
+                />
+              </nav>
+            )}
         </GridContainer>
       </MainSection>
     </AppLayout>

@@ -20,9 +20,19 @@ const getSearchInfo = async (params): Promise<_iSearchInfo> => {
     searchInfoURL = `${ipAddress}:${serverPort}/goCamping/searchList`;
   }
 
-  const { data } = await axios.get(searchInfoURL, {
-    params,
-  });
+  const { data } = await axios
+    .get(searchInfoURL, {
+      params,
+      timeout: 7000,
+    })
+    .catch((err) => {
+      throw new Error('Server Error');
+    });
+
+  const { resultCode } = data.response.header;
+  if (resultCode === '0022') {
+    throw new Error('일일 트래픽 초과');
+  }
 
   const SearchInfoBody: _iSearchInfoBody = data.response.body;
   const { totalCount, pageNo, numOfRows, items } = SearchInfoBody;
@@ -54,6 +64,9 @@ const useSearchInfo = (params: _iSearchInfoReqParams) => {
     () => getSearchInfo(params),
     {
       enabled: false,
+      onError: (err) => {
+        console.log('onError', err.message);
+      },
     },
   );
 };

@@ -20,9 +20,20 @@ const getBasedInfo = async (params): Promise<_iBasedInfo> => {
     basedInfoURL = `${ipAddress}:${serverPort}/goCamping/basedList`;
   }
 
-  const { data } = await axios.get(basedInfoURL, {
-    params,
-  });
+  const { data } = await axios
+    .get(basedInfoURL, {
+      params,
+      timeout: 5000,
+    })
+    .catch((err) => {
+      throw new Error('Server Error');
+    });
+
+  const { resultCode } = data.response.header;
+
+  if (resultCode === '0022') {
+    throw new Error('일일 트래픽 초과');
+  }
 
   const basedInfoBody: _iBasedInfoBody = data.response.body;
   const { totalCount, pageNo, numOfRows, items } = basedInfoBody;
@@ -54,6 +65,9 @@ const useBasedInfo = (params: _iBasedInfoReqParams) => {
     () => getBasedInfo(params),
     {
       enabled: false,
+      onError: (err) => {
+        console.log('onError', err.message);
+      },
     },
   );
 };
