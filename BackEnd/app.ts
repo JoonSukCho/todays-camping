@@ -2,14 +2,6 @@
 import * as express from 'express';
 import * as cors from 'cors';
 import * as passport from 'passport';
-import * as path from 'path';
-
-// router import
-const basedList = require('./routes/goCamping/basedList');
-const imageList = require('./routes/goCamping/imageList');
-const locationBasedList = require('./routes/goCamping/locationBasedList');
-const searchList = require('./routes/goCamping/searchList');
-// const oAuthKakao = require('./routes/oauth/kakao');
 
 // express settings
 const app = express();
@@ -21,12 +13,25 @@ app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// router use
+// router import
+const basedList = require('./routes/goCamping/basedList');
+const imageList = require('./routes/goCamping/imageList');
+const locationBasedList = require('./routes/goCamping/locationBasedList');
+const searchList = require('./routes/goCamping/searchList');
+const register = require('./routes/users/register');
+const userInfo = require('./routes/users/userInfo');
+const likeList = require('./routes/users/likeList');
+
+// goCamping
 app.use('/goCamping/basedList', basedList);
 app.use('/goCamping/imageList', imageList);
 app.use('/goCamping/locationBasedList', locationBasedList);
 app.use('/goCamping/searchList', searchList);
-// app.use('/oauth/kakao', oAuthKakao);
+
+// user
+app.use('/users/register', register);
+app.use('/users/userInfo', userInfo);
+app.use('/users/likeList', likeList);
 
 // listen port
 app.listen(process.env.PORT || 4001, () => {
