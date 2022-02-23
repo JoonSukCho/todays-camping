@@ -11,11 +11,11 @@ router.post('/push', (req, res) => {
   db.query(
     'update user_table set like_list = array_append(like_list, $1) where user_id = $2',
     [content_id, user_id],
-    (err, row) => {
+    (err, result) => {
       if (err) {
-        console.log(err);
+        return res.status(400).json({ status: 400, message: err.message });
       } else {
-        return res.status(200).json({ result: 'ok' });
+        return res.status(200).json({ status: 200, message: 'ok' });
       }
     },
   );
@@ -28,11 +28,11 @@ router.post('/pop', (req, res) => {
   db.query(
     'update user_table set like_list = array_remove(like_list, $1) where user_id = $2',
     [content_id, user_id],
-    (err, row) => {
+    (err, result) => {
       if (err) {
-        console.log(err);
+        return res.status(400).json({ status: 400, message: err.message });
       } else {
-        return res.status(200).json({ result: 'ok' });
+        return res.status(400).json({ status: 400, message: 'ok' });
       }
     },
   );

@@ -1,12 +1,23 @@
 ### signUp
-POST http://localhost:4001/users/signUp HTTP/1.1
+POST http://localhost:4001/users/auth/signUp HTTP/1.1
 content-type: application/json
 
 {
     "user_id": "chojs",
     "user_password": "1234", 
-    "user_password_confirm": "1234",
-    "like_list": ["1021", "1034", "12"]
+    "user_password_confirm": "1234"
+}
+
+### duplicateCheck
+GET http://localhost:4001/users/auth/duplicateCheck?user_id=chojs HTTP/1.1
+
+### login
+POST http://localhost:4001/users/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "user_id": "chojs",
+    "user_password": "1234"
 }
 
 ### push likeList

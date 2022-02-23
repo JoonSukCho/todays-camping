@@ -18,7 +18,7 @@ const basedList = require('./routes/goCamping/basedList');
 const imageList = require('./routes/goCamping/imageList');
 const locationBasedList = require('./routes/goCamping/locationBasedList');
 const searchList = require('./routes/goCamping/searchList');
-const signUp = require('./routes/users/signUp');
+const auth = require('./routes/users/auth');
 const userInfo = require('./routes/users/userInfo');
 const likeList = require('./routes/users/likeList');
 
@@ -29,7 +29,7 @@ app.use('/goCamping/locationBasedList', locationBasedList);
 app.use('/goCamping/searchList', searchList);
 
 // user
-app.use('/users/signUp', signUp);
+app.use('/users/auth', auth);
 app.use('/users/userInfo', userInfo);
 app.use('/users/likeList', likeList);
 
