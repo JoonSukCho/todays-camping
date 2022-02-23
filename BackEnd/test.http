@@ -1,5 +1,5 @@
-### register
-POST http://localhost:4001/users/register HTTP/1.1
+### signUp
+POST http://localhost:4001/users/signUp HTTP/1.1
 content-type: application/json
 
 {
