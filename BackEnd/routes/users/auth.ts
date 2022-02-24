@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import * as express from 'express';
 import * as passport from 'passport';
-import * as jwt from 'jsonwebtoken';
 
 const router = express.Router();
 const db = require('../../db/config');
@@ -15,9 +14,7 @@ router.post('/login', (req, res, next) => {
     req.logIn(user, (err) => {
       if (err) return next(err);
 
-      // jwt-secret-key는 추후 .env에 저장해야 함
-      const token = jwt.sign({ user }, 'jwt-secret-key', { expiresIn: '7d' });
-      return res.status(200).json({ status: 200, message: '로그인 성공', token });
+      return res.status(200).json({ status: 200, message: '로그인 성공' });
     });
   })(req, res, next);
 });
