@@ -1,9 +1,26 @@
 import 'dotenv/config';
 import * as express from 'express';
 import * as passport from 'passport';
+import * as jwt from 'jsonwebtoken';
 
 const router = express.Router();
 const db = require('../../db/config');
+
+// 로그인
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.status(400).json({ status: 400, message: info.message });
+
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+
+      // jwt-secret-key는 추후 .env에 저장해야 함
+      const token = jwt.sign({ user }, 'jwt-secret-key', { expiresIn: '7d' });
+      return res.status(200).json({ status: 200, message: '로그인 성공', token });
+    });
+  })(req, res, next);
+});
 
 // 회원 가입
 router.post('/signUp', (req, res) => {
@@ -37,20 +54,6 @@ router.get('/duplicateCheck', (req, res) => {
 
     return res.status(200).json({ status: 200, message: '사용 가능한 아이디 입니다.' });
   });
-});
-
-// 로그인
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) return next(err);
-    if (!user) return res.status(400).json({ status: 400, message: info.message });
-
-    req.logIn(user, (err) => {
-      if (err) return next(err);
-
-      return res.status(200).json({ status: 200, message: info.message });
-    });
-  })(req, res, next);
 });
 
 module.exports = router;
