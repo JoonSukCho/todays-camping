@@ -2,16 +2,20 @@
 import * as express from 'express';
 import * as cors from 'cors';
 import * as passport from 'passport';
+import * as session from 'express-session';
 
 // express settings
 const app = express();
+const setPassportConfig = require('./passport/index');
 
 app.set('port', process.env.PORT || 4001);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
+app.use(session({ secret: 'cats', resave: true, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+setPassportConfig();
 
 // router import
 const basedList = require('./routes/goCamping/basedList');

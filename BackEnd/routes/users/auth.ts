@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import * as express from 'express';
+import * as passport from 'passport';
 
 const router = express.Router();
 const db = require('../../db/config');
@@ -39,24 +40,17 @@ router.get('/duplicateCheck', (req, res) => {
 });
 
 // 로그인
-router.post('/login', (req, res) => {
-  const { user_id, user_password } = req.body;
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.status(400).json({ status: 400, message: info.message });
 
-  db.query(
-    'SELECT * FROM user_table WHERE user_id = $1 AND user_password = $2',
-    [user_id, user_password],
-    (err, result) => {
-      if (err) {
-        return res.status(400).json({ status: 400, message: err.message });
-      }
+    req.logIn(user, (err) => {
+      if (err) return next(err);
 
-      if (result.rows.length === 0 || result.rows[0].user_password !== user_password) {
-        return res.status(400).json({ status: 400, message: '아이디 또는 비밀번호가 일치하지 않습니다..' });
-      }
-
-      return res.status(200).json({ status: 200, message: 'ok' });
-    },
-  );
+      return res.status(200).json({ status: 200, message: info.message });
+    });
+  })(req, res, next);
 });
 
 module.exports = router;
