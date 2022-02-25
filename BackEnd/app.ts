@@ -3,16 +3,31 @@ import * as express from 'express';
 import * as cors from 'cors';
 import * as passport from 'passport';
 import * as session from 'express-session';
+import * as cookieParser from 'cookie-parser';
 
 // express settings
 const app = express();
 const setPassportConfig = require('./passport/index');
 
 app.set('port', process.env.PORT || 4001);
-app.use(express.json());
+app.use(express.json()); // body parser
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser('cats'));
 app.use(cors({ origin: true, credentials: true }));
-app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: false }));
+app.use(
+  session({
+    name: 'user.sid',
+    secret: 'cats', // secret은 환경변수에 저장해두어야 한다.
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: false,
+      secure: false,
+      maxAge: 60 * 60 * 24 * 1000, // 1일
+    },
+  }),
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
 setPassportConfig();

@@ -24,6 +24,7 @@ module.exports = () => {
           return done(err);
         }
 
+        // https://webaura.tistory.com/entry/NodeJS-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%8E%B8?category=500429
         if (result.rows.length === 0 || result.rows[0].user_password !== user_password) {
           return done(null, false, { message: '아이디 또는 비밀번호가 일치하지 않습니다.' });
         }

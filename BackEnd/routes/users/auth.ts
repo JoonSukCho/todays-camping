@@ -19,6 +19,15 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+// 로그아웃
+router.get('/logout', (req, res) => {
+  req.logout();
+  req.session.destroy(() => {
+    res.clearCookie('user.sid');
+    return res.status(200).json({ status: 200, message: '로그아웃 성공' });
+  });
+});
+
 // 회원 가입
 router.post('/signUp', (req, res) => {
   const { user_id, user_password, user_password_confirm } = req.body;
