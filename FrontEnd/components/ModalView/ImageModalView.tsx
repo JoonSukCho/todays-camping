@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Carousel, { Settings } from 'react-slick';
 import styled from 'styled-components';
@@ -19,6 +18,11 @@ const ImgContainer = styled.div`
   @media (min-width: 768px) {
     height: 500px;
   }
+`;
+
+const Image = styled.img`
+  width: 100%;
+  height: 102%;
 `;
 
 const ImageModalView = (props) => {
@@ -68,30 +72,14 @@ const ImageModalView = (props) => {
       {imageInfoIsFetched ? (
         <Carousel {...carouselSettings}>
           {imageList.length > 0 ? (
-            imageList.map((imageItem) => {
-              const loader = ({ src }) => {
-                return imageItem.url;
-              };
-
-              return (
-                <ImgContainer key={imageItem.serialNum}>
-                  <Image
-                    loader={loader}
-                    src={imageItem.url}
-                    layout="fill"
-                    alt="No Image"
-                  />
-                </ImgContainer>
-              );
-            })
+            imageList.map((imageItem) => (
+              <ImgContainer key={imageItem.serialNum}>
+                <Image src={imageItem.url} alt="No Image" />
+              </ImgContainer>
+            ))
           ) : (
             <ImgContainer>
-              <Image
-                src="/img/ready-image.jpg"
-                width="100%"
-                height="100%"
-                alt="Ready Image"
-              />
+              <Image src="/img/ready-image.jpg" alt="Ready Image" />
             </ImgContainer>
           )}
         </Carousel>
