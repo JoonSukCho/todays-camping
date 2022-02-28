@@ -70,10 +70,7 @@ const SearchResult = ({ router: { query } }) => {
           {searchInfoIsFetched && !searchInfoError ? (
             searchInfo.itemList.length > 0 ? (
               searchInfo.itemList.map((searchItem, idx) => (
-                <GridItem
-                  key={String(idx)}
-                  style={{ paddingTop: 16, paddingBottom: 16 }}
-                >
+                <GridItem key={String(idx)}>
                   <PhotoFeed basedItem={searchItem} />
                 </GridItem>
               ))

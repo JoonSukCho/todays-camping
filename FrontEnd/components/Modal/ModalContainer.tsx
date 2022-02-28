@@ -8,19 +8,16 @@ type DivProps = React.HTMLProps<HTMLDivElement>;
 const Container = styled(Card)`
   width: 100%;
   z-index: 12;
-  margin-left: auto;
-  margin-right: auto;
   padding: 16px;
   background-color: #ffffff;
   border-radius: 8px;
+  margin: 0 16px;
 
   @media (min-width: 0px) {
-    max-width: 350px;
     max-height: 482px;
   }
 
   @media (min-width: 576px) {
-    max-width: 500px;
     max-height: 482px;
   }
   @media (min-width: 768px) {
@@ -37,12 +34,14 @@ const Container = styled(Card)`
   }
 `;
 
-const ModalContainer = forwardRef<HTMLDivElement, DivProps>(({ children }, ref) => {
-  return (
-    <Container ref={ref} tabIndex={-1}>
-      {children}
-    </Container>
-  );
-});
+const ModalContainer = forwardRef<HTMLDivElement, DivProps>(
+  ({ children }, ref) => {
+    return (
+      <Container ref={ref} tabIndex={-1}>
+        {children}
+      </Container>
+    );
+  },
+);
 
 export default ModalContainer;

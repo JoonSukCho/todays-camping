@@ -48,9 +48,13 @@ const getImageInfo = async (params): Promise<_iImageInfo> => {
 };
 
 const useImageInfo = (params: _iImageInfoReqParams) => {
-  return useQuery<_iImageInfo, Error>(['imageInfo', params], () => getImageInfo(params), {
-    enabled: !!params,
-  });
+  return useQuery<_iImageInfo, Error>(
+    ['imageInfo', params],
+    () => getImageInfo(params),
+    {
+      enabled: !!params,
+    },
+  );
 };
 
 export default useImageInfo;

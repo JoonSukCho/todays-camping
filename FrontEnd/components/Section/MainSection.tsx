@@ -25,7 +25,8 @@ const Container = styled.div`
   width: 100%;
   padding: 50px 15px 0px 15px;
   margin: 0 auto;
-  background-color: #f5f6fa;
+  background-color: #ffffff;
+  /* background-color: #f5f6fa; */
 `;
 
 export default MainSection;
