@@ -4,6 +4,7 @@ import * as cors from 'cors';
 import * as passport from 'passport';
 import * as session from 'express-session';
 import * as cookieParser from 'cookie-parser';
+import 'dotenv/config';
 
 // express settings
 const app = express();
@@ -12,12 +13,12 @@ const setPassportConfig = require('./passport/index');
 app.set('port', process.env.PORT || 4001);
 app.use(express.json()); // body parser
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser('cats'));
+app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(cors({ origin: true, credentials: true }));
 app.use(
   session({
     name: 'user.sid',
-    secret: 'cats', // secret은 환경변수에 저장해두어야 한다.
+    secret: process.env.SESSION_SECRET, // secret은 환경변수에 저장해두어야 한다.
     resave: false,
     saveUninitialized: false,
     cookie: {

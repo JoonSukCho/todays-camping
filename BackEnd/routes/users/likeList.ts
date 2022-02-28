@@ -5,7 +5,25 @@ import passport = require('passport');
 const router = express.Router();
 const db = require('../../db/config');
 
-// push likeList
+// 좋아요 목록 가져오기
+router.get('/list', (req, res, next) => {
+  passport.authenticate('local', (err, user) => {
+    if (err) return next(err);
+    if (!user) return res.status(400).json({ status: 400, message: '로그인 먼저 해주세요' });
+
+    const { user_id } = req.query;
+
+    db.query('SELECT like_list FROM user_table WHERE user_id = $1', [user_id], (err, result) => {
+      if (err) {
+        return res.status(400).json({ status: 400, message: err.message });
+      }
+
+      return res.status(200).json({ status: 200, data: result.rows, message: '좋아요 목록 가져오기 성공.' });
+    });
+  });
+});
+
+// 좋아요 목록에 추가
 router.post('/push', (req, res, next) => {
   passport.authenticate('local', (err, user) => {
     if (err) return next(err);
@@ -27,7 +45,7 @@ router.post('/push', (req, res, next) => {
   });
 });
 
-// pop likeList
+// 좋아요 목록에서 제거
 router.post('/pop', (req, res, next) => {
   passport.authenticate('local', (err, user) => {
     if (err) return next(err);
