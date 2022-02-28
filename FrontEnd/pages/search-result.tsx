@@ -105,7 +105,7 @@ const SearchResult = ({ router: { query } }) => {
           {searchInfoIsFetched &&
             !searchInfoError &&
             searchInfo.itemList.length > 0 && (
-              <nav style={{ width: '100%', paddingBottom: 8 }}>
+              <nav style={{ width: '100%', paddingBottom: 8, marginTop: 8 }}>
                 <ReactPaginate
                   previousLabel="<"
                   nextLabel=">"
