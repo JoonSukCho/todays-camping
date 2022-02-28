@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { GlobalStyle } from 'styles/globalStyle';
@@ -11,12 +12,24 @@ import {
   ThemeProvider as MUIThemeProvider,
   StylesProvider,
 } from '@material-ui/core/styles';
+import axios from 'axios';
 
 import * as ga from 'lib/ga';
 
 import 'public/scss/material-kit-react.scss?v=1.10.0';
 import 'public/css/fonts.css';
-import { useEffect } from 'react';
+
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
+
+axios.defaults.withCredentials = true;
+axios.defaults.headers = {
+  'Content-Type': 'application/json',
+  Accept: 'application/json',
+};
 
 function MyApp({ Component, pageProps }: AppProps) {
   const kakaoAppKey = process.env.NEXT_PUBLIC_JS_KEY;

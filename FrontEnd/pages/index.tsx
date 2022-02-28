@@ -122,10 +122,7 @@ const Home = () => {
           >
             <GridContainer>
               {infBasedList.map((infBasedItem, idx) => (
-                <GridItem
-                  key={String(idx)}
-                  style={{ paddingTop: 16, paddingBottom: 16 }}
-                >
+                <GridItem key={String(idx)}>
                   <PhotoFeed basedItem={infBasedItem} />
                 </GridItem>
               ))}

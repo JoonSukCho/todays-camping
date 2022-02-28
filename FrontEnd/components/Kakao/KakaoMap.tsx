@@ -1,12 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
-
 const MapContainer = styled.div`
   text-align: center;
 `;

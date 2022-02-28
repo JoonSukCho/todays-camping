@@ -23,6 +23,9 @@ import {
   Popover,
 } from '@material-ui/core';
 
+// models
+import { _iBasedItem } from 'models/api/goCamping/basedInfo';
+
 // modules
 import {
   getCampSiteFeatures,
@@ -64,17 +67,36 @@ import ModalContainer from 'components/Modal/ModalContainer';
 import ModalLink from 'components/Link/ModalLink';
 import TelLink from 'components/Link/TelLink';
 
+interface PhotoFeedProps {
+  basedItem: _iBasedItem;
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 1140,
     margin: '0 auto',
-    padding: 8,
+    padding: '8px 0px',
+  },
+  header: {
+    paddingLeft: 0,
+    paddingBottom: 8,
+  },
+  headerTitle: {
+    fontWeight: 600,
+    color: '#4a4a4a',
+  },
+  content: {
+    paddingTop: 0,
+    paddingLeft: 8,
+  },
+  footer: {
+    paddingLeft: 0,
+    paddingRight: 0,
   },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
-
   modal: {
     display: 'flex',
     justifyContent: 'center',
@@ -84,8 +106,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ListContainer = styled.div``;
 
-const PhotoFeed = (props) => {
-  const { basedItem } = props;
+const PhotoFeed = ({ basedItem }: PhotoFeedProps) => {
   const classes = useStyles();
 
   const [imageModalOpenFlag, imageModalOpen, imageModalClose] = useModal();
@@ -116,7 +137,9 @@ const PhotoFeed = (props) => {
       icon: HomeIcon,
       title: '홈페이지',
       contents: basedItem.homepage ? (
-        <OuterLink href={getHomePageURL(basedItem)}>{getHomePageURL(basedItem)}</OuterLink>
+        <OuterLink href={getHomePageURL(basedItem)}>
+          {getHomePageURL(basedItem)}
+        </OuterLink>
       ) : (
         '정보 미제공'
       ),
@@ -124,13 +147,19 @@ const PhotoFeed = (props) => {
     {
       icon: LocationOnIcon,
       title: '주소',
-      contents: <ModalLink onClick={mapModalOpen}>{getDetailAddress(basedItem)}</ModalLink>,
+      contents: (
+        <ModalLink onClick={mapModalOpen}>
+          {getDetailAddress(basedItem)}
+        </ModalLink>
+      ),
     },
     {
       icon: PhoneIcon,
       title: '전화번호',
       contents: basedItem.tel ? (
-        <TelLink tel={getPhoneNumber(basedItem)}>{getPhoneNumber(basedItem)}</TelLink>
+        <TelLink tel={getPhoneNumber(basedItem)}>
+          {getPhoneNumber(basedItem)}
+        </TelLink>
       ) : (
         '정보 미제공'
       ),
@@ -156,15 +185,22 @@ const PhotoFeed = (props) => {
     <>
       <Card className={classes.root} elevation={0}>
         <CardHeader
+          classes={{
+            title: classes.headerTitle,
+          }}
+          className={classes.header}
           title={basedItem.facltNm}
           subheader={getDetailAddress(basedItem)}
-          style={{ paddingLeft: 8 }}
         />
         <CardMedia
           className={classes.media}
-          image={basedItem.firstImageUrl ? basedItem.firstImageUrl : '/img/ready-image.jpg'}
+          image={
+            basedItem.firstImageUrl
+              ? basedItem.firstImageUrl
+              : '/img/ready-image.jpg'
+          }
         />
-        <CardActions disableSpacing>
+        <CardActions disableSpacing className={classes.footer}>
           {basedItem.firstImageUrl && (
             <Button size="small" color="primary" onClick={imageModalOpen}>
               이미지 더보기
@@ -173,13 +209,17 @@ const PhotoFeed = (props) => {
           <ExpandMoreButton expanded={feedExpand} handler={expandFeed} />
         </CardActions>
         <Collapse in={feedExpand} timeout="auto" unmountOnExit>
-          <CardContent>
+          <CardContent className={classes.content}>
             <ListContainer>
               <IntroList>
                 {introList.map((intro, idx) => {
                   return (
                     <React.Fragment key={intro.title}>
-                      <IntroListItem key={intro.title} title={intro.title} Icon={intro.icon}>
+                      <IntroListItem
+                        key={intro.title}
+                        title={intro.title}
+                        Icon={intro.icon}
+                      >
                         {intro.contents}
                       </IntroListItem>
                     </React.Fragment>
@@ -191,7 +231,11 @@ const PhotoFeed = (props) => {
         </Collapse>
       </Card>
 
-      <Modal className={classes.modal} open={imageModalOpenFlag} onClose={imageModalClose}>
+      <Modal
+        className={classes.modal}
+        open={imageModalOpenFlag}
+        onClose={imageModalClose}
+      >
         <ModalContainer>
           <ModalHeader>
             <Typography variant="h6">{basedItem.facltNm}</Typography>
@@ -207,7 +251,11 @@ const PhotoFeed = (props) => {
         </ModalContainer>
       </Modal>
 
-      <Modal className={classes.modal} open={mapModalOpenFlag} onClose={mapModalClose}>
+      <Modal
+        className={classes.modal}
+        open={mapModalOpenFlag}
+        onClose={mapModalClose}
+      >
         <ModalContainer>
           <Popover
             open={open}
@@ -228,7 +276,9 @@ const PhotoFeed = (props) => {
               },
             }}
           >
-            <Typography variant="subtitle2">주소가 클립보드에 복사 되었습니다.</Typography>
+            <Typography variant="subtitle2">
+              주소가 클립보드에 복사 되었습니다.
+            </Typography>
           </Popover>
           <ModalHeader>
             <IconButton

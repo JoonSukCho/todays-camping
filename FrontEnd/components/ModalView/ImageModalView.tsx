@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Carousel, { Settings } from 'react-slick';
 import styled from 'styled-components';
 import { _iBasedItem } from 'models/api/goCamping/basedInfo';
@@ -45,7 +45,10 @@ const ImageModalView = (props) => {
       return (
         <ul>
           {dots.map((dot) => (
-            <CarouselDot key={dot.key} active={dot.props.className === 'slick-active'} />
+            <CarouselDot
+              key={dot.key}
+              active={dot.props.className === 'slick-active'}
+            />
           ))}
         </ul>
       );

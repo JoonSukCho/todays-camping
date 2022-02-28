@@ -2,31 +2,56 @@
 import * as express from 'express';
 import * as cors from 'cors';
 import * as passport from 'passport';
-import * as path from 'path';
+import * as session from 'express-session';
+import * as cookieParser from 'cookie-parser';
+import 'dotenv/config';
+
+// express settings
+const app = express();
+const setPassportConfig = require('./passport/index');
+
+app.set('port', process.env.PORT || 4001);
+app.use(express.json()); // body parser
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser(process.env.SESSION_SECRET));
+app.use(cors({ origin: true, credentials: true }));
+app.use(
+  session({
+    name: 'user.sid',
+    secret: process.env.SESSION_SECRET, // secret은 환경변수에 저장해두어야 한다.
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: false,
+      secure: false,
+      maxAge: 60 * 60 * 24 * 1000, // 1일
+    },
+  }),
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+setPassportConfig();
 
 // router import
 const basedList = require('./routes/goCamping/basedList');
 const imageList = require('./routes/goCamping/imageList');
 const locationBasedList = require('./routes/goCamping/locationBasedList');
 const searchList = require('./routes/goCamping/searchList');
-// const oAuthKakao = require('./routes/oauth/kakao');
+const auth = require('./routes/users/auth');
+const userInfo = require('./routes/users/userInfo');
+const likeList = require('./routes/users/likeList');
 
-// express settings
-const app = express();
-
-app.set('port', process.env.PORT || 4001);
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cors());
-app.use(passport.initialize());
-app.use(passport.session());
-
-// router use
+// goCamping
 app.use('/goCamping/basedList', basedList);
 app.use('/goCamping/imageList', imageList);
 app.use('/goCamping/locationBasedList', locationBasedList);
 app.use('/goCamping/searchList', searchList);
-// app.use('/oauth/kakao', oAuthKakao);
+
+// user
+app.use('/users/auth', auth);
+app.use('/users/userInfo', userInfo);
+app.use('/users/likeList', likeList);
 
 // listen port
 app.listen(process.env.PORT || 4001, () => {

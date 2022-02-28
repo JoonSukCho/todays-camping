@@ -1,0 +1,43 @@
+### signUp
+POST http://localhost:4001/users/auth/signUp HTTP/1.1
+content-type: application/json
+
+{
+    "user_id": "chojs",
+    "user_password": "1234", 
+    "user_password_confirm": "1234"
+}
+
+### duplicateCheck
+GET http://localhost:4001/users/auth/duplicateCheck?user_id=chojs HTTP/1.1
+
+### login
+POST http://localhost:4001/users/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "user_id": "chojs",
+    "user_password": "1234"
+}
+
+### push likeList
+POST http://localhost:4001/users/likeList/push HTTP/1.1
+content-type: application/json
+
+{
+    "user_id": "chojs",
+    "content_id": "1021"
+}
+
+### pop likeList
+POST http://localhost:4001/users/likeList/pop HTTP/1.1
+content-type: application/json
+
+{
+    "user_id": "chojs",
+    "content_id": "1"
+}
+
+### getUserInfo
+GET http://localhost:4001/users/userInfo?user_id=chojs HTTP/1.1
+
