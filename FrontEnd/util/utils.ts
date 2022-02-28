@@ -22,6 +22,19 @@ export const IsValidatedURL = (url: string) => {
   return urlRegex.test(url);
 };
 
+// id validate
+export const IsValidatedID = (id: string): boolean => {
+  const regex = /^[a-zA-Z0-9]{1,20}$/; // 대소문자, 숫자 검사
+
+  return regex.test(id);
+};
+
+export const IsValidatedPassword = (password: string): boolean => {
+  const regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/; // 대소문자, 숫자, 특수문자 검사
+
+  return regex.test(password);
+};
+
 // 문자열 모든 공백 제거
 export const removeAllBlank = (str: string): string => {
   return str.replace(/(\s*)/g, '');

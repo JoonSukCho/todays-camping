@@ -2,29 +2,29 @@ import { useMutation } from 'react-query';
 import axios, { AxiosError } from 'axios';
 
 // type & interface
-import { _iSignUpParams } from 'models/api/users/signUp';
+import { _iLoginParams } from 'models/api/users/login';
 
 // useQuery는 generic만 지원
-const useSignUp = () => {
-  let signUpURL = `https://todays-camping.herokuapp.com/users/auth/signUp`;
+const useLogin = () => {
+  let loginURL = `https://todays-camping.herokuapp.com/users/auth/login`;
 
   if (process.env.NODE_ENV === 'development') {
     const ipAddress = process.env.NEXT_PUBLIC_IP_ADDRESS;
     const serverPort = process.env.NEXT_PUBLIC_SERVER_PORT;
 
-    signUpURL = `${ipAddress}:${serverPort}/users/auth/signUp`;
+    loginURL = `${ipAddress}:${serverPort}/users/auth/login`;
   }
 
-  return useMutation<Response, AxiosError, _iSignUpParams>(
+  return useMutation<Response, AxiosError, _iLoginParams>(
     (params) => {
-      return axios.post(signUpURL, params);
+      return axios.post(loginURL, params);
     },
     {
       onError: (err) => {
-        console.log('SignUp Error', err);
+        console.log('Login Error', err);
       },
     },
   );
 };
 
-export default useSignUp;
+export default useLogin;

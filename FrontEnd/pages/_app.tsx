@@ -4,20 +4,21 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { GlobalStyle } from 'styles/globalStyle';
 import { QueryClientProvider, QueryClient } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
-import { theme } from 'styles/theme';
+import axios from 'axios';
 import { ThemeProvider } from 'styled-components';
 import {
   ThemeProvider as MUIThemeProvider,
   StylesProvider,
 } from '@material-ui/core/styles';
-import axios from 'axios';
 
-import * as ga from 'lib/ga';
-
+// theme, css
+import { theme } from 'styles/theme';
 import 'public/scss/material-kit-react.scss?v=1.10.0';
 import 'public/css/fonts.css';
+
+// lib
+import * as ga from 'lib/ga';
 
 declare global {
   interface Window {
