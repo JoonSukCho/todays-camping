@@ -95,7 +95,7 @@ const HeaderLinks = () => {
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button onClick={moveLikeListPage} className={classes.navLink}>
-            좋아요 목록
+            좋아요 리스트
           </Button>
         </ListItem>
         {userInfo ? (
