@@ -6,6 +6,14 @@ import * as session from 'express-session';
 import * as cookieParser from 'cookie-parser';
 import 'dotenv/config';
 
+declare global {
+  namespace Express {
+    interface User {
+      user_id?: string;
+    }
+  }
+}
+
 // express settings
 const app = express();
 const setPassportConfig = require('./passport/index');

@@ -17,11 +17,10 @@ import {
   Button,
   Collapse,
   Typography,
-  darken,
   IconButton,
-  Popper,
   Popover,
 } from '@material-ui/core';
+import { PhotoLibrary as PhotoLibraryIcon } from '@material-ui/icons';
 
 // models
 import { _iBasedItem } from 'models/api/goCamping/basedInfo';
@@ -66,6 +65,7 @@ import useModal from 'Hooks/useModal';
 import ModalContainer from 'components/Modal/ModalContainer';
 import ModalLink from 'components/Link/ModalLink';
 import TelLink from 'components/Link/TelLink';
+import LikeButton from 'components/Buttons/LikeButton';
 
 interface PhotoFeedProps {
   basedItem: _iBasedItem;
@@ -201,10 +201,11 @@ const PhotoFeed = ({ basedItem }: PhotoFeedProps) => {
           }
         />
         <CardActions disableSpacing className={classes.footer}>
+          <LikeButton basedItem={basedItem} />
           {basedItem.firstImageUrl && (
-            <Button size="small" color="primary" onClick={imageModalOpen}>
-              이미지 더보기
-            </Button>
+            <IconButton onClick={imageModalOpen} color="primary">
+              <PhotoLibraryIcon />
+            </IconButton>
           )}
           <ExpandMoreButton expanded={feedExpand} handler={expandFeed} />
         </CardActions>

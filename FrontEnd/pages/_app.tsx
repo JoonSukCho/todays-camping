@@ -1,23 +1,29 @@
 import type { AppProps } from 'next/app';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 import Head from 'next/head';
-import { GlobalStyle } from 'styles/globalStyle';
 import { QueryClientProvider, QueryClient } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
-import { theme } from 'styles/theme';
 import { ThemeProvider } from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { GlobalStyle } from 'styles/globalStyle';
 import {
   ThemeProvider as MUIThemeProvider,
   StylesProvider,
 } from '@material-ui/core/styles';
-import axios from 'axios';
 
-import * as ga from 'lib/ga';
+// redux
+import wrapper from 'store/configureStore';
+import { REQUEST_USER_INFO } from 'reducers/user';
 
+// theme, css
+import { theme } from 'styles/theme';
 import 'public/scss/material-kit-react.scss?v=1.10.0';
 import 'public/css/fonts.css';
+
+// lib
+import * as ga from 'lib/ga';
 
 declare global {
   interface Window {
@@ -34,6 +40,13 @@ axios.defaults.headers = {
 function MyApp({ Component, pageProps }: AppProps) {
   const kakaoAppKey = process.env.NEXT_PUBLIC_JS_KEY;
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: REQUEST_USER_INFO,
+    });
+  }, []);
 
   // 구글 애널리틱스 페이지 이동 조회
   useEffect(() => {
@@ -124,4 +137,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

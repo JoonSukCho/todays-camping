@@ -8,8 +8,8 @@ const Header = styled.div`
   /* height: 34px; */
 `;
 
-const ModalHeader = ({ children }) => {
-  return <Header>{children}</Header>;
+const ModalHeader = ({ children, ...rest }) => {
+  return <Header {...rest}>{children}</Header>;
 };
 
 export default ModalHeader;

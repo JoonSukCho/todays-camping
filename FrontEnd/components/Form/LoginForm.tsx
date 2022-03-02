@@ -1,91 +1,188 @@
-import axios, { AxiosError } from 'axios';
-import { Button, TextField } from '@material-ui/core';
-import { useQueryClient, useMutation } from 'react-query';
-import { useEffect } from 'react';
-import CirCularLoader from 'components/Loader/CirCularLoader';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { REQUEST_USER_INFO } from 'reducers/user';
 
-const LoginForm = () => {
-  const ipAddress = process.env.NEXT_PUBLIC_IP_ADDRESS;
-  const serverPort = process.env.NEXT_PUBLIC_SERVER_PORT;
+// components
+import {
+  Button,
+  FormControlLabel,
+  makeStyles,
+  TextField,
+  Typography,
+  Checkbox,
+  CircularProgress,
+} from '@material-ui/core';
+
+// Models
+import { _iLoginParams } from 'models/api/users/login';
+
+// Hooks
+import useLogin from 'Hooks/api/useLogin';
+import { IsValidatedID } from 'util/utils';
+
+interface LoginFormProps {
+  moveSignUpModal: () => void;
+  closeLoginModal: () => void;
+}
+
+const useStyles = makeStyles((theme) => ({
+  loginButton: {
+    width: '100%',
+    marginTop: 16,
+  },
+  footer: {
+    marginTop: 16,
+    textAlign: 'center',
+    color: '#7e7e7e',
+  },
+  signUp: {
+    marginLeft: 6,
+    color: '#333333',
+    cursor: 'pointer',
+    textDecoration: 'underline',
+    fontWeight: 500,
+  },
+  chkRemember: {
+    color: '#7e7e7e',
+  },
+}));
+
+const LoginForm = ({ moveSignUpModal, closeLoginModal }: LoginFormProps) => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
 
   // 로그인 mutation
   const {
-    data: loginData,
     mutate: loginMutate,
     isLoading: loginIsLoading,
     isError: loginIsError,
-    isSuccess: loginIsSuccess,
+    isSuccess: loginSuccess,
     error: loginError,
-  } = useMutation<Response, AxiosError>(
-    (params) => {
-      return axios.post(`${ipAddress}:${serverPort}/users/auth/login`, params);
-    },
-    {
-      onError: (err) => {
-        // console.log(err);
-      },
-    },
-  );
+  } = useLogin();
 
-  // 로그아웃 mutation
-  const {
-    data: logoutData,
-    mutate: logoutMutate,
-    isLoading: logoutIsLoading,
-    isError: logoutIsError,
-    isSuccess: logoutIsSuccess,
-    error: logoutError,
-  } = useMutation<Response, AxiosError>(
-    () => {
-      return axios.get(`${ipAddress}:${serverPort}/users/auth/logout`);
-    },
-    {
-      onError: (err) => {
-        // console.log(err);
-      },
-    },
-  );
+  const [isValidID, setIsValidID] = useState(true);
+  const [isValidPW, setISValidPW] = useState(true);
+  const [chkRemember, setChkRemember] = useState(false);
+  const [userInputs, setUserInputs] = useState<_iLoginParams>({
+    user_id: '',
+    user_password: '',
+  });
+  const { user_id, user_password } = userInputs;
 
-  const submitLogin = () => {
+  const requestLogin = () => {
+    if (!IsValidatedID(user_id)) {
+      setIsValidID(false);
+      return false;
+    }
+
+    if (user_password.length === 0) {
+      setISValidPW(false);
+      return false;
+    }
+
     loginMutate({
-      user_id: 'chojs',
-      user_password: '1234',
+      user_id,
+      user_password,
     });
   };
 
-  const submitLogout = () => {
-    logoutMutate();
+  const onInputChange = (e) => {
+    const { value, name } = e.target;
+    setUserInputs({
+      ...userInputs,
+      [name]: value,
+    });
+  };
+
+  const onRememberChange = (e) => {
+    setChkRemember(e.target.checked);
+  };
+
+  const onEnterPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter') {
+      requestLogin();
+    }
   };
 
   useEffect(() => {
     if (loginError) {
-      console.log(loginError.response.data);
+      const { message } = loginError.response.data;
+      alert(message);
     }
-  }, [loginIsLoading]);
+  }, [loginError]);
 
+  // login callback
   useEffect(() => {
-    console.log(loginData);
-  }, [loginData]);
-
-  useEffect(() => {
-    if (logoutError) {
-      console.log(logoutError.response.data);
+    if (loginSuccess) {
+      closeLoginModal();
+      dispatch({
+        type: REQUEST_USER_INFO,
+      });
     }
-  }, [logoutIsLoading]);
-
-  useEffect(() => {
-    console.log(logoutData);
-  }, [logoutData]);
+  }, [loginSuccess]);
 
   return (
     <div>
-      {loginIsLoading && <CirCularLoader />}
-      <Button onClick={submitLogin} color="primary">
-        로그인
+      <TextField
+        id="user_id"
+        name="user_id"
+        label="아이디"
+        variant="outlined"
+        required
+        fullWidth
+        margin="normal"
+        value={user_id}
+        error={!isValidID}
+        helperText={
+          !isValidID ? '아이디는 영문자, 숫자로 1~20자리로 입력해주세요.' : ''
+        }
+        onChange={onInputChange}
+        onKeyPress={onEnterPress}
+      />
+      <TextField
+        id="user_password"
+        name="user_password"
+        type="password"
+        label="비밀번호"
+        variant="outlined"
+        required
+        fullWidth
+        margin="normal"
+        value={user_password}
+        error={!isValidPW}
+        helperText={!isValidPW ? '비밀번호는 필수 입력값 입니다.' : ''}
+        onChange={onInputChange}
+        onKeyPress={onEnterPress}
+      />
+      <FormControlLabel
+        className={classes.chkRemember}
+        control={
+          <Checkbox
+            color="primary"
+            checked={chkRemember}
+            onChange={onRememberChange}
+          />
+        }
+        label="아이디 저장"
+      />
+      <Button
+        className={classes.loginButton}
+        onClick={requestLogin}
+        color="primary"
+        variant="contained"
+      >
+        {loginIsLoading ? (
+          <CircularProgress size={26} color="inherit" />
+        ) : (
+          '로그인'
+        )}
       </Button>
-      <Button onClick={submitLogout} color="primary">
-        로그아웃
-      </Button>
+      <Typography variant="body2" className={classes.footer}>
+        아직 회원이 아니신가요?
+        <span className={classes.signUp} onClick={moveSignUpModal}>
+          회원가입
+        </span>
+      </Typography>
     </div>
   );
 };
