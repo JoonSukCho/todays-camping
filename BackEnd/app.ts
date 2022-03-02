@@ -33,8 +33,9 @@ app.use(
     saveUninitialized: false,
     proxy: true,
     cookie: {
-      httpOnly: process.env.NODE_ENV && process.env.NODE_ENV === 'production' ? true : false,
-      secure: process.env.NODE_ENV && process.env.NODE_ENV === 'production' ? true : false,
+      path: process.env.NODE_ENV === 'production' ? '.todays-camping.vercel.app' : '/',
+      httpOnly: process.env.NODE_ENV === 'production' ? true : false,
+      secure: process.env.NODE_ENV === 'production' ? true : false,
       maxAge: 60 * 60 * 24 * 1000, // 1일
     },
   }),
