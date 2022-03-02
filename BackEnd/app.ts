@@ -24,21 +24,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(cors({ origin: true, credentials: true }));
 app.set('trust proxy', 1);
+app.enable('trust proxy');
 app.use(
   session({
     name: 'user.sid',
     secret: process.env.SESSION_SECRET, // secret은 환경변수에 저장해두어야 한다.
     resave: false,
     saveUninitialized: false,
+    proxy: true,
     cookie: {
-      httpOnly: false,
+      httpOnly: process.env.NODE_ENV && process.env.NODE_ENV === 'production' ? true : false,
       secure: process.env.NODE_ENV && process.env.NODE_ENV === 'production' ? true : false,
       maxAge: 60 * 60 * 24 * 1000, // 1일
     },
   }),
 );
-
-app.enable('trust proxy');
 
 app.use(passport.initialize());
 app.use(passport.session());
