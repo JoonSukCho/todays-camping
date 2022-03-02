@@ -6,7 +6,7 @@ const router = express.Router();
 const db = require('../../db/config');
 
 router.get('/', (req, res) => {
-  if (req.user && req.isAuthenticated()) {
+  if (req.user) {
     const user_id = req.user;
 
     db.query('SELECT user_id,like_list FROM user_table WHERE user_id = $1', [user_id], (err, row) => {
