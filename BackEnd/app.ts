@@ -29,6 +29,7 @@ app.use(
     secret: process.env.SESSION_SECRET, // secret은 환경변수에 저장해두어야 한다.
     resave: false,
     saveUninitialized: false,
+    proxy: true,
     cookie: {
       httpOnly: false,
       secure: false,
@@ -36,6 +37,8 @@ app.use(
     },
   }),
 );
+
+app.enable('trust proxy');
 
 app.use(passport.initialize());
 app.use(passport.session());
