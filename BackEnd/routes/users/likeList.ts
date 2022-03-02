@@ -7,7 +7,7 @@ const db = require('../../db/config');
 
 // 좋아요 목록 가져오기
 router.get('/list', (req, res, next) => {
-  if (req.user && req.isAuthenticated()) {
+  if (req.user) {
     const user_id = req.user;
 
     db.query(
@@ -32,7 +32,7 @@ router.get('/list', (req, res, next) => {
 
 // 좋아요 목록에 추가
 router.post('/push', (req, res) => {
-  if (req.user && req.isAuthenticated()) {
+  if (req.user) {
     const {
       contentId,
       facltNm,
@@ -96,7 +96,7 @@ router.post('/push', (req, res) => {
 
 // 좋아요 목록에서 제거
 router.post('/pop', (req, res) => {
-  if (req.user && req.isAuthenticated()) {
+  if (req.user) {
     const { contentId } = req.body;
     const user_id = req.user;
 
