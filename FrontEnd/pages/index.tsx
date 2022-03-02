@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
+// reducer
+import { useDispatch } from 'react-redux';
+import { REQUEST_LIKE_LIST } from 'reducers/likeList';
+
 // mui
 import { Typography } from '@material-ui/core';
 
@@ -42,6 +46,8 @@ const shuffledPageIdxArr = generateShuffledArr(totalPage).filter(
   (idx) => idx !== totalPage,
 );
 const Home = () => {
+  const dispatch = useDispatch();
+
   // local state
   const [basedInfoReqParams, setBasedInfoReqParams] =
     useState<_iBasedInfoReqParams>({
@@ -66,6 +72,13 @@ const Home = () => {
       }));
     }
   };
+
+  // 좋아요 목록 요청
+  useEffect(() => {
+    dispatch({
+      type: REQUEST_LIKE_LIST,
+    });
+  }, []);
 
   // basedInfo 요청 (parameter가 변경될 때 요청을 보낸다)
   useEffect(() => {
