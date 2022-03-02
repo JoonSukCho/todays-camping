@@ -18,7 +18,7 @@ const useLogout = () => {
     },
     {
       onError: (err) => {
-        console.log('Logout Error', err);
+        console.log('Logout Error', err.response.data);
       },
     },
   );
