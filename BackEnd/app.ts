@@ -33,10 +33,12 @@ app.use(
     saveUninitialized: false,
     proxy: true,
     cookie: {
-      domain: process.env.NODE_ENV === 'production' ? '.todays-camping.herokuapp.com' : 'localhost',
+      // domain: process.env.NODE_ENV === 'production' ? '.todays-camping.herokuapp.com' : 'localhost',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      httpOnly: process.env.NODE_ENV === 'production' ? true : false,
-      secure: process.env.NODE_ENV === 'production' ? true : false,
+      // httpOnly: process.env.NODE_ENV === 'production' ? true : false,
+      httpOnly: false,
+      // secure: process.env.NODE_ENV === 'production' ? true : false,
+      secure: false,
       maxAge: 60 * 60 * 24 * 1000, // 1일
     },
   }),
