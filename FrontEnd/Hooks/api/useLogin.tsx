@@ -20,6 +20,7 @@ const useLogin = () => {
       return axios.post(loginURL, params);
     },
     {
+      mutationKey: 'login',
       onError: (err) => {
         console.log('Login Error', err);
       },
