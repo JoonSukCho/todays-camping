@@ -12,11 +12,12 @@ import Parallax from 'components/Parallax/Parallax';
 import ParallaxContent from 'components/Parallax/ParallaxContent';
 import MainSection from 'components/Section/MainSection';
 import useSearchInfo from 'Hooks/api/useSearchInfo';
-import { _iSearchInfoReqParams } from 'models/api/goCamping/searchInfo';
 import PhotoFeed from 'components/Feed/PhotoFeed';
 import CirCularLoader from 'components/Loader/CirCularLoader';
 import KeywordSearchForm from 'components/Form/KeywordSearchForm';
 import ErrorResponse from 'components/Error/ErrorResponse';
+
+import { _iSearchInfoReqParams } from 'models/api/goCamping/searchInfo';
 
 const NUM_OF_ROWS = 10;
 const SearchResult = ({ router: { query } }) => {
@@ -37,10 +38,24 @@ const SearchResult = ({ router: { query } }) => {
 
   useEffect(() => {
     if (query.keyword) {
-      setSearchInfoReqParams({
-        numOfRows: NUM_OF_ROWS,
-        pageNo,
-        keyword: query.keyword,
+      setSearchInfoReqParams((prevState) => {
+        if (prevState) {
+          if (prevState.keyword !== query.keyword) {
+            setPageNo(1);
+
+            return {
+              numOfRows: NUM_OF_ROWS,
+              keyword: query.keyword,
+              pageNo: 1,
+            };
+          }
+        }
+
+        return {
+          numOfRows: NUM_OF_ROWS,
+          pageNo,
+          keyword: query.keyword,
+        };
       });
     }
   }, [query, pageNo]);
@@ -53,11 +68,11 @@ const SearchResult = ({ router: { query } }) => {
 
   return (
     <AppLayout>
-      <Parallax height={300} bgColor="rgba(0, 0, 0, 0.8)">
+      <Parallax height={170} bgColor="rgba(0, 0, 0, 0.8)">
         <ParallaxContent>
           <GridContainer>
             <GridItem>
-              <KeywordSearchForm initialValue={query.keyword} spacing={50} />
+              <KeywordSearchForm initialValue={query.keyword} spacing={70} />
             </GridItem>
           </GridContainer>
         </ParallaxContent>
@@ -133,15 +148,18 @@ const SearchResult = ({ router: { query } }) => {
 
 const NoResultContainer = styled.div`
   width: 100%;
-  height: calc(100vh - 435px);
+  height: calc(100vh - 443px);
   display: flex;
   flex-direction: column;
   text-align: center;
+  justify-content: center;
+  margin: 90px 0px;
 `;
 
 const LoaderContainer = styled.div`
   width: 100%;
-  height: calc(100vh - 435px);
+  height: calc(100vh - 443px);
+  margin: 90px 0px;
 `;
 
 const NoResultText = styled.h1`

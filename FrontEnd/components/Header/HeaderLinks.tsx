@@ -1,6 +1,9 @@
 /*eslint-disable*/
 import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'reducers';
+import { REQUEST_USER_INFO } from 'reducers/user';
 
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,18 +22,17 @@ import LoginForm from 'components/Form/LoginForm';
 // Hooks
 import useModal from 'Hooks/useModal';
 import useLogout from 'Hooks/api/useLogout';
-import useUserInfo from 'Hooks/api/useUserInfo';
 
 const useStyles = makeStyles(styles);
 
 const HeaderLinks = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const {
-    data: userInfo,
-    loading: isUserInfoLoading,
-    refetch: refetchUserInfo,
-  } = useUserInfo({ enabled: true });
+  const { userInfo, userInfoLoading } = useSelector(
+    (state: RootState) => state.user,
+  );
+
   const { mutate: logoutMutate, isSuccess: logoutSuccess } = useLogout();
 
   const [loginModalOpenFlag, loginModalOpen, loginModalClose] = useModal();
@@ -45,12 +47,43 @@ const HeaderLinks = () => {
     logoutMutate();
   };
 
+  const moveLikeListPage = () => {
+    if (!userInfo) {
+      alert('로그인 후 이용할 수 있습니다.');
+      return false;
+    }
+    Router.push('/like-list');
+  };
+
+  // logout callback
   useEffect(() => {
     if (logoutSuccess) {
+      dispatch({
+        type: REQUEST_USER_INFO,
+      });
+
       Router.push('/');
-      refetchUserInfo();
     }
   }, [logoutSuccess]);
+
+  if (userInfoLoading) {
+    return (
+      <>
+        <List className={classes.list}>
+          <ListItem className={classes.listItem}>
+            <Button href="/" className={classes.navLink}>
+              Home
+            </Button>
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            <Button onClick={moveLikeListPage} className={classes.navLink}>
+              좋아요 리스트
+            </Button>
+          </ListItem>
+        </List>
+      </>
+    );
+  }
 
   return (
     <>
@@ -60,7 +93,12 @@ const HeaderLinks = () => {
             Home
           </Button>
         </ListItem>
-        {!isUserInfoLoading && userInfo ? (
+        <ListItem className={classes.listItem}>
+          <Button onClick={moveLikeListPage} className={classes.navLink}>
+            좋아요 목록
+          </Button>
+        </ListItem>
+        {userInfo ? (
           <>
             <ListItem className={classes.listItem}>
               <Button className={classes.navLink} onClick={requestLogout}>
@@ -99,7 +137,10 @@ const HeaderLinks = () => {
             <Typography variant="h6">로그인</Typography>
           </ModalHeader>
           <ModalContent>
-            <LoginForm moveSignUpModal={moveSignUpModal} />
+            <LoginForm
+              moveSignUpModal={moveSignUpModal}
+              closeLoginModal={loginModalClose}
+            />
           </ModalContent>
         </ModalContainer>
       </Modal>

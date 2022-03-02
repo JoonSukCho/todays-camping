@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { REQUEST_USER_INFO } from 'reducers/user';
 
 // components
 import {
@@ -16,11 +18,11 @@ import { _iLoginParams } from 'models/api/users/login';
 
 // Hooks
 import useLogin from 'Hooks/api/useLogin';
-import useUserInfo from 'Hooks/api/useUserInfo';
 import { IsValidatedID } from 'util/utils';
 
 interface LoginFormProps {
   moveSignUpModal: () => void;
+  closeLoginModal: () => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -45,11 +47,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginForm = ({ moveSignUpModal }: LoginFormProps) => {
+const LoginForm = ({ moveSignUpModal, closeLoginModal }: LoginFormProps) => {
   const classes = useStyles();
-
-  // userInfo Hook
-  const { refetch: refetchUserInfo } = useUserInfo();
+  const dispatch = useDispatch();
 
   // 로그인 mutation
   const {
@@ -69,18 +69,6 @@ const LoginForm = ({ moveSignUpModal }: LoginFormProps) => {
   });
   const { user_id, user_password } = userInputs;
 
-  const onInputChange = (e) => {
-    const { value, name } = e.target;
-    setUserInputs({
-      ...userInputs,
-      [name]: value,
-    });
-  };
-
-  const onRememberChange = (e) => {
-    setChkRemember(e.target.checked);
-  };
-
   const requestLogin = () => {
     if (!IsValidatedID(user_id)) {
       setIsValidID(false);
@@ -98,6 +86,24 @@ const LoginForm = ({ moveSignUpModal }: LoginFormProps) => {
     });
   };
 
+  const onInputChange = (e) => {
+    const { value, name } = e.target;
+    setUserInputs({
+      ...userInputs,
+      [name]: value,
+    });
+  };
+
+  const onRememberChange = (e) => {
+    setChkRemember(e.target.checked);
+  };
+
+  const onEnterPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter') {
+      requestLogin();
+    }
+  };
+
   useEffect(() => {
     if (loginError) {
       const { message } = loginError.response.data;
@@ -105,9 +111,13 @@ const LoginForm = ({ moveSignUpModal }: LoginFormProps) => {
     }
   }, [loginError]);
 
+  // login callback
   useEffect(() => {
     if (loginSuccess) {
-      refetchUserInfo();
+      closeLoginModal();
+      dispatch({
+        type: REQUEST_USER_INFO,
+      });
     }
   }, [loginSuccess]);
 
@@ -127,6 +137,7 @@ const LoginForm = ({ moveSignUpModal }: LoginFormProps) => {
           !isValidID ? '아이디는 영문자, 숫자로 1~20자리로 입력해주세요.' : ''
         }
         onChange={onInputChange}
+        onKeyPress={onEnterPress}
       />
       <TextField
         id="user_password"
@@ -141,6 +152,7 @@ const LoginForm = ({ moveSignUpModal }: LoginFormProps) => {
         error={!isValidPW}
         helperText={!isValidPW ? '비밀번호는 필수 입력값 입니다.' : ''}
         onChange={onInputChange}
+        onKeyPress={onEnterPress}
       />
       <FormControlLabel
         className={classes.chkRemember}
