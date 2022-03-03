@@ -23,29 +23,29 @@ app.use(express.json()); // body parser
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(cors({ origin: true, credentials: true }));
-app.set('trust proxy', 1);
-app.enable('trust proxy');
-app.use(
-  session({
-    name: 'user.sid',
-    secret: process.env.SESSION_SECRET, // secret은 환경변수에 저장해두어야 한다.
-    resave: false,
-    saveUninitialized: false,
-    proxy: true,
-    cookie: {
-      // domain: process.env.NODE_ENV === 'production' ? '.todays-camping.herokuapp.com' : 'localhost',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      // httpOnly: process.env.NODE_ENV === 'production' ? true : false,
-      httpOnly: false,
-      // secure: process.env.NODE_ENV === 'production' ? true : false,
-      secure: false,
-      maxAge: 60 * 60 * 24 * 1000, // 1일
-    },
-  }),
-);
+// app.set('trust proxy', 1);
+// app.enable('trust proxy');
+// app.use(
+//   session({
+//     name: 'user.sid',
+//     secret: process.env.SESSION_SECRET, // secret은 환경변수에 저장해두어야 한다.
+//     resave: false,
+//     saveUninitialized: false,
+//     proxy: true,
+//     cookie: {
+//       // domain: process.env.NODE_ENV === 'production' ? '.todays-camping.herokuapp.com' : 'localhost',
+//       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+//       // httpOnly: process.env.NODE_ENV === 'production' ? true : false,
+//       httpOnly: false,
+//       // secure: process.env.NODE_ENV === 'production' ? true : false,
+//       secure: false,
+//       maxAge: 60 * 60 * 24 * 1000, // 1일
+//     },
+//   }),
+// );
 
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 setPassportConfig();
 
 // router import
