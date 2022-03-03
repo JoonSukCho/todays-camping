@@ -35,6 +35,8 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
+  'access-token': 'Bearer ',
+  'refresh-token': 'Bearer ',
 };
 
 function MyApp({ Component, pageProps }: AppProps) {

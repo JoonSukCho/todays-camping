@@ -5,6 +5,11 @@ import {
   SUCCESS_USER_INFO,
   ERROR_USER_INFO,
 } from 'reducers/user';
+import {
+  isValidRefreshToken,
+  resetRefreshToken,
+  setRefreshTokenToHeader,
+} from 'util/auth';
 
 const getUserInfo = async () => {
   let userInfoURL = `https://todays-camping.herokuapp.com/users/userInfo`;
@@ -14,6 +19,12 @@ const getUserInfo = async () => {
     const serverPort = process.env.NEXT_PUBLIC_SERVER_PORT;
 
     userInfoURL = `${ipAddress}:${serverPort}/users/userInfo`;
+  }
+
+  if (isValidRefreshToken()) {
+    setRefreshTokenToHeader();
+  } else {
+    resetRefreshToken();
   }
 
   const { data } = await axios.get(userInfoURL).catch((err) => {

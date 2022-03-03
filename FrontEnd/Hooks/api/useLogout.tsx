@@ -12,9 +12,15 @@ const useLogout = () => {
     logoutURL = `${ipAddress}:${serverPort}/users/auth/logout`;
   }
 
-  return useMutation<Response, AxiosError>(
+  return useMutation<any, AxiosError>(
     () => {
-      return axios.get(logoutURL);
+      return axios.get(logoutURL).then((res) => {
+        axios.defaults.headers['access-token'] = `Bearer `;
+        axios.defaults.headers['refresh-token'] = `Bearer `;
+
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('expired');
+      });
     },
     {
       onError: (err) => {

@@ -15,9 +15,19 @@ const useLogin = () => {
     loginURL = `${ipAddress}:${serverPort}/users/auth/login`;
   }
 
-  return useMutation<Response, AxiosError, _iLoginParams>(
+  return useMutation<any, AxiosError, _iLoginParams>(
     (params) => {
-      return axios.post(loginURL, params, { withCredentials: true });
+      return axios.post(loginURL, params).then((res) => {
+        const { accessToken, refreshToken, expired } = res.data;
+        axios.defaults.headers['access-token'] = `Bearer ${accessToken}`;
+        axios.defaults.headers['refresh-token'] = `Bearer ${refreshToken}`;
+
+        // refresh Token을 localStorage에 저장. (추후 DB에 저장으로 수정)
+        localStorage.setItem('refreshToken', refreshToken);
+        // refresh Token의 만료시간을 localStorage에 저장.
+        localStorage.setItem('expired', expired);
+        return res.data;
+      });
     },
     {
       mutationKey: 'login',
