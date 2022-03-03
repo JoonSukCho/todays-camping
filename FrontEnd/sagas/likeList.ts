@@ -5,6 +5,11 @@ import {
   SUCCESS_LIKE_LIST,
   ERROR_LIKE_LIST,
 } from 'reducers/likeList';
+import {
+  isValidRefreshToken,
+  resetRefreshToken,
+  setRefreshTokenToHeader,
+} from 'util/auth';
 
 const getLikeList = async () => {
   let likeListURL = `https://todays-camping.herokuapp.com/users/likeList/list`;
@@ -14,6 +19,12 @@ const getLikeList = async () => {
     const serverPort = process.env.NEXT_PUBLIC_SERVER_PORT;
 
     likeListURL = `${ipAddress}:${serverPort}/users/likeList/list`;
+  }
+
+  if (isValidRefreshToken()) {
+    setRefreshTokenToHeader();
+  } else {
+    resetRefreshToken();
   }
 
   const { data } = await axios.get(likeListURL).catch((err) => {

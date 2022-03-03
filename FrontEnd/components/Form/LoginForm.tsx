@@ -53,6 +53,7 @@ const LoginForm = ({ moveSignUpModal, closeLoginModal }: LoginFormProps) => {
 
   // 로그인 mutation
   const {
+    data: loginData,
     mutate: loginMutate,
     isLoading: loginIsLoading,
     isError: loginIsError,

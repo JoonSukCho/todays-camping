@@ -1,31 +1,37 @@
 import 'dotenv/config';
 import * as express from 'express';
 import * as passport from 'passport';
+import * as jwt from 'jsonwebtoken';
 
 const router = express.Router();
 const db = require('../../db/config');
 
 // 로그인
 router.post('/login', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
+  passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err) return next(err);
     if (!user) return res.status(400).json({ status: 400, message: info.message });
 
-    req.logIn(user, (err) => {
+    req.logIn(user, { session: false }, (err) => {
       if (err) return next(err);
 
-      return res.status(200).json({ status: 200, message: '로그인 성공' });
+      const refreshExpiredDays = 14;
+      const refreshExpired = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * refreshExpiredDays).valueOf();
+      const accessToken = jwt.sign({ user_id: user.user_id }, process.env.SESSION_SECRET, { expiresIn: '1h' });
+      const refreshToken = jwt.sign({ user_id: user.user_id }, process.env.SESSION_SECRET, {
+        expiresIn: `${refreshExpiredDays}d`,
+      });
+
+      return res
+        .status(200)
+        .json({ status: 200, message: '로그인 성공', accessToken, refreshToken, expired: refreshExpired });
     });
   })(req, res, next);
 });
 
 // 로그아웃
 router.get('/logout', (req, res) => {
-  req.logout();
-  req.session.destroy(() => {
-    res.clearCookie('user.sid');
-    return res.status(200).json({ status: 200, message: '로그아웃 성공' });
-  });
+  return res.status(200).json({ status: 200, message: '로그아웃 성공' });
 });
 
 // 회원 가입
