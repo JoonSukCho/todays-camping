@@ -7,14 +7,11 @@
 - React
 - Next.js
 - Typescript
-- Material-ui
-- react-query
-- axios
-- styled-components
 
 ### Back-end
 - Node.js
 - Express
+- postgresql
 
 ### etc
 - git
@@ -25,6 +22,6 @@
 
 
 # 배포 환경
-Frontend - Vercel
-Backend - Heroku
+- Frontend: Vercel
+- Backend: Heroku
 
