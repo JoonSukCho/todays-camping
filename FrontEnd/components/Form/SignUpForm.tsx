@@ -18,7 +18,7 @@ import { _iSignUpParams } from 'models/api/users/signUp';
 // Hooks
 import useSignUp from 'Hooks/api/useSignUp';
 import useDupCheckId from 'Hooks/api/useDupCheckId';
-import { IsValidatedID } from 'util/utils';
+import { IsValidatedID, IsValidatedPassword } from 'util/utils';
 import useLogin from 'Hooks/api/useLogin';
 
 const useStyles = makeStyles((theme) => ({
@@ -72,7 +72,7 @@ const SignUpForm = ({ closeSignUpModal }) => {
       return false;
     }
 
-    if (user_password.length === 0) {
+    if (!IsValidatedPassword(user_password)) {
       setISValidPW(false);
       return false;
     }
@@ -174,7 +174,7 @@ const SignUpForm = ({ closeSignUpModal }) => {
             <Button
               variant="contained"
               color="primary"
-              style={{ minWidth: 100 }}
+              style={{ minWidth: 90 }}
               onClick={requestDupCheck}
             >
               {dupCheckIsLoading ? (
@@ -199,7 +199,11 @@ const SignUpForm = ({ closeSignUpModal }) => {
         margin="normal"
         value={user_password}
         error={!isValidPW}
-        helperText={!isValidPW ? '비밀번호는 필수 입력값 입니다.' : ''}
+        helperText={
+          !isValidPW
+            ? '8~20자의 영문 대소문자, 숫자, 특수문자(!@#$%^*+=-)만 사용 가능합니다.'
+            : ''
+        }
         onChange={onInputChange}
         onKeyPress={onEnterPress}
       />
