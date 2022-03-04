@@ -30,7 +30,6 @@ const useLogin = () => {
       });
     },
     {
-      mutationKey: 'login',
       onError: (err) => {
         console.log('Login Error', err.response.data);
       },

@@ -66,25 +66,12 @@ const HeaderLinks = () => {
     }
   }, [logoutSuccess]);
 
-  if (userInfoLoading) {
+  if (userInfoLoading)
     return (
       <>
-        <List className={classes.list}>
-          <ListItem className={classes.listItem}>
-            <Button href="/" className={classes.navLink}>
-              Home
-            </Button>
-          </ListItem>
-          <ListItem className={classes.listItem}>
-            <Button onClick={moveLikeListPage} className={classes.navLink}>
-              좋아요 리스트
-            </Button>
-          </ListItem>
-        </List>
+        <List className={classes.list} />
       </>
     );
-  }
-
   return (
     <>
       <List className={classes.list}>
@@ -160,7 +147,7 @@ const HeaderLinks = () => {
             <Typography variant="h6">회원가입</Typography>
           </ModalHeader>
           <ModalContent>
-            <SignUpForm />
+            <SignUpForm closeSignUpModal={signUpModalClose} />
           </ModalContent>
         </ModalContainer>
       </Modal>
