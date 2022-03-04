@@ -43,7 +43,7 @@ router.post('/signUp', (req, res) => {
     [user_id, user_password, user_password_confirm],
     (err, result) => {
       if (err) {
-        return res.status(400).json({ status: 400, message: err.message });
+        return res.status(400).json({ status: 400, message: '이미 존재하는 아이디 입니다.' });
       } else {
         return res.status(200).json({ status: 200, message: '회원 가입 성공.' });
       }
@@ -56,15 +56,20 @@ router.get('/duplicateCheck', (req, res) => {
   const { user_id } = req.query;
 
   db.query('SELECT COUNT(user_id) FROM user_table WHERE user_id = $1', [user_id], (err, result) => {
-    if (err) {
-      return res.status(400).json({ status: 400, message: err.message });
-    }
+    try {
+      if (err) {
+        return res.status(400).json({ status: 400, message: err.message });
+      }
 
-    if (result.rows.length > 0) {
-      return res.status(400).json({ status: 400, message: '이미 존재하는 아이디 입니다.' });
-    }
+      const count = parseInt(result.rows[0].count, 10);
+      if (count > 0) {
+        return res.status(400).json({ status: 400, success: false, message: '이미 존재하는 아이디 입니다.' });
+      }
 
-    return res.status(200).json({ status: 200, message: '사용 가능한 아이디 입니다.' });
+      return res.status(200).json({ status: 200, success: true, data: { message: '사용 가능한 아이디 입니다.' } });
+    } catch (error) {
+      return res.status(400).json({ status: 400, message: error });
+    }
   });
 });
 
