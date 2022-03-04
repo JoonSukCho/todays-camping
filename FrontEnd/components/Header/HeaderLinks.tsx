@@ -74,27 +74,47 @@ const HeaderLinks = () => {
     );
   return (
     <>
-      <List className={classes.list}>
-        <ListItem className={classes.listItem}>
-          <Button href="/" className={classes.navLink}>
-            Home
-          </Button>
-        </ListItem>
-        <ListItem className={classes.listItem}>
-          <Button onClick={moveLikeListPage} className={classes.navLink}>
-            좋아요 리스트
-          </Button>
-        </ListItem>
-        {userInfo ? (
-          <>
+      {userInfo ? (
+        <>
+          <List className={classes.list}>
+            <ListItem className={classes.listItem}>
+              <Button
+                className={classes.navLink}
+                style={{ textTransform: 'none', cursor: 'default' }}
+              >
+                {userInfo.user_id}님
+              </Button>
+            </ListItem>
+            <ListItem className={classes.listItem}>
+              <Button href="/" className={classes.navLink}>
+                Home
+              </Button>
+            </ListItem>
+            <ListItem className={classes.listItem}>
+              <Button onClick={moveLikeListPage} className={classes.navLink}>
+                좋아요 리스트
+              </Button>
+            </ListItem>
             <ListItem className={classes.listItem}>
               <Button className={classes.navLink} onClick={requestLogout}>
                 로그아웃
               </Button>
             </ListItem>
-          </>
-        ) : (
-          <>
+          </List>
+        </>
+      ) : (
+        <>
+          <List className={classes.list}>
+            <ListItem className={classes.listItem}>
+              <Button href="/" className={classes.navLink}>
+                Home
+              </Button>
+            </ListItem>
+            <ListItem className={classes.listItem}>
+              <Button onClick={moveLikeListPage} className={classes.navLink}>
+                좋아요 리스트
+              </Button>
+            </ListItem>
             <ListItem className={classes.listItem}>
               <Button className={classes.navLink} onClick={loginModalOpen}>
                 로그인
@@ -105,9 +125,9 @@ const HeaderLinks = () => {
                 회원가입
               </Button>
             </ListItem>
-          </>
-        )}
-      </List>
+          </List>
+        </>
+      )}
 
       {/* 로그인 모달 */}
       <Modal
