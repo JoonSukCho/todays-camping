@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { REQUEST_USER_INFO } from 'reducers/user';
+import { REQUEST_LIKE_LIST } from 'reducers/likeList';
 
 // components
 import {
   Button,
-  FormControlLabel,
   makeStyles,
   TextField,
   Typography,
-  Checkbox,
   CircularProgress,
 } from '@material-ui/core';
 
@@ -42,9 +41,6 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'underline',
     fontWeight: 500,
   },
-  chkRemember: {
-    color: '#7e7e7e',
-  },
 }));
 
 const LoginForm = ({ moveSignUpModal, closeLoginModal }: LoginFormProps) => {
@@ -53,7 +49,6 @@ const LoginForm = ({ moveSignUpModal, closeLoginModal }: LoginFormProps) => {
 
   // 로그인 mutation
   const {
-    data: loginData,
     mutate: loginMutate,
     isLoading: loginIsLoading,
     isError: loginIsError,
@@ -63,7 +58,6 @@ const LoginForm = ({ moveSignUpModal, closeLoginModal }: LoginFormProps) => {
 
   const [isValidID, setIsValidID] = useState(true);
   const [isValidPW, setISValidPW] = useState(true);
-  const [chkRemember, setChkRemember] = useState(false);
   const [userInputs, setUserInputs] = useState<_iLoginParams>({
     user_id: '',
     user_password: '',
@@ -95,10 +89,6 @@ const LoginForm = ({ moveSignUpModal, closeLoginModal }: LoginFormProps) => {
     });
   };
 
-  const onRememberChange = (e) => {
-    setChkRemember(e.target.checked);
-  };
-
   const onEnterPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
       requestLogin();
@@ -106,11 +96,11 @@ const LoginForm = ({ moveSignUpModal, closeLoginModal }: LoginFormProps) => {
   };
 
   useEffect(() => {
-    if (loginError) {
+    if (loginIsError) {
       const { message } = loginError.response.data;
       alert(message);
     }
-  }, [loginError]);
+  }, [loginIsError]);
 
   // login callback
   useEffect(() => {
@@ -118,6 +108,9 @@ const LoginForm = ({ moveSignUpModal, closeLoginModal }: LoginFormProps) => {
       closeLoginModal();
       dispatch({
         type: REQUEST_USER_INFO,
+      });
+      dispatch({
+        type: REQUEST_LIKE_LIST,
       });
     }
   }, [loginSuccess]);
@@ -154,17 +147,6 @@ const LoginForm = ({ moveSignUpModal, closeLoginModal }: LoginFormProps) => {
         helperText={!isValidPW ? '비밀번호는 필수 입력값 입니다.' : ''}
         onChange={onInputChange}
         onKeyPress={onEnterPress}
-      />
-      <FormControlLabel
-        className={classes.chkRemember}
-        control={
-          <Checkbox
-            color="primary"
-            checked={chkRemember}
-            onChange={onRememberChange}
-          />
-        }
-        label="아이디 저장"
       />
       <Button
         className={classes.loginButton}

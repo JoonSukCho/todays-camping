@@ -20,6 +20,7 @@ const useSignUp = () => {
       return axios.post(signUpURL, params);
     },
     {
+      retry: 0,
       onError: (err) => {
         console.log('SignUp Error', err);
       },
