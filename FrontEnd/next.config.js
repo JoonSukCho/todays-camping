@@ -10,6 +10,7 @@ module.exports = withPlugins([[withImages]], {
   },
   images: {
     disableStaticImages: true,
+    domains: ['gocamping.or.kr'],
   },
   webpack(config, { webpack }) {
     return config;

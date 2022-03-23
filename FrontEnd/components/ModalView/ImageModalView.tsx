@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Carousel, { Settings } from 'react-slick';
 import styled from 'styled-components';
@@ -10,9 +11,10 @@ import useImageInfo from 'Hooks/api/useImageInfo';
 import CarouselDot from 'components/CustomIcons/CarouselDot';
 
 // @material-ui
-import { Divider, Card } from '@material-ui/core';
+import { Divider, Card, CircularProgress } from '@material-ui/core';
 
 const ImgContainer = styled.div`
+  position: relative;
   height: 300px;
 
   @media (min-width: 768px) {
@@ -20,10 +22,16 @@ const ImgContainer = styled.div`
   }
 `;
 
-const Image = styled.img`
-  width: 100%;
-  height: 102%;
+const ImageLoadProgress = styled(CircularProgress)`
+  position: absolute;
+  top: calc(50% - 13px);
+  left: calc(50% - 20px);
 `;
+
+// const Image = styled.img`
+//   width: 100%;
+//   height: 102%;
+// `;
 
 const ImageModalView = (props) => {
   const basedItem: _iBasedItem = props.basedItem;
@@ -40,7 +48,7 @@ const ImageModalView = (props) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
-    lazyLoad: 'progressive',
+    // lazyLoad: 'progressive',
     appendDots: (dots: any[]) => {
       return (
         <ul>
@@ -55,9 +63,11 @@ const ImageModalView = (props) => {
     },
   });
   const [imageList, setImageList] = useState([]);
+  const [imageLoaded, setImageLoaded] = useState([]);
 
   useEffect(() => {
     if (imageInfoIsFetched) {
+      setImageLoaded(imageInfo.itemList.map(() => false));
       setImageList(
         imageInfo.itemList.map((imageItem) => ({
           url: imageItem.imageUrl,
@@ -72,14 +82,31 @@ const ImageModalView = (props) => {
       {imageInfoIsFetched ? (
         <Carousel {...carouselSettings}>
           {imageList.length > 0 ? (
-            imageList.map((imageItem) => (
+            imageList.map((imageItem, idx) => (
               <ImgContainer key={imageItem.serialNum}>
-                <Image src={imageItem.url} alt="No Image" />
+                <Image
+                  src={imageItem.url}
+                  alt="Image Not Found"
+                  layout="fill"
+                  objectFit="fill"
+                  onLoadingComplete={() => {
+                    setImageLoaded((prev) => {
+                      prev[idx] = true;
+                      return [...prev];
+                    });
+                  }}
+                />
+                {!imageLoaded[idx] && <ImageLoadProgress />}
               </ImgContainer>
             ))
           ) : (
             <ImgContainer>
-              <Image src="/img/ready-image.jpg" alt="Ready Image" />
+              <Image
+                src="/img/ready-image.jpg"
+                alt="Image Not Found"
+                layout="fill"
+                objectFit="fill"
+              />
             </ImgContainer>
           )}
         </Carousel>
