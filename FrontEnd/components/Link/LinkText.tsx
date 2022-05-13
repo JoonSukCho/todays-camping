@@ -2,6 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { darken } from '@material-ui/core';
 
+const LinkText = ({ children, ...rest }) => {
+  return <CustomLinkText {...rest}>{children}</CustomLinkText>;
+};
+
 const CustomLinkText = styled.span`
   cursor: pointer;
   text-decoration: none;
@@ -12,9 +16,5 @@ const CustomLinkText = styled.span`
     transition: color ease-in 0.1s;
   }
 `;
-
-const LinkText = ({ children, ...rest }) => {
-  return <CustomLinkText {...rest}>{children}</CustomLinkText>;
-};
 
 export default LinkText;

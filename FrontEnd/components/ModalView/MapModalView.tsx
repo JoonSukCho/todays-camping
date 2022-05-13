@@ -1,10 +1,12 @@
 import React from 'react';
 import KakaoMap from 'components/KakaoMap';
 
-const MapModalView = (props) => {
-  const { basedItem } = props;
-  const { mapX, mapY } = basedItem;
+interface MapModalViewProps {
+  mapX: number;
+  mapY: number;
+}
 
+const MapModalView = ({ mapX, mapY }: MapModalViewProps) => {
   return (
     <>
       <KakaoMap coordinate={{ mapX, mapY }} />

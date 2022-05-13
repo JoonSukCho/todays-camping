@@ -2,20 +2,17 @@ import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 
 // @material-ui/core
-import {
-  Avatar,
-  Divider,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  makeStyles,
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
 
-const IconAvatar = styled(Avatar)`
-  color: ${({ theme }) => theme.palette.primary.main} !important;
-  background-color: #ffffff !important;
-`;
+interface IntroListItemProps {
+  icon: React.ReactNode;
+  title: string;
+  children: React.ReactNode;
+}
 
 const useStyles = makeStyles(() => ({
   denseListItem: {
@@ -27,25 +24,29 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const IntroListItem = (props) => {
-  const { Icon, title, children } = props;
+const IntroListItem = ({ icon, title, children }: IntroListItemProps) => {
   const classes = useStyles();
 
   return (
     <ListItem alignItems="flex-start" className={classes.denseListItem}>
       <ListItemAvatar>
-        <IconAvatar variant="square">
-          <Icon style={{ fontSize: 28 }} />
-        </IconAvatar>
+        <IconAvatar variant="square">{icon}</IconAvatar>
       </ListItemAvatar>
       <ListItemText
         classes={{ primary: classes.listItemText }}
         primary={title}
         secondary={children}
-        secondaryTypographyProps={{ style: { whiteSpace: 'normal', wordWrap: 'break-word' } }}
+        secondaryTypographyProps={{
+          style: { whiteSpace: 'normal', wordWrap: 'break-word' },
+        }}
       />
     </ListItem>
   );
 };
+
+const IconAvatar = styled(Avatar)`
+  color: ${({ theme }) => theme.palette.primary.main} !important;
+  background-color: #ffffff !important;
+`;
 
 export default IntroListItem;

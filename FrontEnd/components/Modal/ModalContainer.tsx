@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
-import { Card } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
 
 type DivProps = React.HTMLProps<HTMLDivElement>;
 

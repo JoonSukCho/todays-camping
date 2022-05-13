@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'reducers';
 // components
-import { IconButton, makeStyles } from '@material-ui/core';
-import { Favorite as FavoriteIcon } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 // Hooks
 import { usePushLike, usePopLike } from 'Hooks/api/useLikeList';

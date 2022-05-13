@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import Router from 'next/router';
 import styled from 'styled-components';
-import { Button, TextField } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 import { keywordState } from 'recoils/Atoms/keyword';
 import { useRecoilValue, useSetRecoilState } from 'recoil';

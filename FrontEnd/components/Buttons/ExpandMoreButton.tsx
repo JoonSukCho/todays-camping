@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import clsx from 'classnames';
 
 // @material-ui
-import { IconButton } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
-import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 interface ButtonProps {
   expanded: boolean;

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ReactPaginate from 'react-paginate';
 
-import { Search as SearchIcon } from '@material-ui/icons';
+import SearchIcon from '@material-ui/icons/Search';
 
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
