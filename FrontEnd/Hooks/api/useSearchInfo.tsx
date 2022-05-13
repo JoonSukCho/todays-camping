@@ -21,8 +21,14 @@ const getSearchInfo = async (params): Promise<_iSearchInfo> => {
   }
 
   const { data } = await axios
-    .get(searchInfoURL, {
-      params,
+    .get('/api/searchList', {
+      params: {
+        ...params,
+        ServiceKey: process.env.NEXT_PUBLIC_SERVICE_KEY,
+        MobileOS: 'ETC',
+        MobileApp: 'AppTest',
+        _type: 'json',
+      },
       timeout: 7000,
     })
     .catch((err) => {

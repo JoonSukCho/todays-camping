@@ -22,7 +22,11 @@ const loggerMiddleware = createLogger({
 
 export const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
-  const middlewares = [sagaMiddleware, loggerMiddleware];
+  const middlewares = [sagaMiddleware];
+
+  if (process.env.NODE_ENV === 'development') {
+    middlewares.push(loggerMiddleware);
+  }
 
   const enhancer =
     process.env.NODE_ENV === 'production'

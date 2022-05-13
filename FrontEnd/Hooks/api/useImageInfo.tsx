@@ -20,8 +20,14 @@ const getImageInfo = async (params): Promise<_iImageInfo> => {
     imageInfoURL = `${ipAddress}:${serverPort}/goCamping/imageList`;
   }
 
-  const { data } = await axios.get(imageInfoURL, {
-    params,
+  const { data } = await axios.get('/api/imageList', {
+    params: {
+      ...params,
+      ServiceKey: process.env.NEXT_PUBLIC_SERVICE_KEY,
+      MobileOS: 'ETC',
+      MobileApp: 'AppTest',
+      _type: 'json',
+    },
   });
 
   const imageInfoBody: _iImageInfoBody = data.response.body;

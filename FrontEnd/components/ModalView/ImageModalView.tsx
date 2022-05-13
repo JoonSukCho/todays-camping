@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import Carousel, { Settings } from 'react-slick';
+import Carousel from 'react-slick';
+import type { Settings } from 'react-slick';
 import styled from 'styled-components';
 
 // Hooks
@@ -71,6 +72,7 @@ const ImageModalView = ({ contentId }: ImageModalViewProps) => {
                   alt="Image Not Found"
                   layout="fill"
                   objectFit="fill"
+                  quality={10}
                   onLoadingComplete={() => {
                     setImageLoaded((prev) => {
                       prev[idx] = true;

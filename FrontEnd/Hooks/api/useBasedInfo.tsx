@@ -21,8 +21,14 @@ const getBasedInfo = async (params): Promise<_iBasedInfo> => {
   }
 
   const { data } = await axios
-    .get(basedInfoURL, {
-      params,
+    .get('/api/basedList', {
+      params: {
+        ...params,
+        ServiceKey: process.env.NEXT_PUBLIC_SERVICE_KEY,
+        MobileOS: 'ETC',
+        MobileApp: 'AppTest',
+        _type: 'json',
+      },
       timeout: 5000,
     })
     .catch((err) => {
