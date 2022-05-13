@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import Carousel, { Settings } from 'react-slick';
+import Carousel from 'react-slick';
+import type { Settings } from 'react-slick';
 import styled from 'styled-components';
 
 // Hooks
@@ -30,7 +31,6 @@ const ImageModalView = ({ contentId }: ImageModalViewProps) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
-    // lazyLoad: 'progressive',
     appendDots: (dots: any[]) => {
       return (
         <ul>
@@ -60,7 +60,7 @@ const ImageModalView = ({ contentId }: ImageModalViewProps) => {
   }, [imageInfoIsFetched]);
 
   return (
-    <Card style={{ touchAction: 'pan-x' }}>
+    <Container>
       {imageInfoIsFetched ? (
         <Carousel {...carouselSettings}>
           {imageList.length > 0 ? (
@@ -69,13 +69,17 @@ const ImageModalView = ({ contentId }: ImageModalViewProps) => {
                 <Image
                   src={imageItem.url}
                   alt="Image Not Found"
-                  layout="fill"
-                  objectFit="fill"
+                  width={500}
+                  height={500}
+                  quality={50}
                   onLoadingComplete={() => {
                     setImageLoaded((prev) => {
                       prev[idx] = true;
                       return [...prev];
                     });
+                  }}
+                  onClick={() => {
+                    window.open(imageItem.url, '_blank');
                   }}
                 />
                 {!imageLoaded[idx] && <ImageLoadProgress />}
@@ -93,13 +97,21 @@ const ImageModalView = ({ contentId }: ImageModalViewProps) => {
           )}
         </Carousel>
       ) : (
-        <ImgContainer style={{ background: '#eee' }} />
+        <ImgContainer>
+          <ImageLoadProgress />
+        </ImgContainer>
       )}
-    </Card>
+    </Container>
   );
 };
 
+const Container = styled.div`
+  touch-action: pan-x;
+`;
+
 const ImgContainer = styled.div`
+  display: flex !important;
+  justify-content: center;
   position: relative;
   height: 300px;
 

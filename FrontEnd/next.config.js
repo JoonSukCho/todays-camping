@@ -15,4 +15,14 @@ module.exports = withPlugins([[withImages]], {
   webpack(config, { webpack }) {
     return config;
   },
+
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination:
+          'http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/:path*',
+      },
+    ];
+  },
 });

@@ -11,18 +11,15 @@ import {
 } from 'models/api/goCamping/basedInfo';
 
 const getBasedInfo = async (params): Promise<_iBasedInfo> => {
-  let basedInfoURL = `https://todays-camping.herokuapp.com/goCamping/basedList`;
-
-  if (process.env.NODE_ENV === 'development') {
-    const ipAddress = process.env.NEXT_PUBLIC_IP_ADDRESS;
-    const serverPort = process.env.NEXT_PUBLIC_SERVER_PORT;
-
-    basedInfoURL = `${ipAddress}:${serverPort}/goCamping/basedList`;
-  }
-
   const { data } = await axios
-    .get(basedInfoURL, {
-      params,
+    .get('/api/basedList', {
+      params: {
+        ...params,
+        ServiceKey: process.env.NEXT_PUBLIC_SERVICE_KEY,
+        MobileOS: 'ETC',
+        MobileApp: 'AppTest',
+        _type: 'json',
+      },
       timeout: 5000,
     })
     .catch((err) => {

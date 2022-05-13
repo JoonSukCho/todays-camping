@@ -11,17 +11,14 @@ import {
 } from 'models/api/goCamping/imageInfo';
 
 const getImageInfo = async (params): Promise<_iImageInfo> => {
-  let imageInfoURL = 'https://todays-camping.herokuapp.com/goCamping/imageList';
-
-  if (process.env.NODE_ENV === 'development') {
-    const ipAddress = process.env.NEXT_PUBLIC_IP_ADDRESS;
-    const serverPort = process.env.NEXT_PUBLIC_SERVER_PORT;
-
-    imageInfoURL = `${ipAddress}:${serverPort}/goCamping/imageList`;
-  }
-
-  const { data } = await axios.get(imageInfoURL, {
-    params,
+  const { data } = await axios.get('/api/imageList', {
+    params: {
+      ...params,
+      ServiceKey: process.env.NEXT_PUBLIC_SERVICE_KEY,
+      MobileOS: 'ETC',
+      MobileApp: 'AppTest',
+      _type: 'json',
+    },
   });
 
   const imageInfoBody: _iImageInfoBody = data.response.body;
