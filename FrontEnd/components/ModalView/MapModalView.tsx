@@ -1,5 +1,5 @@
 import React from 'react';
-import KakaoMap from 'components/Kakao/KakaoMap';
+import KakaoMap from 'components/KakaoMap';
 
 const MapModalView = (props) => {
   const { basedItem } = props;

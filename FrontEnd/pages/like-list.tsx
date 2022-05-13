@@ -15,9 +15,9 @@ import GridItem from 'components/Grid/GridItem';
 import AppLayout from 'components/Layout/AppLayout';
 import Parallax from 'components/Parallax/Parallax';
 import ParallaxContent from 'components/Parallax/ParallaxContent';
-import MainSection from 'components/Section/MainSection';
-import PhotoFeed from 'components/Feed/PhotoFeed';
-import CirCularLoader from 'components/Loader/CirCularLoader';
+import MainSection from 'components/MainSection';
+import PhotoFeed from 'components/PhotoFeed';
+import CirCularLoader from 'components/CirCularLoader';
 
 const LikeList = () => {
   const dispatch = useDispatch();
