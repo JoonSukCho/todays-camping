@@ -11,15 +11,6 @@ import {
 } from 'models/api/goCamping/searchInfo';
 
 const getSearchInfo = async (params): Promise<_iSearchInfo> => {
-  let searchInfoURL = `https://todays-camping.herokuapp.com/goCamping/searchList`;
-
-  if (process.env.NODE_ENV === 'development') {
-    const ipAddress = process.env.NEXT_PUBLIC_IP_ADDRESS;
-    const serverPort = process.env.NEXT_PUBLIC_SERVER_PORT;
-
-    searchInfoURL = `${ipAddress}:${serverPort}/goCamping/searchList`;
-  }
-
   const { data } = await axios
     .get('/api/searchList', {
       params: {

@@ -86,7 +86,7 @@ const SearchResult = ({ router: { query } }) => {
             searchInfo.itemList.length > 0 ? (
               searchInfo.itemList.map((searchItem, idx) => (
                 <GridItem key={String(idx)}>
-                  <PhotoFeed basedItem={searchItem} />
+                  <PhotoFeed basedItem={searchItem} isSearchResultPage />
                 </GridItem>
               ))
             ) : (

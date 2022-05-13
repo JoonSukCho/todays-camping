@@ -73,7 +73,13 @@ const HeaderLinks = () => {
   if (userInfoLoading)
     return (
       <>
-        <List className={classes.list} />
+        <List className={classes.list}>
+          <ListItem className={classes.listItem}>
+            <Button href="/" className={classes.navLink}>
+              Home
+            </Button>
+          </ListItem>
+        </List>
       </>
     );
   return (
