@@ -3,19 +3,19 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ReactPaginate from 'react-paginate';
 
-import { Search as SearchIcon } from '@material-ui/icons';
+import SearchIcon from '@material-ui/icons/Search';
 
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import AppLayout from 'components/Layout/AppLayout';
 import Parallax from 'components/Parallax/Parallax';
 import ParallaxContent from 'components/Parallax/ParallaxContent';
-import MainSection from 'components/Section/MainSection';
+import MainSection from 'components/MainSection';
 import useSearchInfo from 'Hooks/api/useSearchInfo';
-import PhotoFeed from 'components/Feed/PhotoFeed';
-import CirCularLoader from 'components/Loader/CirCularLoader';
+import PhotoFeed from 'components/PhotoFeed';
+import CirCularLoader from 'components/CirCularLoader';
 import KeywordSearchForm from 'components/Form/KeywordSearchForm';
-import ErrorResponse from 'components/Error/ErrorResponse';
+import ErrorResponse from 'components/ErrorResponse';
 
 import { _iSearchInfoReqParams } from 'models/api/goCamping/searchInfo';
 

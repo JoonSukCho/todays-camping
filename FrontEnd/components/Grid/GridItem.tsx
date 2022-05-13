@@ -6,8 +6,8 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 interface GridItemProps {
-  children: JSX.Element;
-  className: string;
+  children: React.ReactNode;
+  className?: string;
 }
 
 const styles = () =>
@@ -24,9 +24,9 @@ const styles = () =>
 
 const useStyles = makeStyles(styles);
 
-const GridItem = (props) => {
+const GridItem = ({ children, className, ...rest }: GridItemProps) => {
   const classes = useStyles();
-  const { children, className, ...rest }: GridItemProps = props;
+
   return (
     <Grid item className={classes.grid + ' ' + className} {...rest}>
       {children}

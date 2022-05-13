@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo';
 import Header from 'components/Header/Header';
 import HeaderLinks from 'components/Header/HeaderLinks';
-import Footer from 'components/Footer/Footer';
+import Footer from 'components/Footer';
 import TopButton from 'components/Buttons/TopButton';
 
 interface AppLayoutProps {

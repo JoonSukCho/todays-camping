@@ -2,7 +2,7 @@ import { _iCommonItem } from 'models/api/goCamping/common';
 
 export interface _iLikeListParams extends _iCommonItem {}
 
-export interface _iLikeList {
+export interface _iLikeItem {
   contentid: number; // Image랑 mapping에 필요한 id
   facltnm?: string; // 야영장명
   addr1?: string; // 주소

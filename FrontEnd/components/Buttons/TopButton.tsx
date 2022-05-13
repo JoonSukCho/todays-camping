@@ -1,6 +1,6 @@
-import { IconButton } from '@material-ui/core';
 import { useCallback, useEffect, useState } from 'react';
-import { ArrowUpward as ArrowUpwardIcon } from '@material-ui/icons';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 const TopButton = () => {
   const [visible, setVisible] = useState<boolean>(false);

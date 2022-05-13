@@ -1,11 +1,11 @@
 import produce from 'produce';
-import { _iLikeList } from 'models/api/users/likeList';
+import { _iLikeItem } from 'models/api/users/likeList';
 
 export interface LikeList {
   likeListLoading: boolean;
   likeListDone: boolean;
   likeListError: Error;
-  likeList: _iLikeList[];
+  likeList: _iLikeItem[];
 }
 
 export const initialState: LikeList = {

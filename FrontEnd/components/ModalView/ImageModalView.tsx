@@ -2,7 +2,6 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Carousel, { Settings } from 'react-slick';
 import styled from 'styled-components';
-import { _iBasedItem } from 'models/api/goCamping/basedInfo';
 
 // Hooks
 import useImageInfo from 'Hooks/api/useImageInfo';
@@ -11,33 +10,16 @@ import useImageInfo from 'Hooks/api/useImageInfo';
 import CarouselDot from 'components/CustomIcons/CarouselDot';
 
 // @material-ui
-import { Divider, Card, CircularProgress } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const ImgContainer = styled.div`
-  position: relative;
-  height: 300px;
+interface ImageModalViewProps {
+  contentId: number;
+}
 
-  @media (min-width: 768px) {
-    height: 500px;
-  }
-`;
-
-const ImageLoadProgress = styled(CircularProgress)`
-  position: absolute;
-  top: calc(50% - 13px);
-  left: calc(50% - 20px);
-`;
-
-// const Image = styled.img`
-//   width: 100%;
-//   height: 102%;
-// `;
-
-const ImageModalView = (props) => {
-  const basedItem: _iBasedItem = props.basedItem;
-
+const ImageModalView = ({ contentId }: ImageModalViewProps) => {
   const { data: imageInfo, isFetched: imageInfoIsFetched } = useImageInfo({
-    contentId: basedItem.contentId,
+    contentId,
   });
 
   // local state
@@ -116,5 +98,25 @@ const ImageModalView = (props) => {
     </Card>
   );
 };
+
+const ImgContainer = styled.div`
+  position: relative;
+  height: 300px;
+
+  @media (min-width: 768px) {
+    height: 500px;
+  }
+`;
+
+const ImageLoadProgress = styled(CircularProgress)`
+  position: absolute;
+  top: calc(50% - 13px);
+  left: calc(50% - 20px);
+`;
+
+// const Image = styled.img`
+//   width: 100%;
+//   height: 102%;
+// `;
 
 export default ImageModalView;
