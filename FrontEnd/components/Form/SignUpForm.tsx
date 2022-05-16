@@ -82,6 +82,10 @@ const SignUpForm = ({ closeSignUpModal }) => {
       return false;
     }
 
+    if (!isValidID || !isValidPW || !isValidPWCheck) {
+      return false;
+    }
+
     signUpMutate({
       user_id,
       user_password,
