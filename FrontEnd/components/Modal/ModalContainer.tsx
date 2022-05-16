@@ -24,14 +24,6 @@ const Container = styled(Card)`
     max-width: 720px;
     max-height: 682px;
   }
-  @media (min-width: 992px) {
-    max-width: 960px;
-    max-height: 682px;
-  }
-  @media (min-width: 1200px) {
-    max-width: 1140px;
-    max-height: 682px;
-  }
 `;
 
 const ModalContainer = forwardRef<HTMLDivElement, DivProps>(
