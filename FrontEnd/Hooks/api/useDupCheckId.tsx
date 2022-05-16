@@ -28,9 +28,6 @@ const useDupCheckId = (params) => {
   return useQuery<any, Error>([params], () => dupCheckId(params), {
     enabled: false,
     retry: 0,
-    onError: (err) => {
-      console.log('DupCheckId Error', err);
-    },
   });
 };
 

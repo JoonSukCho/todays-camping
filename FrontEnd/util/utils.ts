@@ -24,13 +24,13 @@ export const IsValidatedURL = (url: string) => {
 
 // id validate
 export const IsValidatedID = (id: string): boolean => {
-  const regex = /^[a-zA-Z0-9]{1,20}$/; // 대소문자, 숫자 검사
+  const regex = /^[a-zA-Z0-9]{2,20}$/; // 대소문자, 숫자 검사
 
   return regex.test(id);
 };
 
 export const IsValidatedPassword = (password: string): boolean => {
-  const regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/; // 대소문자, 숫자, 특수문자 검사
+  const regex = /^(?=.*[a-z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/; // 소문자, 숫자, 특수문자 검사
 
   return regex.test(password);
 };

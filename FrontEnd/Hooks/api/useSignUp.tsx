@@ -21,9 +21,6 @@ const useSignUp = () => {
     },
     {
       retry: 0,
-      onError: (err) => {
-        console.log('SignUp Error', err);
-      },
     },
   );
 };

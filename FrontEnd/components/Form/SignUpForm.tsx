@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { REQUEST_USER_INFO } from 'reducers/user';
 import { REQUEST_LIKE_LIST } from 'reducers/likeList';
@@ -30,8 +30,8 @@ const SignUpForm = ({ closeSignUpModal }) => {
   const dispatch = useDispatch();
 
   const [isValidID, setIsValidID] = useState(true);
-  const [isValidPW, setISValidPW] = useState(true);
-  const [isValidPWCheck, setISValidPWCheck] = useState(true);
+  const [isValidPW, setIsValidPW] = useState(true);
+  const [isValidPWCheck, setIsValidPWCheck] = useState(true);
   const [idHelperText, setIdHelperText] = useState('');
 
   const [userInputs, setUserInputs] = useState<_iSignUpParams>({
@@ -59,28 +59,26 @@ const SignUpForm = ({ closeSignUpModal }) => {
     refetch: reqDupCheckId,
   } = useDupCheckId(user_id);
 
-  const requestDupCheck = () => {
-    reqDupCheckId();
-  };
-
+  // 회원가입 요청
   const requestSignUp = () => {
-    if (!IsValidatedID(user_id)) {
+    if (dupCheckIsLoading) {
+      setIdHelperText('아이디 중복 체크 중입니다.');
+      return false;
+    }
+
+    if (user_id === '') {
+      setIdHelperText('아이디를 입력해주세요.');
       setIsValidID(false);
       return false;
     }
 
-    if (!IsValidatedPassword(user_password)) {
-      setISValidPW(false);
+    if (user_password === '') {
+      setIsValidPW(false);
       return false;
     }
 
-    if (user_password !== user_password_confirm) {
-      setISValidPWCheck(false);
-      return false;
-    }
-
-    if (!dupCheckIsSuccess) {
-      alert('아이디 중복 확인을 먼저 해주세요.');
+    if (user_password_confirm === '') {
+      setIsValidPWCheck(false);
       return false;
     }
 
@@ -90,43 +88,70 @@ const SignUpForm = ({ closeSignUpModal }) => {
       user_password_confirm,
     });
   };
-  const onInputChange = (e) => {
-    setIdHelperText('');
 
-    const { value, name } = e.target;
-    setUserInputs({
-      ...userInputs,
-      [name]: value,
-    });
-  };
-
+  // 엔터키를 누르면 회원가입 요청
   const onEnterPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
       requestSignUp();
     }
   };
 
-  useEffect(() => {
-    if (!isValidID) {
-      setIdHelperText('아이디는 영문자, 숫자로 1~20자리로 입력해주세요.');
-    }
-  }, [isValidID]);
+  // input change 핸들러
+  const onInputChange = useCallback(
+    (e) => {
+      const { value, name } = e.target;
+      setUserInputs({
+        ...userInputs,
+        [name]: value,
+      });
+    },
+    [userInputs],
+  );
 
+  // 아이디 유효성 검사
+  useEffect(() => {
+    if (user_id !== '') {
+      if (IsValidatedID(user_id)) {
+        setIsValidID(true);
+      } else {
+        setIdHelperText('아이디는 영문자, 숫자로 2~20자리로 입력해주세요.');
+        setIsValidID(false);
+      }
+    }
+  }, [user_id]);
+
+  // 비밀번호 유효성 검사
+  useEffect(() => {
+    if (user_password !== '') {
+      setIsValidPW(IsValidatedPassword(user_password));
+    }
+  }, [user_password]);
+
+  // 비밀번호 확인
+  useEffect(() => {
+    if (user_password_confirm !== '') {
+      setIsValidPWCheck(user_password === user_password_confirm);
+    }
+  }, [user_password_confirm]);
+
+  // 아이디 중복 없음
+  useEffect(() => {
+    if (dupCheckIsSuccess && isValidID) {
+      setIdHelperText('사용하실 수 있는 아이디 입니다.');
+    }
+  }, [dupCheckIsSuccess]);
+
+  // 아이디 중복
   useEffect(() => {
     if (dupCheckIsError) {
       setIdHelperText(dupCheckError.message);
     }
   }, [dupCheckIsError]);
 
+  // 회원가입 에러 처리
   useEffect(() => {
-    if (dupCheckIsSuccess) {
-      setIdHelperText('사용하실 수 있는 아이디 입니다.');
-    }
-  }, [dupCheckIsSuccess]);
-
-  useEffect(() => {
-    if (signUpIsError) {
-      alert(signUpError.message);
+    if (signUpIsError && signUpError.response) {
+      alert(signUpError.response.data.message);
     }
   }, [signUpIsError]);
 
@@ -140,7 +165,7 @@ const SignUpForm = ({ closeSignUpModal }) => {
     }
   }, [signUpSuccess]);
 
-  // 회원가입 후 로그인 callback
+  // 회원가입 후 로그인 성공 시 callback
   useEffect(() => {
     if (loginSuccess) {
       closeSignUpModal();
@@ -166,21 +191,8 @@ const SignUpForm = ({ closeSignUpModal }) => {
         value={user_id}
         error={!isValidID || dupCheckIsError}
         helperText={idHelperText}
-        InputProps={{
-          endAdornment: (
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ minWidth: 90 }}
-              onClick={requestDupCheck}
-            >
-              {dupCheckIsLoading ? (
-                <CircularProgress size={26} color="inherit" />
-              ) : (
-                '중복 확인'
-              )}
-            </Button>
-          ),
+        onBlur={() => {
+          reqDupCheckId();
         }}
         onChange={onInputChange}
         onKeyPress={onEnterPress}
@@ -198,7 +210,7 @@ const SignUpForm = ({ closeSignUpModal }) => {
         error={!isValidPW}
         helperText={
           !isValidPW
-            ? '8~20자의 영문 대소문자, 숫자, 특수문자(!@#$%^*+=-)만 사용 가능합니다.'
+            ? '비밀번호는 8자 이상의 영문 소문자, 숫자, 특수문자(!@#$%^*+=-)를 모두 포함해야 합니다.'
             : ''
         }
         onChange={onInputChange}
