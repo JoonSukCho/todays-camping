@@ -67,11 +67,12 @@ const ImageModalView = ({ contentId }: ImageModalViewProps) => {
             imageList.map((imageItem, idx) => (
               <ImgContainer key={imageItem.serialNum}>
                 <Image
+                  loading="eager"
+                  priority
                   src={imageItem.url}
                   alt="Image Not Found"
                   width={500}
                   height={500}
-                  quality={50}
                   onLoadingComplete={() => {
                     setImageLoaded((prev) => {
                       prev[idx] = true;
