@@ -2,6 +2,8 @@ import { withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ReactPaginate from 'react-paginate';
+import { useDispatch } from 'react-redux';
+import { REQUEST_LIKE_LIST } from 'reducers/likeList';
 
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -21,6 +23,7 @@ import { _iSearchInfoReqParams } from 'models/api/goCamping/searchInfo';
 
 const NUM_OF_ROWS = 10;
 const SearchResult = ({ router: { query } }) => {
+  const dispatch = useDispatch();
   const [pageNo, setPageNo] = useState<number>(1);
   const [searchInfoReqParams, setSearchInfoReqParams] =
     useState<_iSearchInfoReqParams>(null);
@@ -35,6 +38,13 @@ const SearchResult = ({ router: { query } }) => {
   const handlePageClick = (e: { selected: number }) => {
     setPageNo(e.selected + 1);
   };
+
+  // 좋아요 목록 불러오기
+  useEffect(() => {
+    dispatch({
+      type: REQUEST_LIKE_LIST,
+    });
+  }, []);
 
   useEffect(() => {
     if (query.keyword) {
@@ -86,7 +96,7 @@ const SearchResult = ({ router: { query } }) => {
             searchInfo.itemList.length > 0 ? (
               searchInfo.itemList.map((searchItem, idx) => (
                 <GridItem key={String(idx)}>
-                  <PhotoFeed basedItem={searchItem} isSearchResultPage />
+                  <PhotoFeed basedItem={searchItem} />
                 </GridItem>
               ))
             ) : (
