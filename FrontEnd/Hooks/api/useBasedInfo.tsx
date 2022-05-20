@@ -15,7 +15,7 @@ const getBasedInfo = async (params): Promise<_iBasedInfo> => {
     .get('/api/basedList', {
       params: {
         ...params,
-        ServiceKey: process.env.NEXT_PUBLIC_SERVICE_KEY,
+        ServiceKey: process.env.SERVICE_KEY,
         MobileOS: 'ETC',
         MobileApp: 'AppTest',
         _type: 'json',
