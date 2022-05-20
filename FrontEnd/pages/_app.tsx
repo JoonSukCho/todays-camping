@@ -40,7 +40,7 @@ axios.defaults.headers = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const kakaoAppKey = process.env.NEXT_PUBLIC_JS_KEY;
+  const kakaoAppKey = process.env.KAKAO_JS_KEY;
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -100,7 +100,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>오늘의 캠핑</title>
         <script
           async
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS}`}
         />
         <script
           dangerouslySetInnerHTML={{
@@ -108,7 +108,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+        gtag('config', '${process.env.GOOGLE_ANALYTICS}', {
           page_path: window.location.pathname,
         });
       `,

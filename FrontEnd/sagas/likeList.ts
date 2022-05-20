@@ -15,8 +15,8 @@ const getLikeList = async () => {
   let likeListURL = `https://todays-camping.herokuapp.com/users/likeList/list`;
 
   if (process.env.NODE_ENV === 'development') {
-    const ipAddress = process.env.NEXT_PUBLIC_IP_ADDRESS;
-    const serverPort = process.env.NEXT_PUBLIC_SERVER_PORT;
+    const ipAddress = process.env.LOCAL_IP_ADDRESS;
+    const serverPort = process.env.LOCAL_SERVER_PORT;
 
     likeListURL = `${ipAddress}:${serverPort}/users/likeList/list`;
   }
