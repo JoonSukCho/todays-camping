@@ -15,8 +15,8 @@ const getUserInfo = async () => {
   let userInfoURL = `https://todays-camping.herokuapp.com/users/userInfo`;
 
   if (process.env.NODE_ENV === 'development') {
-    const ipAddress = process.env.NEXT_PUBLIC_IP_ADDRESS;
-    const serverPort = process.env.NEXT_PUBLIC_SERVER_PORT;
+    const ipAddress = process.env.LOCAL_IP_ADDRESS;
+    const serverPort = process.env.LOCAL_SERVER_PORT;
 
     userInfoURL = `${ipAddress}:${serverPort}/users/userInfo`;
   }

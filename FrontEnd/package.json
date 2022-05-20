@@ -1,12 +1,13 @@
 {
-  "name": "material-kit-react",
+  "name": "todays-camping",
   "version": "1.10.0",
-  "description": "Material Kit React. Coded by Creative Tim",
+  "description": "todays-camping by chojs28",
   "private": true,
   "main": "index.tsx",
   "dependencies": {
     "@material-ui/core": "4.11.4",
     "@material-ui/icons": "4.11.2",
+    "@next/bundle-analyzer": "^12.1.6",
     "axios": "^0.21.1",
     "classnames": "2.3.1",
     "dotenv": "^10.0.0",
@@ -60,7 +61,7 @@
   "scripts": {
     "dev": "next dev -p 4000",
     "start": "next start",
-    "build": "next build",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && next build ",
     "export": "next export",
     "lint:check": "eslint . --ext=js,jsx;  exit 0",
     "lint:fix": "eslint . --ext=js,jsx --fix;  exit 0",

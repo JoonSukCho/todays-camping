@@ -14,7 +14,7 @@ const getImageInfo = async (params): Promise<_iImageInfo> => {
   const { data } = await axios.get('/api/imageList', {
     params: {
       ...params,
-      ServiceKey: process.env.NEXT_PUBLIC_SERVICE_KEY,
+      ServiceKey: process.env.SERVICE_KEY,
       MobileOS: 'ETC',
       MobileApp: 'AppTest',
       _type: 'json',
