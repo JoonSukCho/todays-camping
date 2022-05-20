@@ -38,7 +38,6 @@ import LikeButton from 'components/Buttons/LikeButton';
 
 interface PhotoFeedProps {
   basedItem: _iBasedItem;
-  isSearchResultPage?: boolean;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -74,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PhotoFeed = ({ basedItem, isSearchResultPage }: PhotoFeedProps) => {
+const PhotoFeed = ({ basedItem }: PhotoFeedProps) => {
   const classes = useStyles();
 
   const [imageModalOpenFlag, imageModalOpen, imageModalClose] = useModal();
@@ -105,7 +104,7 @@ const PhotoFeed = ({ basedItem, isSearchResultPage }: PhotoFeedProps) => {
           }
         />
         <CardActions disableSpacing className={classes.footer}>
-          {!isSearchResultPage && <LikeButton basedItem={basedItem} />}
+          <LikeButton basedItem={basedItem} />
           {basedItem.firstImageUrl && (
             <IconButton onClick={imageModalOpen} color="primary">
               <PhotoLibraryIcon />

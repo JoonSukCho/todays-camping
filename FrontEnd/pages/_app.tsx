@@ -40,7 +40,7 @@ axios.defaults.headers = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const kakaoAppKey = process.env.NEXT_PUBLIC_JS_KEY;
+  const kakaoAppKey = process.env.KAKAO_JS_KEY;
   const router = useRouter();
   const dispatch = useDispatch();
 
