@@ -35,10 +35,10 @@ import {
   getDetailAddress,
 } from 'util/basedItem';
 import { IsValidatedURL } from 'util/utils';
-import { _iBasedItem } from 'models/api/goCamping/basedInfo';
+import { _tBasedInfo } from 'models/api/goCamping/basedInfo';
 
 interface IntroListProps {
-  basedItem: _iBasedItem;
+  basedItem: _tBasedInfo;
 }
 
 const useStyles = makeStyles((theme) => ({

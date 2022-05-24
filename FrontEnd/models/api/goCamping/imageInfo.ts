@@ -1,7 +1,6 @@
 import { _iGCResponseBody } from 'models/api/goCamping/common';
 
 // types
-export type _tImageItem = _iImageItem[] | _iImageItem;
 
 // interfaces
 export interface _iImageInfoReqParams {
@@ -10,18 +9,18 @@ export interface _iImageInfoReqParams {
 
 export interface _iImageInfoBody extends _iGCResponseBody {
   items: {
-    item?: _tImageItem;
+    item?: _iImageInfo[] | _iImageInfo;
   };
 }
 
-export interface _iImageInfo {
+export interface _iImageInfoResponse {
   totalCount: number;
   pageNo: number;
   numOfRows: number;
-  itemList: _iImageItem[];
+  itemList: _iImageInfo[];
 }
 
-export interface _iImageItem {
+export interface _iImageInfo {
   contentId: number; // contentId
   createdtime: string; // 이미지 생성 시간
   imageUrl: string; // 이미지 url
