@@ -17,6 +17,7 @@ recoil, react-query 등 다양한 상태관리 라이브러리 경험과 카카�
 - TypeScript
 - Material-ui
 - Redux, Redux-saga
+- recoil
 - react-query
 - styled-components
 ### BackEnd
@@ -28,7 +29,7 @@ recoil, react-query 등 다양한 상태관리 라이브러리 경험과 카카�
 ## Main Features
 - 로그인 / 회원가입
 - 키워드 검색
-- 무한 스크롤 및 랜덤 피드 요청 
+- react-query의 useInfiniteQuery를 이용한 무한 스크롤 및 랜덤 피드 요청 
 - 피드 좋아요 기능 및 좋아요 한 피드 모아보기
 - 카카오 지도로 해당 캠핑지 위치 보기
 - 반응형 UI
