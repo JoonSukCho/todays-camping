@@ -105,11 +105,11 @@ const PhotoFeed = ({ basedInfo }: PhotoFeedProps) => {
         />
         <CardActions disableSpacing className={classes.footer}>
           <LikeButton basedItem={basedInfo} />
-          {basedInfo.firstImageUrl && (
+          {/* {basedInfo.firstImageUrl && (
             <IconButton onClick={imageModalOpen} color="primary">
               <PhotoLibraryIcon />
             </IconButton>
-          )}
+          )} */}
           <ExpandMoreButton expanded={feedExpand} handler={expandFeed} />
         </CardActions>
         <Collapse in={feedExpand} timeout="auto" unmountOnExit>
