@@ -3,14 +3,13 @@ import axios from 'axios';
 
 // type & interface
 import {
-  _tImageItem,
   _iImageInfoBody,
   _iImageInfoReqParams,
+  _iImageInfoResponse,
   _iImageInfo,
-  _iImageItem,
 } from 'models/api/goCamping/imageInfo';
 
-const getImageInfo = async (params): Promise<_iImageInfo> => {
+const getImageInfo = async (params): Promise<_iImageInfoResponse> => {
   const { data } = await axios.get('/api/imageList', {
     params: {
       ...params,
@@ -23,11 +22,11 @@ const getImageInfo = async (params): Promise<_iImageInfo> => {
 
   const imageInfoBody: _iImageInfoBody = data.response.body;
   const { totalCount, pageNo, numOfRows, items } = imageInfoBody;
-  const imageInfo: _iImageInfo = {} as _iImageInfo;
-  let imageList: _iImageItem[] = [];
+  const imageInfo: _iImageInfoResponse = {} as _iImageInfoResponse;
+  let imageList: _iImageInfo[] = [];
 
   if (Object.prototype.hasOwnProperty.call(items, 'item')) {
-    const imageItem: _tImageItem = items.item;
+    const imageItem: _iImageInfo[] | _iImageInfo = items.item;
 
     if (Array.isArray(imageItem)) {
       imageList = imageItem;
@@ -45,7 +44,7 @@ const getImageInfo = async (params): Promise<_iImageInfo> => {
 };
 
 const useImageInfo = (params: _iImageInfoReqParams) => {
-  return useQuery<_iImageInfo, Error>(
+  return useQuery<_iImageInfoResponse, Error>(
     ['imageInfo', params],
     () => getImageInfo(params),
     {

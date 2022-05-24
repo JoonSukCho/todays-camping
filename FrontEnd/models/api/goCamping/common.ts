@@ -16,7 +16,7 @@ export interface _iGCResponseBody {
   totalCount: number;
 }
 
-export interface _iCommonItem {
+export interface _iCommonInfo {
   contentId: number; // Image랑 mapping에 필요한 id
   facltNm?: string; // 야영장명
   addr1?: string; // 주소

@@ -1,4 +1,4 @@
-import { _iBasedItem } from 'models/api/goCamping/basedInfo';
+import { _tBasedInfo } from 'models/api/goCamping/basedInfo';
 
 import GridItem from 'components/Grid/GridItem';
 import PhotoFeed from 'components/PhotoFeed';
@@ -9,7 +9,7 @@ interface LikeListItemProps {
 }
 
 const LikeListItem = ({ likeItem }: LikeListItemProps) => {
-  const basedItem: _iBasedItem = {
+  const basedItem: _tBasedInfo = {
     contentId: likeItem.contentid,
     facltNm: likeItem.facltnm,
     addr1: likeItem.addr1,
@@ -31,7 +31,7 @@ const LikeListItem = ({ likeItem }: LikeListItemProps) => {
 
   return (
     <GridItem>
-      <PhotoFeed basedItem={basedItem} />
+      <PhotoFeed basedInfo={basedItem} />
     </GridItem>
   );
 };

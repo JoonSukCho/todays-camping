@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { _iBasedItem } from 'models/api/goCamping/basedInfo';
+import { _tBasedInfo } from 'models/api/goCamping/basedInfo';
 
 // reducer
 import { RootState } from 'reducers';

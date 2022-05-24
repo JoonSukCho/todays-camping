@@ -3,14 +3,13 @@ import axios from 'axios';
 
 // type & interface
 import {
-  _tBasedItem,
   _iBasedInfoBody,
   _iBasedInfoReqParams,
-  _iBasedInfo,
-  _iBasedItem,
+  _iBasedInfoResponse,
+  _tBasedInfo,
 } from 'models/api/goCamping/basedInfo';
 
-const getBasedInfo = async (params): Promise<_iBasedInfo> => {
+const getBasedInfo = async (params): Promise<_iBasedInfoResponse> => {
   const { data } = await axios
     .get('/api/basedList', {
       params: {
@@ -34,11 +33,11 @@ const getBasedInfo = async (params): Promise<_iBasedInfo> => {
 
   const basedInfoBody: _iBasedInfoBody = data.response.body;
   const { totalCount, pageNo, numOfRows, items } = basedInfoBody;
-  const basedInfo: _iBasedInfo = {} as _iBasedInfo;
-  let basedList: _iBasedItem[] = [];
+  const basedInfo: _iBasedInfoResponse = {} as _iBasedInfoResponse;
+  let basedList: _tBasedInfo[] = [];
 
   if (Object.prototype.hasOwnProperty.call(items, 'item')) {
-    const basedItem: _tBasedItem = items.item;
+    const basedItem: _tBasedInfo[] | _tBasedInfo = items.item;
 
     if (Array.isArray(basedItem)) {
       basedList = basedItem;
@@ -57,7 +56,7 @@ const getBasedInfo = async (params): Promise<_iBasedInfo> => {
 
 // useQuery는 generic만 지원
 const useBasedInfo = (params: _iBasedInfoReqParams) => {
-  return useQuery<_iBasedInfo, Error>(
+  return useQuery<_iBasedInfoResponse, Error>(
     ['basedInfo', params],
     () => getBasedInfo(params),
     {

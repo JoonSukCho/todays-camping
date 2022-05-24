@@ -1,7 +1,8 @@
-import { _iCommonItem, _iGCResponseBody } from 'models/api/goCamping/common';
+import { _iCommonInfo, _iGCResponseBody } from 'models/api/goCamping/common';
 
 // types
-export type _tSearchItem = _iSearchItem[] | _iSearchItem;
+export type _tSearchInfo = _iCommonInfo;
+export type _tSearchInfoList = _tSearchInfo[];
 
 // interfaces
 export interface _iSearchInfoReqParams {
@@ -10,17 +11,15 @@ export interface _iSearchInfoReqParams {
   keyword?: string;
 }
 
-export interface _iSearchInfoBody extends _iGCResponseBody {
-  items: {
-    item?: _tSearchItem;
-  };
-}
-
-export interface _iSearchInfo {
+export interface _iSearchInfoResponse {
   totalCount: number;
   pageNo: number;
   numOfRows: number;
-  itemList: _iSearchItem[];
+  itemList: _tSearchInfo[];
 }
 
-export interface _iSearchItem extends _iCommonItem {}
+export interface _iSearchInfoBody extends _iGCResponseBody {
+  items: {
+    item?: _tSearchInfoList | _tSearchInfo;
+  };
+}

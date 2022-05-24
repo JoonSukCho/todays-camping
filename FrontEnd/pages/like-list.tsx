@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { _iBasedItem } from 'models/api/goCamping/basedInfo';
+import { _tBasedInfo } from 'models/api/goCamping/basedInfo';
 
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';

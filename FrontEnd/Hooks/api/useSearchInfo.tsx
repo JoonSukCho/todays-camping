@@ -3,14 +3,13 @@ import axios from 'axios';
 
 // type & interface
 import {
-  _tSearchItem,
   _iSearchInfoBody,
   _iSearchInfoReqParams,
-  _iSearchInfo,
-  _iSearchItem,
+  _iSearchInfoResponse,
+  _tSearchInfo,
 } from 'models/api/goCamping/searchInfo';
 
-const getSearchInfo = async (params): Promise<_iSearchInfo> => {
+const getSearchInfo = async (params): Promise<_iSearchInfoResponse> => {
   const { data } = await axios
     .get('/api/searchList', {
       params: {
@@ -33,11 +32,11 @@ const getSearchInfo = async (params): Promise<_iSearchInfo> => {
 
   const SearchInfoBody: _iSearchInfoBody = data.response.body;
   const { totalCount, pageNo, numOfRows, items } = SearchInfoBody;
-  const SearchInfo: _iSearchInfo = {} as _iSearchInfo;
-  let SearchList: _iSearchItem[] = [];
+  const SearchInfo: _iSearchInfoResponse = {} as _iSearchInfoResponse;
+  let SearchList: _tSearchInfo[] = [];
 
   if (Object.prototype.hasOwnProperty.call(items, 'item')) {
-    const SearchItem: _tSearchItem = items.item;
+    const SearchItem: _tSearchInfo[] | _tSearchInfo = items.item;
 
     if (Array.isArray(SearchItem)) {
       SearchList = SearchItem;
@@ -56,7 +55,7 @@ const getSearchInfo = async (params): Promise<_iSearchInfo> => {
 
 // useQuery는 generic만 지원
 const useSearchInfo = (params: _iSearchInfoReqParams) => {
-  return useQuery<_iSearchInfo, Error>(
+  return useQuery<_iSearchInfoResponse, Error>(
     ['searchInfo', params],
     () => getSearchInfo(params),
     {

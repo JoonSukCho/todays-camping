@@ -21,7 +21,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 
 // models
-import { _iBasedItem } from 'models/api/goCamping/basedInfo';
+import { _tBasedInfo } from 'models/api/goCamping/basedInfo';
 
 // modules
 import { getDetailAddress } from 'util/basedItem';
@@ -37,7 +37,7 @@ import ModalContainer from 'components/Modal/ModalContainer';
 import LikeButton from 'components/Buttons/LikeButton';
 
 interface PhotoFeedProps {
-  basedItem: _iBasedItem;
+  basedInfo: _tBasedInfo;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PhotoFeed = ({ basedItem }: PhotoFeedProps) => {
+const PhotoFeed = ({ basedInfo }: PhotoFeedProps) => {
   const classes = useStyles();
 
   const [imageModalOpenFlag, imageModalOpen, imageModalClose] = useModal();
@@ -92,20 +92,20 @@ const PhotoFeed = ({ basedItem }: PhotoFeedProps) => {
             title: classes.headerTitle,
           }}
           className={classes.header}
-          title={basedItem.facltNm}
-          subheader={getDetailAddress(basedItem.addr1, basedItem.addr2)}
+          title={basedInfo.facltNm}
+          subheader={getDetailAddress(basedInfo.addr1, basedInfo.addr2)}
         />
         <CardMedia
           className={classes.media}
           image={
-            basedItem.firstImageUrl
-              ? basedItem.firstImageUrl
+            basedInfo.firstImageUrl
+              ? basedInfo.firstImageUrl
               : '/img/ready-image.jpg'
           }
         />
         <CardActions disableSpacing className={classes.footer}>
-          <LikeButton basedItem={basedItem} />
-          {basedItem.firstImageUrl && (
+          <LikeButton basedItem={basedInfo} />
+          {basedInfo.firstImageUrl && (
             <IconButton onClick={imageModalOpen} color="primary">
               <PhotoLibraryIcon />
             </IconButton>
@@ -114,7 +114,7 @@ const PhotoFeed = ({ basedItem }: PhotoFeedProps) => {
         </CardActions>
         <Collapse in={feedExpand} timeout="auto" unmountOnExit>
           <CardContent className={classes.content}>
-            <IntroList basedItem={basedItem}></IntroList>
+            <IntroList basedItem={basedInfo}></IntroList>
           </CardContent>
         </Collapse>
       </Card>
@@ -126,10 +126,10 @@ const PhotoFeed = ({ basedItem }: PhotoFeedProps) => {
       >
         <ModalContainer>
           <ModalHeader>
-            <Typography variant="h6">{basedItem.facltNm}</Typography>
+            <Typography variant="h6">{basedInfo.facltNm}</Typography>
           </ModalHeader>
           <ModalContent>
-            <ImageModalView contentId={basedItem.contentId} />
+            <ImageModalView contentId={basedInfo.contentId} />
           </ModalContent>
           <ModalFooter>
             <Button autoFocus onClick={imageModalClose} color="primary">
