@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -13,89 +13,56 @@ import Typography from '@material-ui/core/Typography';
 
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-
 import PhotoFeed from 'components/PhotoFeed';
 import CirCularLoader from 'components/CirCularLoader';
+import ErrorResponse from 'components/ErrorResponse';
 
 // Hooks
-import useBasedInfo from 'Hooks/api/useBasedInfo';
-
-// util
-import { generateShuffledArr } from 'util/utils';
+import useInfiniteBasedInfo from 'Hooks/api/useInfiniteBasedList';
 
 // models
 import { _iBasedInfoReqParams } from 'models/api/goCamping/basedInfo';
-import ErrorResponse from 'components/ErrorResponse';
-
-const NUM_OF_ROWS = 10;
-const totalCount = 2910;
-const totalPage = Math.ceil(totalCount / NUM_OF_ROWS);
-const shuffledPageIdxArr = generateShuffledArr(totalPage).filter(
-  (idx) => idx !== totalPage,
-);
 
 const InfiniteScrollFeeds = () => {
   const dispatch = useDispatch();
 
-  // local state
-  const [basedInfoReqParams, setBasedInfoReqParams] =
-    useState<_iBasedInfoReqParams>({
-      pageNo: 0,
-      numOfRows: 0,
-    });
-  const [infBasedList, setInfBasedList] = useState([]);
-
   const {
-    data: basedInfo,
-    error: basedInfoError,
-    isFetched: basedInfoIsFetched,
-    refetch: getBasedInfo,
-  } = useBasedInfo(basedInfoReqParams);
+    data: allPagesData,
+    hasNextPage,
+    isFetching,
+    isError,
+    error,
+    fetchNextPage,
+  } = useInfiniteBasedInfo();
 
-  // Infinite Scroll의 next data 요청
-  const fetchNextData = () => {
-    if (shuffledPageIdxArr.length > 0) {
-      setBasedInfoReqParams((prev) => ({
-        pageNo: shuffledPageIdxArr[prev.pageNo + 1],
-        numOfRows: NUM_OF_ROWS,
-      }));
+  const basedInfoList = useMemo(() => {
+    if (allPagesData) {
+      return allPagesData.pages
+        .map((pageData) => pageData.basedInfoList)
+        .flat();
     }
-  };
 
-  // 좋아요 목록 요청
+    return [];
+  }, [allPagesData]);
+
   useEffect(() => {
+    // 좋아요 목록 요청
     dispatch({
       type: REQUEST_LIKE_LIST,
     });
+
+    // Init Data 요청
+    fetchNextPage();
   }, []);
 
-  // basedInfo 요청 (parameter가 변경될 때 요청을 보낸다)
-  useEffect(() => {
-    if (basedInfoReqParams.pageNo !== 0) {
-      getBasedInfo();
-    }
-  }, [basedInfoReqParams]);
-
-  // Infinite Based List를 만든다.
-  useEffect(() => {
-    if (
-      basedInfoIsFetched &&
-      !basedInfoError &&
-      basedInfo.itemList.length > 0
-    ) {
-      const basedItem = basedInfo.itemList;
-
-      setInfBasedList((prev) => prev.concat(basedItem));
-    }
-  }, [basedInfoIsFetched]);
-
-  if (basedInfoError)
-    return <ErrorResponse errorMessage={basedInfoError.message} />;
+  if (isError) return <ErrorResponse errorMessage={error.message} />;
+  if ((isFetching && !hasNextPage) || hasNextPage === undefined)
+    return <CirCularLoader />;
   return (
     <InfiniteScroll
       style={{ overflow: 'hidden' }}
-      dataLength={infBasedList.length}
-      next={fetchNextData}
+      dataLength={basedInfoList.length}
+      next={fetchNextPage}
       hasMore
       loader={<CirCularLoader />}
       endMessage={
@@ -105,9 +72,9 @@ const InfiniteScrollFeeds = () => {
       }
     >
       <GridContainer>
-        {infBasedList.map((infBasedItem, idx) => (
+        {basedInfoList.map((basedInfo, idx) => (
           <GridItem key={String(idx)}>
-            <PhotoFeed basedItem={infBasedItem} />
+            <PhotoFeed basedInfo={basedInfo} />
           </GridItem>
         ))}
       </GridContainer>
