@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const LikeButton = ({ basedItem }) => {
+const LikeButton = ({ basedInfo }) => {
   const classes = useStyles();
 
   const { userInfo } = useSelector((state: RootState) => state.user);
@@ -34,7 +34,7 @@ const LikeButton = ({ basedItem }) => {
     if (likeList) {
       setIsLike(
         !!likeList.find(
-          (likeInfo) => likeInfo.contentid === basedItem.contentId,
+          (likeInfo) => likeInfo.contentid === basedInfo.contentId,
         ),
       );
     }
@@ -47,10 +47,10 @@ const LikeButton = ({ basedItem }) => {
     }
 
     if (isLike) {
-      popLike(basedItem);
+      popLike(basedInfo);
       setIsLike(false);
     } else {
-      pushLike(basedItem);
+      pushLike(basedInfo);
       setIsLike(true);
     }
   };

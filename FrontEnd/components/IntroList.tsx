@@ -8,6 +8,7 @@ import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
 
 import HomeIcon from '@material-ui/icons/Home';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -23,7 +24,6 @@ import ModalLink from 'components/Link/ModalLink';
 import IntroListItem from 'components/IntroListItem';
 import MapModalView from 'components/ModalView/MapModalView';
 import Modal from '@material-ui/core/Modal';
-import ModalContainer from 'components/Modal/ModalContainer';
 import ModalHeader from 'components/Modal/ModalHeader';
 import ModalFooter from 'components/Modal/ModalFooter';
 import ModalContent from 'components/Modal/ModalContent';
@@ -33,12 +33,12 @@ import {
   getCampSiteFeatures,
   getSiteForms,
   getDetailAddress,
-} from 'util/basedItem';
+} from 'util/basedInfo';
 import { IsValidatedURL } from 'util/utils';
 import { _tBasedInfo } from 'models/api/goCamping/basedInfo';
 
 interface IntroListProps {
-  basedItem: _tBasedInfo;
+  basedInfo: _tBasedInfo;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const IntroList = ({ basedItem }: IntroListProps) => {
+const IntroList = ({ basedInfo }: IntroListProps) => {
   const classes = useStyles();
   const [mapModalOpenFlag, mapModalOpen, mapModalClose] = useModal();
   const [copyMessageAnchor, setCopyMessageAnchor] = useState(null);
@@ -63,22 +63,22 @@ const IntroList = ({ basedItem }: IntroListProps) => {
   };
 
   const homepageURL = (() => {
-    if (IsValidatedURL(basedItem.homepage)) {
-      return basedItem.homepage;
+    if (IsValidatedURL(basedInfo.homepage)) {
+      return basedInfo.homepage;
     }
 
-    return `http://${basedItem.homepage}`;
+    return `http://${basedInfo.homepage}`;
   })();
-  const detailAddress = getDetailAddress(basedItem.addr1, basedItem.addr2);
-  const operPd = basedItem.operPdCl || '정보 미제공';
-  const phoneNumber = basedItem.tel || '정보 미제공';
+  const detailAddress = getDetailAddress(basedInfo.addr1, basedInfo.addr2);
+  const operPd = basedInfo.operPdCl || '정보 미제공';
+  const phoneNumber = basedInfo.tel || '정보 미제공';
 
   const introList = useMemo(() => {
     return [
       {
         icon: <HomeIcon style={{ fontSize: 28 }} />,
         title: '홈페이지',
-        contents: basedItem.homepage ? (
+        contents: basedInfo.homepage ? (
           <OuterLink href={homepageURL}>{homepageURL}</OuterLink>
         ) : (
           '정보 미제공'
@@ -92,7 +92,7 @@ const IntroList = ({ basedItem }: IntroListProps) => {
       {
         icon: <PhoneIcon style={{ fontSize: 28 }} />,
         title: '전화번호',
-        contents: basedItem.tel ? (
+        contents: basedInfo.tel ? (
           <TelLink tel={phoneNumber}>{phoneNumber}</TelLink>
         ) : (
           '정보 미제공'
@@ -107,23 +107,23 @@ const IntroList = ({ basedItem }: IntroListProps) => {
         icon: <FilterHdrIcon style={{ fontSize: 28 }} />,
         title: '사이트 형태',
         contents: getSiteForms({
-          siteBottomCl1: basedItem.siteBottomCl1,
-          siteBottomCl2: basedItem.siteBottomCl2,
-          siteBottomCl3: basedItem.siteBottomCl3,
-          siteBottomCl4: basedItem.siteBottomCl4,
-          siteBottomCl5: basedItem.siteBottomCl5,
+          siteBottomCl1: basedInfo.siteBottomCl1,
+          siteBottomCl2: basedInfo.siteBottomCl2,
+          siteBottomCl3: basedInfo.siteBottomCl3,
+          siteBottomCl4: basedInfo.siteBottomCl4,
+          siteBottomCl5: basedInfo.siteBottomCl5,
         }),
       },
       {
         icon: <SearchIcon style={{ fontSize: 28 }} />,
         title: '특징',
         contents: getCampSiteFeatures({
-          sbrsCl: basedItem.sbrsCl,
-          animalCmgCl: basedItem.animalCmgCl,
+          sbrsCl: basedInfo.sbrsCl,
+          animalCmgCl: basedInfo.animalCmgCl,
         }),
       },
     ];
-  }, [basedItem]);
+  }, [basedInfo]);
 
   return (
     <div>
@@ -149,7 +149,7 @@ const IntroList = ({ basedItem }: IntroListProps) => {
         open={mapModalOpenFlag}
         onClose={mapModalClose}
       >
-        <ModalContainer>
+        <MapModalContainer>
           <Popover
             open={Boolean(copyMessageAnchor)}
             anchorEl={copyMessageAnchor}
@@ -194,14 +194,14 @@ const IntroList = ({ basedItem }: IntroListProps) => {
             </Typography>
           </ModalHeader>
           <ModalContent>
-            <MapModalView mapX={basedItem.mapX} mapY={basedItem.mapY} />
+            <MapModalView mapX={basedInfo.mapX} mapY={basedInfo.mapY} />
           </ModalContent>
           <ModalFooter>
             <Button autoFocus onClick={mapModalClose} color="primary">
               닫기
             </Button>
           </ModalFooter>
-        </ModalContainer>
+        </MapModalContainer>
       </Modal>
     </div>
   );
@@ -214,6 +214,16 @@ const GridList = styled(List)`
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
   }
+`;
+
+const MapModalContainer = styled(Card)`
+  width: 100%;
+  z-index: 12;
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  margin: 0 16px;
+  max-width: 1200px;
 `;
 
 export default IntroList;

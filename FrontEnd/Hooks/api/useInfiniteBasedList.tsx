@@ -48,12 +48,12 @@ const getRandomBasedInfo = async ({
   let basedInfoList: _tBasedInfo[] = [];
 
   if (Object.prototype.hasOwnProperty.call(items, 'item')) {
-    const basedItem: _tBasedInfo[] | _tBasedInfo = items.item;
+    const basedInfo: _tBasedInfo[] | _tBasedInfo = items.item;
 
-    if (Array.isArray(basedItem)) {
-      basedInfoList = basedItem;
+    if (Array.isArray(basedInfo)) {
+      basedInfoList = basedInfo;
     } else {
-      basedInfoList.push(basedItem);
+      basedInfoList.push(basedInfo);
     }
   }
 

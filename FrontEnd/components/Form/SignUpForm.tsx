@@ -196,7 +196,9 @@ const SignUpForm = ({ closeSignUpModal }) => {
         error={!isValidID || dupCheckIsError}
         helperText={idHelperText}
         onBlur={() => {
-          reqDupCheckId();
+          if (isValidID && user_id !== '') {
+            reqDupCheckId();
+          }
         }}
         onChange={onInputChange}
         onKeyPress={onEnterPress}

@@ -9,7 +9,7 @@ interface LikeListItemProps {
 }
 
 const LikeListItem = ({ likeItem }: LikeListItemProps) => {
-  const basedItem: _tBasedInfo = {
+  const basedInfo: _tBasedInfo = {
     contentId: likeItem.contentid,
     facltNm: likeItem.facltnm,
     addr1: likeItem.addr1,
@@ -31,7 +31,7 @@ const LikeListItem = ({ likeItem }: LikeListItemProps) => {
 
   return (
     <GridItem>
-      <PhotoFeed basedInfo={basedItem} />
+      <PhotoFeed basedInfo={basedInfo} />
     </GridItem>
   );
 };

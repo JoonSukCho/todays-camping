@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import { RootState } from 'reducers';
 import { REQUEST_USER_INFO } from 'reducers/user';
 
@@ -12,11 +13,11 @@ import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
 
 import styles from 'public/jss/material-kit-react/components/headerLinksStyle.js';
 
 // components
-import ModalContainer from 'components/Modal/ModalContainer';
 import ModalHeader from 'components/Modal/ModalHeader';
 import ModalFooter from 'components/Modal/ModalFooter';
 import ModalContent from 'components/Modal/ModalContent';
@@ -184,5 +185,15 @@ const HeaderLinks = () => {
     </>
   );
 };
+
+const ModalContainer = styled(Card)`
+  width: 100%;
+  z-index: 12;
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  margin: 0 16px;
+  max-width: 360px;
+`;
 
 export default HeaderLinks;

@@ -31,6 +31,7 @@ const ImageModalView = ({ contentId }: ImageModalViewProps) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
+
     appendDots: (dots: any[]) => {
       return (
         <ul>
@@ -67,7 +68,6 @@ const ImageModalView = ({ contentId }: ImageModalViewProps) => {
             imageList.map((imageItem, idx) => (
               <ImgContainer key={imageItem.serialNum}>
                 <Image
-                  loading="eager"
                   priority
                   src={imageItem.url}
                   alt="Image Not Found"
