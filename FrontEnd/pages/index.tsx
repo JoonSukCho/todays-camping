@@ -15,8 +15,13 @@ import ScrollGuide from 'components/ScrollGuide';
 // models
 import { _iBasedInfoReqParams } from 'models/api/goCamping/basedInfo';
 import InfiniteScrollFeeds from 'components/InfiniteScrollFeeds';
+import axios from 'axios';
+import { useEffect } from 'react';
 
-const Home = () => {
+const Home = ({ data }) => {
+  useEffect(() => {
+    console.log('data', data);
+  }, [data]);
   return (
     <AppLayout>
       <Parallax image="/img/campfire-background.gif">
@@ -67,3 +72,27 @@ const SubTitle = styled.h3`
 `;
 
 export default Home;
+
+export const getServerSideProps = async (ctx) => {
+  const { data } = await axios
+    .get(
+      'http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList',
+      {
+        params: {
+          pageNo: 1,
+          numOfRows: 10,
+          ServiceKey: process.env.SERVICE_KEY,
+          MobileOS: 'ETC',
+          MobileApp: 'AppTest',
+          _type: 'json',
+        },
+        timeout: 5000,
+      },
+    )
+    .catch((err) => {
+      console.log('error !!!');
+      throw new Error('Server Error');
+    });
+
+  return { props: { data: data.response.body } };
+};
