@@ -90,7 +90,6 @@ export const getServerSideProps = async (ctx) => {
             pageNo: 1,
             numOfRows: 0,
           },
-          timeout: 5000,
         },
       )
       .catch((err) => {
