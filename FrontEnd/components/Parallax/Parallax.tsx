@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 interface ParallaxStyleProps {
@@ -6,7 +6,6 @@ interface ParallaxStyleProps {
   image?: string;
   height?: number;
   bgColor?: string;
-  transform?: number;
 }
 
 interface ParallaxProps extends ParallaxStyleProps {
@@ -20,12 +19,16 @@ const Parallax = ({
   height,
   bgColor,
 }: ParallaxProps) => {
-  const [transform, setTransform] = useState<number>(0);
+  const ContainerRef = useRef(null);
 
   useEffect(() => {
     const resetTransform = () => {
       const windowScrollTop = window.pageYOffset / 3;
-      setTransform(windowScrollTop);
+
+      const $container = ContainerRef.current;
+      if ($container) {
+        $container.style.transform = `translateY(${windowScrollTop}px)`;
+      }
     };
 
     if (window.innerWidth >= 768) {
@@ -37,15 +40,16 @@ const Parallax = ({
         window.removeEventListener('scroll', resetTransform);
       }
     };
-  }, []);
+  }, [ContainerRef]);
 
   return (
     <Container
+      ref={ContainerRef}
       filtered={filtered}
       image={image}
       height={height}
       bgColor={bgColor}
-      transform={transform}
+      // transform={transform}
     >
       {children}
     </Container>
@@ -55,13 +59,12 @@ const Parallax = ({
 export default Parallax;
 
 const Container = styled.div.attrs(
-  ({ bgColor, filtered, height, image, transform }: ParallaxStyleProps) => ({
+  ({ bgColor, filtered, height, image }: ParallaxStyleProps) => ({
     bgColor: bgColor || '#000000',
     image: image
       ? `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url(${image})`
       : 'none',
     height: height ? `${height}px` : '100vh',
-    transform,
     filtered,
   }),
 )`
@@ -74,7 +77,6 @@ const Container = styled.div.attrs(
   max-height: 1000px;
   overflow: hidden;
   position: relative;
-  transform: translate3d(0, ${({ transform }) => transform}px, 0);
   margin: 0;
   padding: 0;
   border: 0;
