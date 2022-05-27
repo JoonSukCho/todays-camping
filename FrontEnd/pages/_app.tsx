@@ -40,7 +40,6 @@ axios.defaults.headers = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const kakaoAppKey = process.env.KAKAO_JS_KEY;
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -116,7 +115,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <script
           type="text/javascript"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoAppKey}`}
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_JS_KEY}`}
         />
         <script
           defer

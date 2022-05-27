@@ -8,16 +8,14 @@ import {
   _iSearchInfoResponse,
   _tSearchInfo,
 } from 'models/api/goCamping/searchInfo';
+import { GO_CAMPING_COMMON_PARAMS } from 'constants/constants';
 
 const getSearchInfo = async (params): Promise<_iSearchInfoResponse> => {
   const { data } = await axios
     .get('/api/searchList', {
       params: {
         ...params,
-        ServiceKey: process.env.SERVICE_KEY,
-        MobileOS: 'ETC',
-        MobileApp: 'AppTest',
-        _type: 'json',
+        ...GO_CAMPING_COMMON_PARAMS,
       },
       timeout: 7000,
     })

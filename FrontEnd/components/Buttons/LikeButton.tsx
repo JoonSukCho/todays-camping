@@ -21,8 +21,8 @@ const useStyles = makeStyles(() => ({
 const LikeButton = ({ basedInfo }) => {
   const classes = useStyles();
 
-  const { userInfo } = useSelector((state: RootState) => state.user);
-  const { likeList } = useSelector((state: RootState) => state.likeList);
+  const userInfo = useSelector((state: RootState) => state.user.userInfo);
+  const likeList = useSelector((state: RootState) => state.likeList.likeList);
 
   const { mutate: pushLike, isSuccess: pushLikeSuccess } = usePushLike();
   const { mutate: popLike, isSuccess: popLikeSuccess } = usePopLike();

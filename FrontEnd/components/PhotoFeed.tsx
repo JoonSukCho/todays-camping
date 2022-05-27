@@ -142,4 +142,4 @@ const PhotoFeed = ({ basedInfo }: PhotoFeedProps) => {
   );
 };
 
-export default PhotoFeed;
+export default React.memo(PhotoFeed);

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -20,10 +20,13 @@ import ErrorResponse from 'components/ErrorResponse';
 // Hooks
 import useInfiniteBasedInfo from 'Hooks/api/useInfiniteBasedList';
 
-// models
-import { _iBasedInfoReqParams } from 'models/api/goCamping/basedInfo';
+interface InfiniteScrollFeedsProps {
+  shuffledPageNumArr: number[];
+}
 
-const InfiniteScrollFeeds = () => {
+const InfiniteScrollFeeds = ({
+  shuffledPageNumArr,
+}: InfiniteScrollFeedsProps) => {
   const dispatch = useDispatch();
 
   const {
@@ -33,7 +36,7 @@ const InfiniteScrollFeeds = () => {
     isError,
     error,
     fetchNextPage,
-  } = useInfiniteBasedInfo();
+  } = useInfiniteBasedInfo({ shuffledPageNumArr });
 
   const basedInfoList = useMemo(() => {
     if (allPagesData) {
@@ -73,7 +76,7 @@ const InfiniteScrollFeeds = () => {
     >
       <GridContainer>
         {basedInfoList.map((basedInfo, idx) => (
-          <GridItem key={String(idx)}>
+          <GridItem key={basedInfo.contentId}>
             <PhotoFeed basedInfo={basedInfo} />
           </GridItem>
         ))}
@@ -88,4 +91,4 @@ const EndMessageComponent = styled(Typography)`
   text-align: center;
 `;
 
-export default InfiniteScrollFeeds;
+export default React.memo(InfiniteScrollFeeds);

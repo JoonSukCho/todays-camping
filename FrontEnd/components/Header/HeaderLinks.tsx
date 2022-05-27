@@ -71,18 +71,6 @@ const HeaderLinks = () => {
     }
   }, [logoutSuccess]);
 
-  if (userInfoLoading)
-    return (
-      <>
-        <List className={classes.list}>
-          <ListItem className={classes.listItem}>
-            <Button href="/" className={classes.navLink}>
-              Home
-            </Button>
-          </ListItem>
-        </List>
-      </>
-    );
   return (
     <>
       {userInfo ? (

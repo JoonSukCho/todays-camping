@@ -13,15 +13,19 @@ import KeywordSearchForm from 'components/Form/KeywordSearchForm';
 import ScrollGuide from 'components/ScrollGuide';
 
 // models
-import { _iBasedInfoReqParams } from 'models/api/goCamping/basedInfo';
+import {
+  _iBasedInfoBody,
+  _iBasedInfoReqParams,
+} from 'models/api/goCamping/basedInfo';
 import InfiniteScrollFeeds from 'components/InfiniteScrollFeeds';
 import axios from 'axios';
-import { useEffect } from 'react';
+import {
+  GO_CAMPING_COMMON_PARAMS,
+  INFINITE_NUM_OF_ROWS,
+} from 'constants/constants';
+import { generateShuffledArr } from 'util/utils';
 
-const Home = ({ data }) => {
-  useEffect(() => {
-    console.log('data', data);
-  }, [data]);
+const Home = ({ shuffledPageNumArr }) => {
   return (
     <AppLayout>
       <Parallax image="/img/campfire-background.gif">
@@ -39,7 +43,7 @@ const Home = ({ data }) => {
         </ParallaxContent>
       </Parallax>
       <MainSection>
-        <InfiniteScrollFeeds />
+        <InfiniteScrollFeeds shuffledPageNumArr={shuffledPageNumArr} />
       </MainSection>
     </AppLayout>
   );
@@ -73,26 +77,34 @@ const SubTitle = styled.h3`
 
 export default Home;
 
+// 랜덤한 피드를 요청하기 위해 전체 페이지 갯수를 요청 후,
+// page number를 shuffle한 배열을 만듦.
 export const getServerSideProps = async (ctx) => {
-  const { data } = await axios
-    .get(
-      'http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList',
-      {
-        params: {
-          pageNo: 1,
-          numOfRows: 10,
-          ServiceKey: process.env.SERVICE_KEY,
-          MobileOS: 'ETC',
-          MobileApp: 'AppTest',
-          _type: 'json',
+  try {
+    const { data } = await axios
+      .get(
+        'http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList',
+        {
+          params: {
+            ...GO_CAMPING_COMMON_PARAMS,
+            pageNo: 1,
+            numOfRows: 0,
+          },
+          timeout: 5000,
         },
-        timeout: 5000,
-      },
-    )
-    .catch((err) => {
-      console.log('error !!!');
-      throw new Error('Server Error');
-    });
+      )
+      .catch((err) => {
+        throw new Error('Server Error');
+      });
 
-  return { props: { data: data.response.body } };
+    const basedInfoBody: _iBasedInfoBody = data.response.body;
+    const { totalCount } = basedInfoBody;
+    const shuffledPageNumArr = generateShuffledArr(
+      Math.ceil(totalCount / INFINITE_NUM_OF_ROWS),
+    );
+
+    return { props: { shuffledPageNumArr } };
+  } catch (error) {
+    return { props: { shuffledPageNumArr: [] } };
+  }
 };
