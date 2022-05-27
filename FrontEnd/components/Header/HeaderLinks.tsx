@@ -77,14 +77,6 @@ const HeaderLinks = () => {
         <>
           <List className={classes.list}>
             <ListItem className={classes.listItem}>
-              <Button
-                className={classes.navLink}
-                style={{ textTransform: 'none', cursor: 'default' }}
-              >
-                {userInfo.user_id}님
-              </Button>
-            </ListItem>
-            <ListItem className={classes.listItem}>
               <Button href="/" className={classes.navLink}>
                 Home
               </Button>
@@ -92,6 +84,14 @@ const HeaderLinks = () => {
             <ListItem className={classes.listItem}>
               <Button onClick={moveLikeListPage} className={classes.navLink}>
                 좋아요 리스트
+              </Button>
+            </ListItem>
+            <ListItem className={classes.listItem}>
+              <Button
+                className={classes.navLink}
+                style={{ textTransform: 'none', cursor: 'default' }}
+              >
+                {userInfo.user_id}님
               </Button>
             </ListItem>
             <ListItem className={classes.listItem}>
