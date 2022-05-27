@@ -7,9 +7,13 @@ const MapContainer = styled.div`
 
 const Map = styled.div`
   width: 100%;
-  height: 300px;
+  height: 700px;
 
-  @media (min-width: 768px) {
+  @media (max-width: 640px) {
+    height: 300px;
+  }
+
+  @media (min-width: 640px) and (max-width: 1024px) {
     height: 500px;
   }
 `;

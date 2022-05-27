@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 
-const useInput = <T extends unknown>(
+const useInput = <T,>(
   initialValue: T = null,
 ): [T, (e) => void, (e) => void] => {
   const [value, setValue] = useState<any>(initialValue);

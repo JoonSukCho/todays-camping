@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 interface ParallaxStyleProps {
@@ -6,7 +6,6 @@ interface ParallaxStyleProps {
   image?: string;
   height?: number;
   bgColor?: string;
-  transform?: number;
 }
 
 interface ParallaxProps extends ParallaxStyleProps {
@@ -20,38 +19,37 @@ const Parallax = ({
   height,
   bgColor,
 }: ParallaxProps) => {
-  const [transform, setTransform] = useState<number>(0);
+  const ContainerRef = useRef(null);
 
   useEffect(() => {
-    let windowScrollTop;
-    if (window.innerWidth >= 768) {
-      windowScrollTop = window.pageYOffset / 3;
-    } else {
-      windowScrollTop = 0;
-    }
+    const resetTransform = () => {
+      const windowScrollTop = window.pageYOffset / 3;
+
+      const $container = ContainerRef.current;
+      if ($container) {
+        $container.style.transform = `translateY(${windowScrollTop}px)`;
+      }
+    };
 
     if (window.innerWidth >= 768) {
       window.addEventListener('scroll', resetTransform);
     }
+
     return function cleanup() {
       if (window.innerWidth >= 768) {
         window.removeEventListener('scroll', resetTransform);
       }
     };
-  }, []);
-
-  const resetTransform = () => {
-    var windowScrollTop = window.pageYOffset / 3;
-    setTransform(windowScrollTop);
-  };
+  }, [ContainerRef]);
 
   return (
     <Container
+      ref={ContainerRef}
       filtered={filtered}
       image={image}
       height={height}
       bgColor={bgColor}
-      transform={transform}
+      // transform={transform}
     >
       {children}
     </Container>
@@ -60,20 +58,25 @@ const Parallax = ({
 
 export default Parallax;
 
-const Container = styled.div<ParallaxStyleProps>`
-  background-color: ${({ bgColor }) => (bgColor ? bgColor : `#000000`)};
+const Container = styled.div.attrs(
+  ({ bgColor, filtered, height, image }: ParallaxStyleProps) => ({
+    bgColor: bgColor || '#000000',
+    image: image
+      ? `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url(${image})`
+      : 'none',
+    height: height ? `${height}px` : '100vh',
+    filtered,
+  }),
+)`
+  background-color: ${({ bgColor }) => bgColor};
   background-position: center center;
   background-size: 100%;
   background-repeat: no-repeat;
-  background-image: ${({ image }) =>
-    image
-      ? `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url(${image})`
-      : 'none'};
-  height: ${({ height }) => (height ? `${height}px` : `100vh`)};
+  background-image: ${({ image }) => image};
+  height: ${({ height }) => height};
   max-height: 1000px;
   overflow: hidden;
   position: relative;
-  transform: translate3d(0, ${({ transform }) => transform}px, 0);
   margin: 0;
   padding: 0;
   border: 0;

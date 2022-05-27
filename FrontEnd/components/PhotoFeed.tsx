@@ -24,7 +24,7 @@ import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import { _tBasedInfo } from 'models/api/goCamping/basedInfo';
 
 // modules
-import { getDetailAddress } from 'util/basedItem';
+import { getDetailAddress } from 'util/basedInfo';
 
 // components
 import ModalHeader from 'components/Modal/ModalHeader';
@@ -104,7 +104,7 @@ const PhotoFeed = ({ basedInfo }: PhotoFeedProps) => {
           }
         />
         <CardActions disableSpacing className={classes.footer}>
-          <LikeButton basedItem={basedInfo} />
+          <LikeButton basedInfo={basedInfo} />
           {/* {basedInfo.firstImageUrl && (
             <IconButton onClick={imageModalOpen} color="primary">
               <PhotoLibraryIcon />
@@ -114,7 +114,7 @@ const PhotoFeed = ({ basedInfo }: PhotoFeedProps) => {
         </CardActions>
         <Collapse in={feedExpand} timeout="auto" unmountOnExit>
           <CardContent className={classes.content}>
-            <IntroList basedItem={basedInfo}></IntroList>
+            <IntroList basedInfo={basedInfo}></IntroList>
           </CardContent>
         </Collapse>
       </Card>
@@ -142,4 +142,4 @@ const PhotoFeed = ({ basedInfo }: PhotoFeedProps) => {
   );
 };
 
-export default PhotoFeed;
+export default React.memo(PhotoFeed);

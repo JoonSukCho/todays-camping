@@ -8,15 +8,13 @@ import {
   _iImageInfoResponse,
   _iImageInfo,
 } from 'models/api/goCamping/imageInfo';
+import { GO_CAMPING_COMMON_PARAMS } from 'constants/constants';
 
 const getImageInfo = async (params): Promise<_iImageInfoResponse> => {
   const { data } = await axios.get('/api/imageList', {
     params: {
       ...params,
-      ServiceKey: process.env.SERVICE_KEY,
-      MobileOS: 'ETC',
-      MobileApp: 'AppTest',
-      _type: 'json',
+      ...GO_CAMPING_COMMON_PARAMS,
     },
   });
 

@@ -37,12 +37,12 @@ const getBasedInfo = async (params): Promise<_iBasedInfoResponse> => {
   let basedList: _tBasedInfo[] = [];
 
   if (Object.prototype.hasOwnProperty.call(items, 'item')) {
-    const basedItem: _tBasedInfo[] | _tBasedInfo = items.item;
+    const basedInfo: _tBasedInfo[] | _tBasedInfo = items.item;
 
-    if (Array.isArray(basedItem)) {
-      basedList = basedItem;
+    if (Array.isArray(basedInfo)) {
+      basedList = basedInfo;
     } else {
-      basedList.push(basedItem);
+      basedList.push(basedInfo);
     }
   }
 

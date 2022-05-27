@@ -3,33 +3,32 @@ import axios from 'axios';
 
 // type & interface
 import { _iBasedInfoBody, _tBasedInfo } from 'models/api/goCamping/basedInfo';
-import { generateShuffledArr } from 'util/utils';
 import { _iCommonInfo } from 'models/api/goCamping/common';
+import { GO_CAMPING_COMMON_PARAMS } from 'constants/constants';
+
+interface _iPageParam {
+  pageParam: {
+    shuffledPageNumArr: number[];
+    currentPageIdx: number;
+  };
+}
 
 interface _iRandomBasedInfo {
   currentPageIdx: number;
   basedInfoList: _tBasedInfo[];
 }
 
-const NUM_OF_ROWS = 10;
-const totalCount = 2910;
-const totalPage = Math.ceil(totalCount / NUM_OF_ROWS);
-const shuffledPageIdxArr = generateShuffledArr(totalPage).filter(
-  (idx) => idx !== totalPage,
-);
-
 const getRandomBasedInfo = async ({
-  pageParam: currentPageIdx = 0,
-}): Promise<_iRandomBasedInfo> => {
+  pageParam,
+}: _iPageParam): Promise<_iRandomBasedInfo> => {
+  const { currentPageIdx, shuffledPageNumArr } = pageParam;
+
   const { data } = await axios
     .get('/api/basedList', {
       params: {
-        pageNo: shuffledPageIdxArr[currentPageIdx],
+        ...GO_CAMPING_COMMON_PARAMS,
+        pageNo: shuffledPageNumArr[currentPageIdx],
         numOfRows: 10,
-        ServiceKey: process.env.SERVICE_KEY,
-        MobileOS: 'ETC',
-        MobileApp: 'AppTest',
-        _type: 'json',
       },
       timeout: 5000,
     })
@@ -48,12 +47,12 @@ const getRandomBasedInfo = async ({
   let basedInfoList: _tBasedInfo[] = [];
 
   if (Object.prototype.hasOwnProperty.call(items, 'item')) {
-    const basedItem: _tBasedInfo[] | _tBasedInfo = items.item;
+    const basedInfo: _tBasedInfo[] | _tBasedInfo = items.item;
 
-    if (Array.isArray(basedItem)) {
-      basedInfoList = basedItem;
+    if (Array.isArray(basedInfo)) {
+      basedInfoList = basedInfo;
     } else {
-      basedInfoList.push(basedItem);
+      basedInfoList.push(basedInfo);
     }
   }
 
@@ -63,13 +62,23 @@ const getRandomBasedInfo = async ({
   };
 };
 
-// useQuery는 generic만 지원
-const useInfiniteBasedInfo = () => {
+const useInfiniteBasedInfo = ({ shuffledPageNumArr }) => {
   return useInfiniteQuery<_iRandomBasedInfo, Error>(
     ['infiniteBasedInfo'],
-    getRandomBasedInfo,
+    ({
+      // pageParam으로 사용할 프로퍼티를 정의
+      pageParam = {
+        currentPageIdx: 0,
+        shuffledPageNumArr,
+      },
+    }) => getRandomBasedInfo({ pageParam }),
     {
-      getNextPageParam: (lastPageIdx) => lastPageIdx.currentPageIdx + 1,
+      getNextPageParam: (lastPage) => {
+        return {
+          currentPageIdx: lastPage.currentPageIdx + 1,
+          shuffledPageNumArr,
+        };
+      },
       onError: (err) => {
         console.log('onError', err.message);
       },

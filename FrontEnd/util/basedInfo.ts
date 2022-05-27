@@ -1,5 +1,3 @@
-import { _tBasedInfo } from 'models/api/goCamping/basedInfo';
-
 interface GetSiteFormsParams {
   siteBottomCl1?: number;
   siteBottomCl2?: number;
