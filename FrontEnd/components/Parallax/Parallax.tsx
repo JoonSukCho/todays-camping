@@ -23,27 +23,21 @@ const Parallax = ({
   const [transform, setTransform] = useState<number>(0);
 
   useEffect(() => {
-    let windowScrollTop;
-    if (window.innerWidth >= 768) {
-      windowScrollTop = window.pageYOffset / 3;
-    } else {
-      windowScrollTop = 0;
-    }
+    const resetTransform = () => {
+      const windowScrollTop = window.pageYOffset / 3;
+      setTransform(windowScrollTop);
+    };
 
     if (window.innerWidth >= 768) {
       window.addEventListener('scroll', resetTransform);
     }
+
     return function cleanup() {
       if (window.innerWidth >= 768) {
         window.removeEventListener('scroll', resetTransform);
       }
     };
   }, []);
-
-  const resetTransform = () => {
-    var windowScrollTop = window.pageYOffset / 3;
-    setTransform(windowScrollTop);
-  };
 
   return (
     <Container
@@ -60,16 +54,23 @@ const Parallax = ({
 
 export default Parallax;
 
-const Container = styled.div<ParallaxStyleProps>`
-  background-color: ${({ bgColor }) => (bgColor ? bgColor : `#000000`)};
+const Container = styled.div.attrs(
+  ({ bgColor, filtered, height, image, transform }: ParallaxStyleProps) => ({
+    bgColor: bgColor || '#000000',
+    image: image
+      ? `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url(${image})`
+      : 'none',
+    height: height ? `${height}px` : '100vh',
+    transform,
+    filtered,
+  }),
+)`
+  background-color: ${({ bgColor }) => bgColor};
   background-position: center center;
   background-size: 100%;
   background-repeat: no-repeat;
-  background-image: ${({ image }) =>
-    image
-      ? `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url(${image})`
-      : 'none'};
-  height: ${({ height }) => (height ? `${height}px` : `100vh`)};
+  background-image: ${({ image }) => image};
+  height: ${({ height }) => height};
   max-height: 1000px;
   overflow: hidden;
   position: relative;
