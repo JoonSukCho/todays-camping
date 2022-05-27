@@ -90,6 +90,7 @@ export const getServerSideProps = async (ctx) => {
             pageNo: 1,
             numOfRows: 0,
           },
+          timeout: 5000,
         },
       )
       .catch((err) => {
@@ -104,6 +105,13 @@ export const getServerSideProps = async (ctx) => {
 
     return { props: { shuffledPageNumArr } };
   } catch (error) {
-    return { props: { shuffledPageNumArr: [] } };
+    // goCamping API 서버 응답이 10초 이상 걸리면
+    // vercel production에서 timeout 페이지로 이동시키는 것을 방지하기 위해
+    // axios timeout 설정 및 timeout시 total count를 임의로 정의.
+    const shuffledPageNumArr = generateShuffledArr(
+      Math.ceil(2910 / INFINITE_NUM_OF_ROWS),
+    );
+
+    return { props: { shuffledPageNumArr } };
   }
 };
