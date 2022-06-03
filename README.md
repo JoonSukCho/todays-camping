@@ -5,10 +5,8 @@
 
 ### [프로젝트 보러 가기](https://todays-camping.vercel.app/)
 
-모든 기능은 혼자 기획 및 구현했습니다.
-recoil, react-query 등 다양한 상태관리 라이브러리 경험과 카카오 지도와 같은 Open API 활용,  
-무료 배포 등 웹서비스 전반적인 경험에 대한 폭을 넓히고자 해당 프로젝트를 진행했습니다. 
-
+모든 기능은 혼자 기획 및 구현했으며, 일부 UI/UX는 인스타그램을 벤치마킹 했습니다. 
+회사 프로젝트에 사용할 기술 스택을 연구하고자 퇴근 후 틈틈이 해당 프로젝트를 진행했습니다.
 
 ## Skills
 ### FrontEnd
@@ -17,7 +15,6 @@ recoil, react-query 등 다양한 상태관리 라이브러리 경험과 카카�
 - TypeScript
 - Material-ui
 - Redux, Redux-saga
-- recoil
 - react-query
 - styled-components
 ### BackEnd
@@ -31,7 +28,7 @@ recoil, react-query 등 다양한 상태관리 라이브러리 경험과 카카�
 - 키워드 검색
 - react-query의 useInfiniteQuery를 이용한 무한 스크롤 및 랜덤 피드 요청 
 - 피드 좋아요 기능 및 좋아요 한 피드 모아보기
-- 카카오 지도로 해당 캠핑지 위치 보기
+- 카카오맵 API를 이용해 지도로 해당 캠핑지 위치 보기
 - 반응형 UI
 
 ## Todo
