@@ -94,6 +94,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           name="naver-site-verification"
           content="0dd7e94a0ebb7299654d1960ad389287e3a380c2"
         />
+        <meta
+          name="description" content="오늘의 캠핑"
+        />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon.png" />
         <title>오늘의 캠핑</title>
